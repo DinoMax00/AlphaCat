@@ -15,7 +15,9 @@
 
 ---
 * 图形化界面
+
   [鲨鱼象棋(这个好看)]https://sharkchess.lanzous.com/b0b87cetc
+  
   [另一个](https://exp.newsmth.net/topic/ed55126a4bc9831c6b148f8c47800fad)
   
   配置引擎
