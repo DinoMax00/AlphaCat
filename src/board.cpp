@@ -1,5 +1,6 @@
 #include"board.h"
 #include"base.h"
+#include<iostream>
 Board::Board() {}
 
 Board::Board(std::string fen)
@@ -40,59 +41,68 @@ void Board::buildBoardFromFen(std::string fen)
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
 }
+
+void Board::genOneMove(std::string move)
+{
+	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
+	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
+	board[end_position] = board[start_position];
+	board[start_position] = EMPTY;
+}
+
 void Board::printBoardForDebug() 
 {
 	for (int i = 0; i < 256; i++) 
 	{
 		switch (board[i])
 		{
-			case 255:
+			case BOUNDARY:
 				std::cout << "  ";
 				break;
-			case 101:
+			case B_JU:
 				std::cout << "r ";
 				break;
-			case 102:
+			case B_MA:
 				std::cout << "n ";
 				break;
-			case 103:
+			case B_XIANG:
 				std::cout << "b ";
 				break;
-			case 104:
+			case B_SHI:
 				std::cout << "a ";
 				break;
-			case 105:
+			case B_JIANG:
 				std::cout << "k ";
 				break;
-			case 106:
+			case B_PAO:
 				std::cout << "c ";
 				break;
-			case 107:
+			case B_BING:
 				std::cout << "p ";
 				break;
-			case 1:
+			case R_JU:
 				std::cout << "R ";
 				break;
-			case 2:
+			case R_MA:
 				std::cout << "N ";
 				break;
-			case 3:
+			case R_XIANG:
 				std::cout << "B ";
 				break;
-			case 4:
+			case R_SHI:
 				std::cout << "A ";
 				break;
-			case 5:
+			case R_JIANG:
 				std::cout << "K ";
 				break;
-			case 6:
+			case R_PAO:
 				std::cout << "C ";
 				break;
-			case 7:
+			case R_BING:
 				std::cout << "P ";
 				break;
-			case 0:
-				std::cout << "· ";
+			case EMPTY:
+				std::cout << ". ";
 				break;
 			default:
 				std::cout << "? ";
