@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     UcciEngine AlphaCat;
-    //AlphaCat.bootEngine();
+    AlphaCat.bootEngine();
     AlphaCat.run();
     return 0;
 }

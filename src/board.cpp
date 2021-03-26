@@ -136,7 +136,7 @@ bool Board::judgeBorder(unsigned char dest)
 	return true;
 }
 
-void Board::generateMoves()
+void Board::generateMoves(bool isRed)
 {
 	for (int index = 0x34; index <= 0xcc; index++)
 	{
@@ -144,6 +144,8 @@ void Board::generateMoves()
 		{
 			case 1:	//车
 			{
+				if (!isRed)
+					break;
 				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
 				{
 					if (!board[temp])
@@ -220,6 +222,8 @@ void Board::generateMoves()
 			}
 			case 101:
 			{
+				if (isRed)
+					break;
 				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
 				{
 					if (!board[temp])
@@ -296,6 +300,8 @@ void Board::generateMoves()
 			}
 			case 2:
 			{
+				if (!isRed)
+					break;
 				for (int i = 0; i < 8; i++)
 				{
 					if (judgeBorder(index + MA_Feasible[i]) && (!board[index + MA_Feasible[i]] || board[index + MA_Feasible[i]] >= 100) && !board[index + MA_Leg[i]])
@@ -308,6 +314,8 @@ void Board::generateMoves()
 			}
 			case 102:
 			{
+				if (isRed)
+					break;
 				for (int i = 0; i < 8; i++)
 				{
 					if (judgeBorder(index + MA_Feasible[i]) && board[index + MA_Feasible[i]] <= 100 && !board[index + MA_Leg[i]])
@@ -320,6 +328,8 @@ void Board::generateMoves()
 			}
 			case 3:
 			{
+				if (!isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + XIANG_Feasible[i]) && (!board[index + XIANG_Feasible[i]] || board[index + XIANG_Feasible[i]] >= 100)
@@ -333,6 +343,8 @@ void Board::generateMoves()
 			}
 			case 103:
 			{
+				if (isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + XIANG_Feasible[i]) && board[index + XIANG_Feasible[i]] <= 100 && !board[index + XIANG_Feasible[i] / 2] && !((index + XIANG_Feasible[i]) & 0x80))
@@ -345,6 +357,8 @@ void Board::generateMoves()
 			}
 			case 4:
 			{
+				if (!isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + SHI_Feasible[i]) && (!board[index + SHI_Feasible[i]] || board[index + SHI_Feasible[i]] >= 100)
@@ -358,6 +372,8 @@ void Board::generateMoves()
 			}
 			case 104:
 			{
+				if (isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + SHI_Feasible[i]) && board[index + SHI_Feasible[i]] <= 100 && (index + SHI_Feasible[i] % 16 >= 7)
@@ -371,6 +387,8 @@ void Board::generateMoves()
 			}
 			case 5:
 			{
+				if (!isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + JIANG_Feasible[i]) && (!board[index + JIANG_Feasible[i]] || board[index + JIANG_Feasible[i]] >= 100))
@@ -383,6 +401,8 @@ void Board::generateMoves()
 			}
 			case 105:
 			{
+				if (isRed)
+					break;
 				for (int i = 0; i < 4; i++)
 				{
 					if (judgeBorder(index + JIANG_Feasible[i]) && board[index + JIANG_Feasible[i]] <= 100)
@@ -395,6 +415,8 @@ void Board::generateMoves()
 			}
 			case 6:				//炮比较麻烦
 			{
+				if (!isRed)
+					break;
 				bool flag = false;
 				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
 				{
@@ -495,6 +517,8 @@ void Board::generateMoves()
 			}
 			case 106:				//炮比较麻烦
 			{
+				if (isRed)
+					break;
 				bool flag = false;
 				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
 				{
@@ -595,6 +619,8 @@ void Board::generateMoves()
 			}
 			case 7:
 			{
+				if (!isRed)
+					break;
 				if (!(index & 0x80))	//已过河
 				{
 					for (int i = 0; i < 3; i++)
@@ -618,6 +644,8 @@ void Board::generateMoves()
 			}
 			case 107:
 			{
+				if (isRed)
+					break;
 				if (index & 0x80)	//已过河
 				{
 					for (int i = 0; i < 3; i++)

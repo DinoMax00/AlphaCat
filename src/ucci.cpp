@@ -59,6 +59,10 @@ void UcciEngine::run()
 	{
 		getCommand();
 		// 检测引擎是不是还活着
+		if (!commandVec.size())
+		{
+			continue;
+		}
 		if (commandVec[0] == "isready")
 		{
 			std::cout << "readyok" << std::endl;
@@ -67,31 +71,45 @@ void UcciEngine::run()
 		if (commandVec[0] == "position")
 		{
 			// std::cout << commandVec[3] << std::endl;
+			this->side =  1;
 			if (commandVec.size() == 8 || commandVec.size() == 9)
 			{
-				std::cout << commandVec[2] << std::endl;
+				if (!moved)
+				{
+					if (commandVec[2] == "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR")
+					{
+						side = 1;
+					}
+					else
+					{
+						side = 0;
+					}
+					moved = true;
+				}
 				board.buildBoardFromFen(commandVec[2]);
 			}
 			else
 			{
-				std::cout << commandVec[commandVec.size()-1] << std::endl;
+				if (!moved)
+				{
+					side = 0;
+					moved = true;
+				}
 				board.genOneMove(commandVec[commandVec.size() - 1]);
 			}
-			board.printBoardForDebug();
+			// board.printBoardForDebug();
 		}
 		// 走子
 		else if (commandVec[0] == "go")
 		{
-			board.generateMoves();
-			for (auto x : board.mov)
-			{
-				std::cout << x.moveToString() << std::endl;
-			}
+			board.generateMoves(side);
 			if (commandVec[1] == "time")
 			{
 				// std::cout << std::stoi(commandVec[2]) << std::endl;
 			}
-			std::cout << "bestmove " << "e0e1" << std::endl;
+			std::cout << "bestmove " << board.mov[0].moveToString() << std::endl;
+			board.genOneMove(board.mov[0].moveToString());
+			board.mov.clear();
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")

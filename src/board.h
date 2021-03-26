@@ -68,7 +68,7 @@ public:
 	****************************************/
 	void printBoardForDebug();
 	bool judgeBorder(unsigned char dest);
-	void generateMoves();
+	void generateMoves(bool);
 };
 
 const int MA_Feasible[8] = { 0x21,0x1f,0x12,0x0e,-0x21,-0x1f,-0x12,-0x0e };
