@@ -56,6 +56,16 @@ void Board::printBoardForDebug()
 {
 	for (int i = 0; i < 256; i++) 
 	{
+		if ((i >> 4) >= 3 && (i >> 4) <= 12 && (i & 15) == 2) //打印列标
+		{
+			std::cout << 12 - ((i >> 4)) << " ";
+			continue;
+		}
+		if ((i >> 4) == 14 && (i & 15) >= 4 && (i & 15) <= 12) //打印行标
+		{
+			std::cout << char((i & 15) - 4 + 'a') << " ";
+			continue;
+		}
 		switch (board[i])
 		{
 			case BOUNDARY:
