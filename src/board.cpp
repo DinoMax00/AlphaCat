@@ -1,6 +1,8 @@
+#include <iostream>
+
 #include"board.h"
 #include"base.h"
-#include<iostream>
+
 Board::Board() {}
 
 Board::Board(std::string fen)

@@ -5,10 +5,12 @@
 #include <string.h>
 #include <vector>
 
+#include "board.h"
+
 class UcciEngine
 {
 private:
-    // Board board;
+    Board board;
     // 读入的命令字符串
     std::string commandStr;
     // 命令字符串分割后的结果

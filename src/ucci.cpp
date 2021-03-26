@@ -66,24 +66,26 @@ void UcciEngine::run()
 		// 移子
 		if (commandVec[0] == "position")
 		{
-			std::cout << commandVec[3] << std::endl;
+			// std::cout << commandVec[3] << std::endl;
 			if (commandVec.size() == 8 || commandVec.size() == 9)
 			{
 				std::cout << commandVec[2] << std::endl;
+				board.buildBoardFromFen(commandVec[2]);
 			}
 			else
 			{
-				std::cout << commandVec[commandVec.size()-1] << std::endl;
+				// std::cout << commandVec[commandVec.size()-1] << std::endl;
 			}
+			// board.printBoardForDebug();
 		}
 		// 走子
 		else if (commandVec[0] == "go")
 		{
 			if (commandVec[1] == "time")
 			{
-				std::cout << std::stoi(commandVec[2]) << std::endl;
+				// std::cout << std::stoi(commandVec[2]) << std::endl;
 			}
-			std::cout << "nobestmove" << std::endl;
+			std::cout << "bestmove " << "e0e1" << std::endl;
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")
