@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "board.h"
+
 class Move
 {
 public:

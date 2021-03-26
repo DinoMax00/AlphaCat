@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 #include"board.h"
 #include"base.h"

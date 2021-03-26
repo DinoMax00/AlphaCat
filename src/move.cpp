@@ -3,12 +3,12 @@
 
 #include "move.h"
 #include "base.h"
+#include "board.h"
 
 std::string Move::moveToString()
 {
 	std::string move = "";
 	move += char((from & 15) - 4 + 'a');
-	// std::cout << ((from & 15) - 4 + 'a') << std::endl;
 	move += char(12 - (from >> 4) + '0');
 	move += char((to & 15) - 4 + 'a');
 	move += char(12 - (to >> 4) + '0');

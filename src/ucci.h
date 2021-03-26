@@ -6,13 +6,14 @@
 #include <vector>
 
 #include "board.h"
+#include "base.h"
 
 class UcciEngine
 {
 private:
     Board board;
     // 0为红 1为黑
-    bool side;
+    Player side;
     // 确定哪一边
     bool moved;
     // 读入的命令字符串

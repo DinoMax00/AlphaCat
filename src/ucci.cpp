@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <string>
-
+#include <fstream>
 #include "ucci.h"
 
 
@@ -70,19 +70,17 @@ void UcciEngine::run()
 		// 移子
 		if (commandVec[0] == "position")
 		{
-			// std::cout << commandVec[3] << std::endl;
-			this->side =  1;
 			if (commandVec.size() == 8 || commandVec.size() == 9)
 			{
 				if (!moved)
 				{
 					if (commandVec[2] == "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR")
 					{
-						side = 1;
+						board.player = RED;
 					}
 					else
 					{
-						side = 0;
+						board.player = BLACK;
 					}
 					moved = true;
 				}
@@ -92,23 +90,38 @@ void UcciEngine::run()
 			{
 				if (!moved)
 				{
-					side = 0;
+					board.player = BLACK;
 					moved = true;
 				}
 				board.genOneMove(commandVec[commandVec.size() - 1]);
 			}
-			// board.printBoardForDebug();
 		}
 		// 走子
 		else if (commandVec[0] == "go")
 		{
-			board.generateMoves(side);
+			board.generateMoves();
 			if (commandVec[1] == "time")
 			{
+				// 时间设定
 				// std::cout << std::stoi(commandVec[2]) << std::endl;
 			}
-			std::cout << "bestmove " << board.mov[0].moveToString() << std::endl;
-			board.genOneMove(board.mov[0].moveToString());
+			std::string  s = board.randomRunMove().moveToString();
+
+			std::ofstream out;
+			out.open("out.txt", std::ios::out | std::ios::binary | std::ios::ate | std::ios::app);
+			if (out.is_open())
+			{
+				out << s << std::endl;
+				out.close();
+			}
+			else out.close();
+
+			if (s == "a0i9") {
+				std::cout << "nobestmove" << std::endl;
+				return;
+			}
+			std::cout << "bestmove " << s << std::endl;
+			board.genOneMove(s);
 			board.mov.clear();
 		}
 		// 拜拜
