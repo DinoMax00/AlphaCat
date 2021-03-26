@@ -66,19 +66,24 @@ void UcciEngine::run()
 		// 移子
 		if (commandVec[0] == "position")
 		{
-			if (commandVec.size() == 8)
+			std::cout << commandVec[3] << std::endl;
+			if (commandVec.size() == 8 || commandVec.size() == 9)
 			{
-				std::cout << commandStr[2] << std::endl;
+				std::cout << commandVec[2] << std::endl;
 			}
 			else
 			{
 				std::cout << commandVec[commandVec.size()-1] << std::endl;
 			}
 		}
-		// 设定限时
-		else if (commandVec[0] == "go" && commandVec[1]=="time")
+		// 走子
+		else if (commandVec[0] == "go")
 		{
-			std::cout << std::stoi(commandVec[2]) << std::endl;
+			if (commandVec[1] == "time")
+			{
+				std::cout << std::stoi(commandVec[2]) << std::endl;
+			}
+			std::cout << "nobestmove" << std::endl;
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")
