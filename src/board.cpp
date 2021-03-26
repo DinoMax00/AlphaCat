@@ -137,7 +137,7 @@ void Board::printBoardForDebug()
 
 Move Board::randomRunMove() 
 {
-	Move x("a0a0");
+	Move x("a0i9");
 	if (mov.empty())
 		return x;
 	return mov[rand()%mov.size()];
