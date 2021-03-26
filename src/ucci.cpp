@@ -33,7 +33,7 @@ void UcciEngine::split()
 void UcciEngine::getCommand()
 {
 	std::getline(std::cin, this->commandStr);
-	this->split();
+	if(commandStr.size()) this->split();
 }
 
 
@@ -74,13 +74,19 @@ void UcciEngine::run()
 			}
 			else
 			{
-				// std::cout << commandVec[commandVec.size()-1] << std::endl;
+				std::cout << commandVec[commandVec.size()-1] << std::endl;
+				board.genOneMove(commandVec[commandVec.size() - 1]);
 			}
-			// board.printBoardForDebug();
+			board.printBoardForDebug();
 		}
 		// 走子
 		else if (commandVec[0] == "go")
 		{
+			board.generateMoves();
+			for (auto x : board.mov)
+			{
+				std::cout << x.moveToString() << std::endl;
+			}
 			if (commandVec[1] == "time")
 			{
 				// std::cout << std::stoi(commandVec[2]) << std::endl;

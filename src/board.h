@@ -3,8 +3,10 @@
 
 
 
-#include<string>
+#include <string>
+#include <vector>
 
+#include "move.h"
 /********************************************************
 类名称：Board
 功能：通过16*16的棋盘来表示棋盘，以减小9*10的棋盘的除法对效率影响
@@ -22,6 +24,8 @@ public:
 	int num_of_rounds;				//回合数
 	int num_of_no_eat_rounds;		//未吃子的回合数
 	long long zobrist;				//当前棋盘的Zobrist键值
+
+	std::vector<Move> mov;
 	
 	//成员函数
 	/****************************************
@@ -63,8 +67,15 @@ public:
 	返回值：
 	****************************************/
 	void printBoardForDebug();
+	bool judgeBorder(unsigned char dest);
+	void generateMoves();
 };
 
-
-
+const int MA_Feasible[8] = { 0x21,0x1f,0x12,0x0e,-0x21,-0x1f,-0x12,-0x0e };
+const int MA_Leg[8] = { 0x10,0x10,0x01,0x01,-0x10,-0x10,-0x01,-0x01 };
+const int XIANG_Feasible[4] = { 0x22,0x1e,-0x22,-0x1e };
+const int SHI_Feasible[4] = { 0x11,0x0f,-0x11,-0x0f };
+const int JIANG_Feasible[4] = { 0x10,0x01,-0x10,-0x01 };
+const int BING_R_Feasible[3] = { 0x01,-0x01,-0x10 };
+const int BING_B_Feasible[3] = { 0x01,-0x01,0x10 };
 #endif

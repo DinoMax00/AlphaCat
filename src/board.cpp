@@ -123,3 +123,522 @@ void Board::printBoardForDebug()
 		if (i % 16 == 15) std::cout << std::endl;
 	}
 }
+
+
+
+///////////////////////
+
+
+bool Board::judgeBorder(unsigned char dest)
+{
+	if (board[dest] == 255)
+		return false;
+	return true;
+}
+
+void Board::generateMoves()
+{
+	for (int index = 0x34; index <= 0xcc; index++)
+	{
+		switch (board[index])
+		{
+			case 1:	//车
+			{
+				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] >= 100 && board[temp] < 255)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index - 0x10; judgeBorder(temp); temp -= 0x10)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] >= 100 && board[temp] < 255)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index + 0x01; judgeBorder(temp); temp += 0x01)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] >= 100 && board[temp] < 255)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index - 0x01; judgeBorder(temp); temp -= 0x01)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] >= 100 && board[temp] < 255)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				break;
+			}
+			case 101:
+			{
+				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] <= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index - 0x10; judgeBorder(temp); temp -= 0x10)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] <= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index + 0x01; judgeBorder(temp); temp += 0x01)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] <= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				for (int temp = index - 0x01; judgeBorder(temp); temp -= 0x01)
+				{
+					if (!board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (board[temp] <= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+					else
+					{
+						break;
+					}
+				}
+				break;
+			}
+			case 2:
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					if (judgeBorder(index + MA_Feasible[i]) && (!board[index + MA_Feasible[i]] || board[index + MA_Feasible[i]] >= 100) && !board[index + MA_Leg[i]])
+					{
+						Move Curstep(index, index + MA_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 102:
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					if (judgeBorder(index + MA_Feasible[i]) && board[index + MA_Feasible[i]] <= 100 && !board[index + MA_Leg[i]])
+					{
+						Move Curstep(index, index + MA_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 3:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + XIANG_Feasible[i]) && (!board[index + XIANG_Feasible[i]] || board[index + XIANG_Feasible[i]] >= 100)
+						&& !board[index + XIANG_Feasible[i] / 2] && ((index + XIANG_Feasible[i]) & 0x80))
+					{
+						Move Curstep(index, index + XIANG_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 103:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + XIANG_Feasible[i]) && board[index + XIANG_Feasible[i]] <= 100 && !board[index + XIANG_Feasible[i] / 2] && !((index + XIANG_Feasible[i]) & 0x80))
+					{
+						Move Curstep(index, index + XIANG_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 4:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + SHI_Feasible[i]) && (!board[index + SHI_Feasible[i]] || board[index + SHI_Feasible[i]] >= 100)
+						&& abs((index + SHI_Feasible[i]) % 16 - 8) + abs((index + SHI_Feasible[i]) / 16 - 11) <= 1)
+					{
+						Move Curstep(index, index + SHI_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 104:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + SHI_Feasible[i]) && board[index + SHI_Feasible[i]] <= 100 && (index + SHI_Feasible[i] % 16 >= 7)
+						&& (abs((index + SHI_Feasible[i]) % 16 - 8) + abs((index + SHI_Feasible[i]) / 16 - 4)) <= 1)
+					{
+						Move Curstep(index, index + SHI_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 5:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + JIANG_Feasible[i]) && (!board[index + JIANG_Feasible[i]] || board[index + JIANG_Feasible[i]] >= 100))
+					{
+						Move Curstep(index, index + JIANG_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 105:
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					if (judgeBorder(index + JIANG_Feasible[i]) && board[index + JIANG_Feasible[i]] <= 100)
+					{
+						Move Curstep(index, index + JIANG_Feasible[i]);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 6:				//炮比较麻烦
+			{
+				bool flag = false;
+				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index - 0x10; judgeBorder(temp); temp -= 0x10)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index + 0x01; judgeBorder(temp); temp += 0x01)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index - 0x01; judgeBorder(temp); temp -= 0x01)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				break;
+			}
+			case 106:				//炮比较麻烦
+			{
+				bool flag = false;
+				for (int temp = index + 0x10; judgeBorder(temp); temp += 0x10)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index - 0x10; judgeBorder(temp); temp -= 0x10)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index + 0x01; judgeBorder(temp); temp += 0x01)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				flag = false;
+				for (int temp = index - 0x01; judgeBorder(temp); temp -= 0x01)
+				{
+					if (!flag && !board[temp])
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+					}
+					else if (!flag && board[temp] < 255)
+					{
+						flag = true;
+						continue;
+					}
+					else if (flag && board[temp] >= 100)
+					{
+						break;
+					}
+					else if (flag && board[temp] && board[temp] < 100)
+					{
+						Move Curstep(index, temp);
+						mov.push_back(Curstep);
+						break;
+					}
+				}
+				break;
+			}
+			case 7:
+			{
+				if (!(index & 0x80))	//已过河
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						if (judgeBorder(index + BING_R_Feasible[i]) && (!board[index + BING_R_Feasible[i]] || board[index + BING_R_Feasible[i]] >= 100))
+						{
+							Move Curstep(index, index + BING_R_Feasible[i]);	//需存储
+							mov.push_back(Curstep);
+						}
+					}
+				}
+				else
+				{
+					if (judgeBorder(index - 0x10) && (!board[index - 0x10] || board[index - 0x10] >= 100))
+					{
+						Move Curstep(index, index - 0x10);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+			case 107:
+			{
+				if (index & 0x80)	//已过河
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						if (judgeBorder(index + BING_B_Feasible[i]) && board[index + BING_B_Feasible[i]] <= 100)
+						{
+							Move Curstep(index, index + BING_B_Feasible[i]);	//需存储
+							mov.push_back(Curstep);
+						}
+					}
+				}
+				else
+				{
+					if (judgeBorder(index + 0x10) && board[index + 0x10] <= 100)
+					{
+						Move Curstep(index, index + 0x10);	//需存储
+						mov.push_back(Curstep);
+					}
+				}
+				break;
+			}
+		}
+	}
+}
