@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include"board.h"
 #include"base.h"
 Board::Board() {}
@@ -92,7 +94,7 @@ void Board::printBoardForDebug()
 				std::cout << "P ";
 				break;
 			case 0:
-				std::cout << "· ";
+				std::cout << ". ";
 				break;
 			default:
 				std::cout << "? ";

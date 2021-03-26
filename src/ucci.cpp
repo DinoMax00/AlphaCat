@@ -70,11 +70,13 @@ void UcciEngine::run()
 			if (commandVec.size() == 8 || commandVec.size() == 9)
 			{
 				std::cout << commandVec[2] << std::endl;
+				board.buildBoardFromFen(commandVec[2]);
 			}
 			else
 			{
 				std::cout << commandVec[commandVec.size()-1] << std::endl;
 			}
+			board.printBoardForDebug();
 		}
 		// 走子
 		else if (commandVec[0] == "go")

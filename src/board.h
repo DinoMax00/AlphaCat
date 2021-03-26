@@ -1,3 +1,8 @@
+#ifndef BOARD_H
+#define BOARD_H
+
+
+
 #include<string>
 
 /********************************************************
@@ -51,3 +56,7 @@ public:
 	****************************************/
 	void printBoardForDebug();
 };
+
+
+
+#endif
