@@ -1,7 +1,7 @@
 #ifndef BASE_H
 #define BASE_H
 
-// 与游戏有关的基本参数
+// 涓庢父鎴忔湁鍏崇殑鍩烘湰鍙傛暟
 
 enum Chess
 {
