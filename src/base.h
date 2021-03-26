@@ -16,6 +16,10 @@ enum Chess
 	R_BING = 7, B_BING = 107
 };
 
-
+enum Player
+{
+	RED = 1,
+	BLACK = 0
+};
 
 #endif

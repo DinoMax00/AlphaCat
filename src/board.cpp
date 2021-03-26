@@ -13,7 +13,6 @@ Board::Board(std::string fen)
 	buildBoardFromFen(fen);
 }
 
-
 void Board::buildBoardFromFen(std::string fen)
 {
 	for (int i = 0; i < 256; i++) 
@@ -45,6 +44,7 @@ void Board::buildBoardFromFen(std::string fen)
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
+	generateMoves();
 }
 
 void Board::genOneMove(std::string move)
@@ -53,6 +53,14 @@ void Board::genOneMove(std::string move)
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
+	generateMoves();
+}
+
+void Board::genOneMove(Move move)
+{
+	board[move.to] = board[move.from];
+	board[move.from] = EMPTY;
+	generateMoves();
 }
 
 void Board::printBoardForDebug() 
@@ -126,6 +134,4 @@ void Board::printBoardForDebug()
 		if (i % 16 == 15) std::cout << std::endl;
 	}
 }
-
-
 

@@ -16,7 +16,7 @@ class Board
 {
 public:
 	//成员变量
-	unsigned char player;			//当前走棋玩家
+	bool player;					//当前走棋玩家
 	unsigned char board[256];		//棋盘上某一位上的棋子
 	unsigned char pos_of_king[2];	//棋盘上将帅的位置
 	int num_of_move[8];				//每一种棋子的走棋方案数
@@ -59,7 +59,7 @@ public:
 	返回值：
 	****************************************/
 	void genOneMove(std::string move);
-
+	void genOneMove(Move move);
 	/****************************************
 	名称：printBoardForDebug()
 	功能：打印棋盘看查情况
@@ -68,7 +68,13 @@ public:
 	****************************************/
 	void printBoardForDebug();
 
-	void generateMoves(bool);
+	/****************************************
+	名称：generateMoves()
+	功能：生成所有能走的步数
+	参数：
+	返回值：
+	****************************************/
+	void generateMoves();
 };
 
 
