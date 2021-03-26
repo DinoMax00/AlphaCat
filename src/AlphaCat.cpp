@@ -1,7 +1,11 @@
 #include <iostream>
 
+#include "ucci.h"
+
 int main(int argc, char* argv[])
 {
-    std::cout << "hello AlphaCat!" << std::endl;
+    UcciEngine AlphaCat;
+    AlphaCat.bootEngine();
+    AlphaCat.run();
     return 0;
 }
