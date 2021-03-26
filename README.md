@@ -14,6 +14,13 @@
   - 3 ./有用的东西
 
 ---
-  [下载链接](https://exp.newsmth.net/topic/ed55126a4bc9831c6b148f8c47800fad)
+* 图形化界面
+
+  [鲨鱼象棋(这个好看)](https://sharkchess.lanzous.com/b0b87cetc)
+  
+  [天机象棋](http://www.xqpt.com/)
+  
+  [另一个](https://exp.newsmth.net/topic/ed55126a4bc9831c6b148f8c47800fad)
+  
   配置引擎
   ![](./docImg/引擎.PNG)
