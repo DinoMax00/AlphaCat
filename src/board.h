@@ -1,4 +1,5 @@
-﻿
+#include<string>
+
 /********************************************************
 类名称：Board
 功能：通过16*16的棋盘来表示棋盘，以减小9*10的棋盘的除法对效率影响
@@ -32,13 +33,21 @@ public:
 	参数：const char* fen，构造当前局面的FEN格式串
 	返回值：构造的Board对象
 	****************************************/
-	Board(const char *fen);
+	Board(std::string fen);
 
 	/****************************************
 	名称：buildBoardFromFen()
 	功能：通过FEN数组来初始化对象
-	参数：const char* fen，构造当前局面的FEN格式串
+	参数：string fen，构造当前局面的FEN格式串
 	返回值：构造的Board对象
 	****************************************/
-	void buildBoardFromFen(const char* fen);
+	void buildBoardFromFen(std::string fen);
+
+	/****************************************
+	名称：printBoardForDebug()
+	功能：打印棋盘看查情况
+	参数：
+	返回值：
+	****************************************/
+	void printBoardForDebug();
 };
