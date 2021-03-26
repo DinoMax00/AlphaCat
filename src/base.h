@@ -18,5 +18,4 @@ enum Chess
 
 
 
-
 #endif
