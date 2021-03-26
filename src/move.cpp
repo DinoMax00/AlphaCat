@@ -226,7 +226,7 @@ void Board::generateMoves()
 				for (int i = 0; i < 4; i++)
 				{
 					if (board[index + XIANG_Feasible[i]] != 255 && (!board[index + XIANG_Feasible[i]] || board[index + XIANG_Feasible[i]] >= 100)
-						&& !board[index + XIANG_Feasible[i] / 2] && ((index + XIANG_Feasible[i]) & 0x80))
+						&& !board[index + (XIANG_Feasible[i] / 2)] && ((index + XIANG_Feasible[i]) & 0x80))
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
@@ -240,7 +240,7 @@ void Board::generateMoves()
 					break;
 				for (int i = 0; i < 4; i++)
 				{
-					if (board[index + XIANG_Feasible[i]] != 255 && board[index + XIANG_Feasible[i]] <= 100 && !board[index + XIANG_Feasible[i] / 2] && !((index + XIANG_Feasible[i]) & 0x80))
+					if (board[index + XIANG_Feasible[i]] != 255 && board[index + XIANG_Feasible[i]] <= 100 && !board[index + (XIANG_Feasible[i] / 2)] && !((index + XIANG_Feasible[i]) & 0x80))
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
@@ -255,7 +255,7 @@ void Board::generateMoves()
 				for (int i = 0; i < 4; i++)
 				{
 					if (board[index + SHI_Feasible[i]] != 255 && (!board[index + SHI_Feasible[i]] || board[index + SHI_Feasible[i]] >= 100)
-						&& abs((index + SHI_Feasible[i]) % 16 - 8) + abs((index + SHI_Feasible[i]) / 16 - 11) <= 1)
+						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 11) <= 1)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
@@ -270,7 +270,7 @@ void Board::generateMoves()
 				for (int i = 0; i < 4; i++)
 				{
 					if (board[index + SHI_Feasible[i]] != 255 && board[index + SHI_Feasible[i]] <= 100 && (index + SHI_Feasible[i] % 16 >= 7)
-						&& (abs((index + SHI_Feasible[i]) % 16 - 8) + abs((index + SHI_Feasible[i]) / 16 - 4)) <= 1)
+						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 4) <= 1)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
@@ -284,7 +284,8 @@ void Board::generateMoves()
 					break;
 				for (int i = 0; i < 4; i++)
 				{
-					if (board[index + JIANG_Feasible[i]] != 255 && (!board[index + JIANG_Feasible[i]] || board[index + JIANG_Feasible[i]] >= 100))
+					if (board[index + JIANG_Feasible[i]] != 255 && (!board[index + JIANG_Feasible[i]] || board[index + JIANG_Feasible[i]] >= 100)
+						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 11) <= 1)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
@@ -298,7 +299,8 @@ void Board::generateMoves()
 					break;
 				for (int i = 0; i < 4; i++)
 				{
-					if (board[index + JIANG_Feasible[i]] != 255 && board[index + JIANG_Feasible[i]] <= 100)
+					if (board[index + JIANG_Feasible[i]] != 255 && board[index + JIANG_Feasible[i]] <= 100
+						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 4) <= 1)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
 						mov.push_back(Curstep);
