@@ -49,6 +49,14 @@ public:
 	void buildBoardFromFen(std::string fen);
 
 	/****************************************
+	名称：genOneMove()
+	功能：通过move数组来移动
+	参数：string move，构造当前局面的移动串
+	返回值：
+	****************************************/
+	void genOneMove(std::string move);
+
+	/****************************************
 	名称：printBoardForDebug()
 	功能：打印棋盘看查情况
 	参数：
