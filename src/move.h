@@ -6,10 +6,9 @@
 #include "board.h"
 class Move
 {
-private:
+public:
 	unsigned char from;
 	unsigned char to;
-public:
 	Move(std::string);
 	Move(int, int);
 	std::string moveToString();
