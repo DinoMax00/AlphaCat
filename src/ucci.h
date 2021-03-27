@@ -12,10 +12,8 @@ class UcciEngine
 {
 private:
     Board board;
-    // 0为红 1为黑
-    Player side;
     // 确定哪一边
-    bool moved;
+    bool moved = false;
     // 读入的命令字符串
     std::string commandStr;
     // 命令字符串分割后的结果

@@ -22,4 +22,5 @@ enum Player
 	BLACK = 0
 };
 
+
 #endif

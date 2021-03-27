@@ -1,9 +1,11 @@
 #include <iostream>
 #include <ctime>
+#include "log.h"
 #include "ucci.h"
 
 int main(int argc, char* argv[])
 {
+    Log().clear();
     srand(time(NULL));
     UcciEngine AlphaCat;
     AlphaCat.bootEngine();
