@@ -4,10 +4,6 @@
 #include "ucci.h"
 #include "log.h"
 
-
-/*
- *   
-*/
 void UcciEngine::clear()
 {
 	commandStr.clear();
@@ -68,7 +64,38 @@ void UcciEngine::bootEngine()
 
 void UcciEngine::updWhichPlayer()
 {
-
+	if (commandVec[1] == "fen")
+	{
+		// 更新游戏角色
+		if (commandVec[3] == "b")
+		{
+			if (commandVec.size() <= 9)
+				board.player = BLACK;
+			else if ((commandVec.size() - 9) % 2)
+				board.player = RED;
+			else
+				board.player = BLACK;
+		}
+		else
+		{
+			if (commandVec.size() <= 9)
+				board.player = RED;
+			else if ((commandVec.size() - 9) % 2)
+				board.player = BLACK;
+			else
+				board.player = RED;
+		}
+	}
+	else if (commandVec[1] == "startpos")
+	{
+		// 更新游戏角色
+		if (commandVec.size() <= 3)
+			board.player = RED;
+		else if ((commandVec.size() - 3) % 2)
+			board.player = BLACK;
+		else
+			board.player = RED;
+	}
 }
 
 
@@ -96,28 +123,9 @@ void UcciEngine::run()
 		// 移子
 		else if (commandVec[0] == "position")
 		{
+			updWhichPlayer();
 			if (commandVec[1] == "fen")
 			{
-				// 更新游戏角色
-				if (commandVec[3] == "b")
-				{
-					if (commandVec.size() <= 9)
-						board.player = BLACK;
-					else if ((commandVec.size() - 9) % 2)
-						board.player = RED;
-					else
-						board.player = BLACK;
-				}
-				else
-				{
-					if (commandVec.size() <= 9)
-						board.player = RED;
-					else if ((commandVec.size() - 9) % 2)
-						board.player = BLACK;
-					else
-						board.player = RED;
-				}
-				// 更新
 				if (commandVec.size() <= 9)
 				{
 					board.buildBoardFromFen(commandVec[2]);
@@ -127,18 +135,9 @@ void UcciEngine::run()
 					board.genOneMove(commandVec[commandVec.size() - 1]);
 				}
 			}
-			else if (commandVec[1] == "startpos")
+			else if (commandVec[1] == "startpos" && commandVec.size() > 3)
 			{
-				// 更新游戏角色
-				if (commandVec.size() <= 3)
-					board.player = RED;
-				else if ((commandVec.size() - 3) % 2)
-					board.player = BLACK;
-				else
-					board.player = RED;
-				// 更新
-				if(commandVec.size() > 3)
-					board.genOneMove(commandVec[commandVec.size() - 1]);
+				board.genOneMove(commandVec[commandVec.size() - 1]);
 			}
 			Log().info(std::string("当前游戏角色: ") + (board.player == RED ? "RED" : "BLACK"));
 		}
