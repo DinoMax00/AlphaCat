@@ -17,7 +17,7 @@ Board::Board(std::string fen)
 	mov.resize(MAX_MOVES);
 }
 
-void Board::buildBoardFromFen(std::string fen)
+void Board::buildBoardFromFen(std::string fen, bool whether_get_all)
 {
 	for (int i = 0; i < 256; i++) 
 	{
@@ -48,10 +48,11 @@ void Board::buildBoardFromFen(std::string fen)
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
-	generateMoves();
+	if (whether_get_all)
+		generateMoves();
 }
 
-void Board::genOneMove(std::string move)
+void Board::genOneMove(std::string move, bool whether_get_all)
 {
 	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
@@ -59,16 +60,23 @@ void Board::genOneMove(std::string move)
 		return;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
-	generateMoves();
+	if(whether_get_all)
+		generateMoves();
 }
 
-void Board::genOneMove(Move move)
+void Board::genOneMove(Move move, bool whether_get_all)
 {
 	if (board[move.from] == EMPTY)
 		return;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
-	generateMoves();
+	if (whether_get_all)
+		generateMoves();
+}
+
+void deleteOneMove() 
+{
+
 }
 
 void Board::printBoardForDebug() 

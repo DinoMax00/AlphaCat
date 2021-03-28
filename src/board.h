@@ -47,19 +47,20 @@ public:
 	/****************************************
 	名称：buildBoardFromFen()
 	功能：通过FEN数组来初始化对象
-	参数：string fen，构造当前局面的FEN格式串
+	参数：string fen，构造当前局面的FEN格式串,bool whether_get_all 默认 GET_ALL对新局面生成所有可行走法
 	返回值：构造的Board对象
 	****************************************/
-	void buildBoardFromFen(std::string fen);
+	void buildBoardFromFen(std::string fen, bool whether_get_all = GET_ALL);
 
 	/****************************************
 	名称：genOneMove()
 	功能：通过move数组来移动
-	参数：string move，构造当前局面的移动串
+	参数：string move，构造当前局面的移动串,bool whether_get_all 默认 GET_ALL对新局面生成所有可行走法
 	返回值：
 	****************************************/
-	void genOneMove(std::string move);
-	void genOneMove(Move move);
+	void genOneMove(std::string move, bool whether_get_all = GET_ALL);
+	void genOneMove(Move move, bool whether_get_all = GET_ALL);
+
 	/****************************************
 	名称：printBoardForDebug()
 	功能：打印棋盘看查情况
@@ -75,6 +76,14 @@ public:
 	返回值：
 	****************************************/
 	void generateMoves();
+
+	/****************************************
+	名称：deleteOneMove()
+	功能：返回上一步的局面
+	参数：
+	返回值：
+	****************************************/
+	void deleteOneMove();
 
 
 	/****************************************

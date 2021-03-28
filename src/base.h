@@ -22,5 +22,11 @@ enum Player
 	BLACK = 0
 };
 
+enum Getall
+{
+	GET_ALL = 1,
+	NOT_GET_ALL = 0
+};
+
 const int MAX_MOVES = 300;
 #endif
