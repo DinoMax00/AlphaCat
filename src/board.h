@@ -18,7 +18,7 @@ public:
 	//成员变量
 	bool player;							//当前走棋玩家
 	unsigned char board[256];				//棋盘上某一位上的棋子
-	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
+	unsigned char pos_of_kings[2] = {0x38, 0xc8};			//棋盘上将帅的位置
 	unsigned int num_of_move[8];			//每一种棋子的走棋方案数
 	unsigned int num_of_chess;				//当前棋盘的棋子个数
 	unsigned int num_of_rounds;				//回合数

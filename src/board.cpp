@@ -68,6 +68,10 @@ void Board::genOneMove(Move& move, bool whether_get_all)
 {
 	if (board[move.from] == EMPTY)
 		return;
+	if (board[move.from] == R_JIANG)
+		pos_of_kings[0] = move.to;
+	if (board[move.from] == B_JIANG)
+		pos_of_kings[1] = move.to;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
 	if (whether_get_all)
