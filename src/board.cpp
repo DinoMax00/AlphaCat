@@ -69,9 +69,9 @@ void Board::genOneMove(Move& move, bool whether_get_all)
 	if (board[move.from] == EMPTY)
 		return;
 	if (board[move.from] == R_JIANG)
-		pos_of_kings[0] = move.to;
+		pos_of_kings[RED] = move.to;
 	if (board[move.from] == B_JIANG)
-		pos_of_kings[1] = move.to;
+		pos_of_kings[BLACK] = move.to;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
 	if (whether_get_all)
@@ -182,11 +182,17 @@ Move Board::randomRunMove()
 	Move x("a0i9");
 	if (mov.empty())
 		return x;
-
-	int index = rand() % mov.size();
-	if (checkJiang(mov[index]))
-		return x;
-	return mov[index];
+	int t = 1000;
+	while(t --)
+	{
+		int index = rand() % mov.size();
+		Log().info(mov[index].moveToString());
+		if (checkJiang(mov[index]))
+			continue;
+		printBoardForDebug();
+		return mov[index];
+	}
+	return x;
 }
 
 void Board::updMovs()
