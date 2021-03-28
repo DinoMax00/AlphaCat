@@ -84,6 +84,10 @@ void Board::genOneMove(Move& move, bool whether_get_all)
 
 void Board::deleteOneMove(Move& m) 
 {
+	if (board[m.to] == R_JIANG)
+		pos_of_kings[RED] = m.from;
+	if (board[m.to] == B_JIANG)
+		pos_of_kings[BLACK] = m.from;
 	board[m.from] = board[m.to];
 	board[m.to] = m.chessOnTo;
 }
@@ -213,6 +217,8 @@ void Board::updMovs()
 bool Board::checkJiang(Move& mov)
 {
 	genOneMove(mov, NOT_GET_ALL);
+	Log().info(std::string("position of JIang:") + char((pos_of_kings[0] & 15) - 4 + 'a')+char((12 - (pos_of_kings[0] >> 4) + '0')));
+	Log().add(std::string("position of JIang:") + char((pos_of_kings[1] & 15) - 4 + 'a') + char((12 - (pos_of_kings[1] >> 4) + '0')));
 	bool flag = 0;
 
 	//判断是否有将帅直面
