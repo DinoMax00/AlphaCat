@@ -10,8 +10,20 @@ Board::Board(std::string fen)
 	buildBoardFromFen(fen);
 }
 
+<<<<<<< Updated upstream
 
 void Board::buildBoardFromFen(std::string fen)
+=======
+Board::Board(Board* board_from, Move& move)
+{
+	memcpy(this->board, board_from->board, 256);
+	memcpy(this->pos_of_kings, board_from->pos_of_kings, 2);
+	player = !(board_from->player);
+	genOneMove(move);
+}
+
+void Board::buildBoardFromFen(std::string fen, bool whether_get_all)
+>>>>>>> Stashed changes
 {
 	for (int i = 0; i < 256; i++) 
 	{
