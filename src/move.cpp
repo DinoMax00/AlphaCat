@@ -5,8 +5,13 @@
 #include "base.h"
 #include "board.h"
 
+Move::Move()
+{
+}
+
 std::string Move::moveToString()
 {
+	
 	std::string move = "";
 	move += char((from & 15) - 4 + 'a');
 	move += char(12 - (from >> 4) + '0');
@@ -17,6 +22,7 @@ std::string Move::moveToString()
 
 Move::Move(int from, int to)
 {
+	
 	this->from = from;
 	this->to = to;
 }
@@ -564,4 +570,5 @@ void Board::generateMoves()
 			}
 		}
 	}
+	updMovs();
 }

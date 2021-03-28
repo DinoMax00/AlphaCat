@@ -4,11 +4,16 @@
 #include <iostream>
 #include <string>
 
+#include "base.h"
+
 class Move
 {
 public:
-	unsigned char from;
-	unsigned char to;
+	unsigned char from = 0;
+	unsigned char to = 0;
+	unsigned char chessOnTo = EMPTY;
+	   
+	Move();
 	Move(std::string);
 	Move(int, int);
 	std::string moveToString();
