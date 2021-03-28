@@ -299,7 +299,7 @@ Move Board::randomRunMove()
 }
 
 
-GameStatus Board::mtcsMove()
+GameStatus Board::mctsMove()
 {
 	uint32_t round = 0;
 	bool cur_side = player;

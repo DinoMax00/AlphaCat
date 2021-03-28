@@ -1,33 +1,33 @@
-#ifndef MTCS_H
-#define MTCS_H
+#ifndef mcts_H
+#define mcts_H
 #include<string>
 #include<vector>
 #include"move.h"
 #include"board.h"
 
-const double MTCS_C = 1.414;
-const unsigned int MTCS_TIMES = 1000;
+const double mcts_C = 1.414;
+const unsigned int mcts_TIMES = 1000;
 
-class Mtcs {
+class mcts {
 public:
 	Board* situation;
 	unsigned int win_times;
 	unsigned int all_times;
 	bool is_over;
-	Mtcs* initial_mtcs;
+	mcts* initial_mcts;
 	//Move& best_move;
-	Mtcs* father;
+	mcts* father;
 	//unsigned int draw_times;
 
-	std::vector<Mtcs*> tryed_choices;
+	std::vector<mcts*> tryed_choices;
 
-	Mtcs(Board*);
+	mcts(Board*);
 	
 	void selectionOfTry();
 
 	Move& getBestMove();
 	std::string getBestMoveString();
-	void printForMtcsDebug();
+	void printFormctsDebug();
 
 	//void ExpansionOfNew();
 };

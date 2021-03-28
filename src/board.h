@@ -115,12 +115,12 @@ public:
 	bool checkJiang(Move& mov, bool);
 
 	/*******************************************
-	函数名称：mtcsMove
+	函数名称：mctsMove
 	功能：蒙特卡洛搜索中的随机走子
 	参数：
 	返回值：GameStatus
 	*******************************************/
-	GameStatus mtcsMove();
+	GameStatus mctsMove();
 };
 
 

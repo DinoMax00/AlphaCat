@@ -3,7 +3,7 @@
 
 #include "ucci.h"
 #include "log.h"
-#include "mtcs.h"
+#include "mcts.h"
 void UcciEngine::clear()
 {
 	commandStr.clear();
@@ -153,9 +153,9 @@ void UcciEngine::run()
 			}
 			// 获取响应
 			//std::string  s = board.randomRunMove().moveToString();
-			Mtcs mtcs_now(&board);
-			mtcs_now.selectionOfTry();
-			std::string s = mtcs_now.getBestMoveString();
+			mcts mcts_now(&board);
+			mcts_now.selectionOfTry();
+			std::string s = mcts_now.getBestMoveString();
 			if (s == "a0i9") {
 				std::cout << "nobestmove" << std::endl;
 				Log().info("引擎响应->nobestmove");

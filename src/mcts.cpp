@@ -1,10 +1,10 @@
-#include"mtcs.h"
+#include"mcts.h"
 #include<math.h>
 #include"log.h"
-Mtcs::Mtcs(Board* bo)
+mcts::mcts(Board* bo)
 {
 	situation = bo;
-	initial_mtcs = this;
+	initial_mcts = this;
 	all_times = 1;
 	//此处调用快速获胜获得结果
 	win_times = 0;
@@ -17,29 +17,29 @@ Mtcs::Mtcs(Board* bo)
 }
 
 
-void Mtcs::selectionOfTry()
+void mcts::selectionOfTry()
 {
 	int i = 0;
-	while (i++ < MTCS_TIMES) 
+	while (i++ < mcts_TIMES) 
 	{
-		//printForMtcsDebug();
+		//printFormctsDebug();
 		//std::cout << situation->player << std::endl;
-		Mtcs* selected = this;
+		mcts* selected = this;
 		//std::cout << ">>fuck" << std::endl;
 		if (selected->situation->mov.empty() || selected->is_over) Log().info("error by feifei");
 		while (selected->tryed_choices.size() == selected->situation->mov.size())
 		{
 			//std::cout << ">>fuck" << std::endl;
 			double max_score = -1;
-			Mtcs* next = selected;
+			mcts* next = selected;
 			for (auto i : selected->tryed_choices)
 			{
 				if (i->situation->mov.empty() || i->is_over) continue;
 				double score = -10000;
-				if (selected->situation->player == initial_mtcs->situation->player)
-					score = (double)i->win_times / i->all_times + MTCS_C * sqrt(log(selected->all_times) / i->all_times);
+				if (selected->situation->player == initial_mcts->situation->player)
+					score = (double)i->win_times / i->all_times + mcts_C * sqrt(log(selected->all_times) / i->all_times);
 				else
-					score = ((double)i->all_times - i->win_times) / i->all_times + MTCS_C * sqrt(log(selected->all_times) / i->all_times);
+					score = ((double)i->all_times - i->win_times) / i->all_times + mcts_C * sqrt(log(selected->all_times) / i->all_times);
 				if (score > max_score)
 				{
 					max_score = score;
@@ -54,10 +54,10 @@ void Mtcs::selectionOfTry()
 			}
 			else
 				selected = next;
-			if (selected == initial_mtcs)
+			if (selected == initial_mcts)
 				break;
 		}
-		if (selected == initial_mtcs && selected->tryed_choices.size() == selected->situation->mov.size())
+		if (selected == initial_mcts && selected->tryed_choices.size() == selected->situation->mov.size())
 		{
 			Log().info("error by feifei2");
 			std::cout << "??" << std::endl;
@@ -67,23 +67,23 @@ void Mtcs::selectionOfTry()
 		Board* next_board = new Board(selected->situation, to_new_situation);
 
 		Board* board_play = new Board(selected->situation, to_new_situation);
-		int result = board_play->mtcsMove();
+		int result = board_play->mctsMove();
 
-		Mtcs* next_mtcs = new Mtcs(next_board);
+		mcts* next_mcts = new mcts(next_board);
 		int x;
-		//unsigned int result = situation->mtcsMove();
-		if (result <= 0 && next_board->player == initial_mtcs->situation->player || result > 0 && next_board->player != initial_mtcs->situation->player)
-			x=next_mtcs->win_times = 0;
+		//unsigned int result = situation->mctsMove();
+		if (result <= 0 && next_board->player == initial_mcts->situation->player || result > 0 && next_board->player != initial_mcts->situation->player)
+			x=next_mcts->win_times = 0;
 		else
-			x=next_mtcs->win_times = 1;
+			x=next_mcts->win_times = 1;
 		
-		next_mtcs->initial_mtcs = initial_mtcs;
-		next_mtcs->father = selected;
-		selected->tryed_choices.emplace_back(next_mtcs);
+		next_mcts->initial_mcts = initial_mcts;
+		next_mcts->father = selected;
+		selected->tryed_choices.emplace_back(next_mcts);
 
-		next_mtcs->win_times;
+		next_mcts->win_times;
 		
-		while (selected != initial_mtcs) 
+		while (selected != initial_mcts) 
 		{
 			 selected->all_times++;
 			 selected->win_times += x;
@@ -97,7 +97,7 @@ void Mtcs::selectionOfTry()
 }
 
 
-Move& Mtcs::getBestMove()
+Move& mcts::getBestMove()
 {
 	double max_win_score = -1;
 	if (tryed_choices.empty())
@@ -123,7 +123,7 @@ Move& Mtcs::getBestMove()
 	return situation->mov[choice];
 }
 
-std::string Mtcs::getBestMoveString()
+std::string mcts::getBestMoveString()
 {
 	double max_win_score = -1;
 	if (tryed_choices.empty())
@@ -151,7 +151,7 @@ std::string Mtcs::getBestMoveString()
 	return situation->mov[choice].moveToString();
 }
 
-void Mtcs::printForMtcsDebug() 
+void mcts::printFormctsDebug() 
 {
 	std::cout << win_times << " " << all_times << std::endl;
 	std::cout << tryed_choices.size()<<" "<<this->situation->mov.size()<<std::endl;
