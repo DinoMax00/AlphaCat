@@ -8,11 +8,13 @@
 Board::Board() 
 {
 	buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+	mov.resize(MAX_MOVES);
 }
 
 Board::Board(std::string fen)
 {
 	buildBoardFromFen(fen);
+	mov.resize(MAX_MOVES);
 }
 
 void Board::buildBoardFromFen(std::string fen)

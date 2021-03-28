@@ -22,5 +22,5 @@ enum Player
 	BLACK = 0
 };
 
-
+const int MAX_MOVES = 300;
 #endif

@@ -25,7 +25,7 @@ public:
 	int num_of_no_eat_rounds;		//未吃子的回合数
 	long long zobrist;				//当前棋盘的Zobrist键值
 
-	std::vector<Move> mov;
+	std::vector<Move> mov;			//记录当前棋盘所有可行的走法
 	
 	//成员函数
 	/****************************************

@@ -44,12 +44,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -62,12 +62,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -80,12 +80,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -98,12 +98,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -122,12 +122,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -140,12 +140,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -158,12 +158,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -176,12 +176,12 @@ void Board::generateMoves()
 					if (!board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -200,7 +200,7 @@ void Board::generateMoves()
 					if (board[index + MA_Feasible[i]] != 255 && (!board[index + MA_Feasible[i]] || board[index + MA_Feasible[i]] >= 100) && !board[index + MA_Leg[i]])
 					{
 						Move Curstep(index, index + MA_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -214,7 +214,7 @@ void Board::generateMoves()
 					if (board[index + MA_Feasible[i]] != 255 && board[index + MA_Feasible[i]] <= 100 && !board[index + MA_Leg[i]])
 					{
 						Move Curstep(index, index + MA_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -229,7 +229,7 @@ void Board::generateMoves()
 						&& !board[index + (XIANG_Feasible[i] / 2)] && ((index + XIANG_Feasible[i]) & 0x80))
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -243,7 +243,7 @@ void Board::generateMoves()
 					if (board[index + XIANG_Feasible[i]] != 255 && board[index + XIANG_Feasible[i]] <= 100 && !board[index + (XIANG_Feasible[i] / 2)] && !((index + XIANG_Feasible[i]) & 0x80))
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -258,7 +258,7 @@ void Board::generateMoves()
 						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 11) <= 1)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -273,7 +273,7 @@ void Board::generateMoves()
 						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 4) <= 1)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -288,7 +288,7 @@ void Board::generateMoves()
 						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 11) <= 1)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -303,7 +303,7 @@ void Board::generateMoves()
 						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 4) <= 1)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -318,7 +318,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -332,7 +332,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] >= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -342,7 +342,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -356,7 +356,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] >= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -366,7 +366,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -380,7 +380,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] >= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -390,7 +390,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -404,7 +404,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] >= 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -420,7 +420,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -434,7 +434,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] && board[temp] < 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -444,7 +444,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -458,7 +458,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] && board[temp] < 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -468,7 +468,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -482,7 +482,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] && board[temp] < 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -492,7 +492,7 @@ void Board::generateMoves()
 					if (!flag && !board[temp])
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -506,7 +506,7 @@ void Board::generateMoves()
 					else if (flag && board[temp] && board[temp] < 100)
 					{
 						Move Curstep(index, temp);
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -523,7 +523,7 @@ void Board::generateMoves()
 						if (board[index + BING_R_Feasible[i]] != 255 && (!board[index + BING_R_Feasible[i]] || board[index + BING_R_Feasible[i]] >= 100))
 						{
 							Move Curstep(index, index + BING_R_Feasible[i]);	//Ðè´æ´¢
-							mov.push_back(Curstep);
+							mov.emplace_back(Curstep);
 						}
 					}
 				}
@@ -532,7 +532,7 @@ void Board::generateMoves()
 					if (board[index - 0x10] != 255 && (!board[index - 0x10] || board[index - 0x10] >= 100))
 					{
 						Move Curstep(index, index - 0x10);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
@@ -548,7 +548,7 @@ void Board::generateMoves()
 						if (board[index + BING_B_Feasible[i]] != 255 && board[index + BING_B_Feasible[i]] <= 100)
 						{
 							Move Curstep(index, index + BING_B_Feasible[i]);	//Ðè´æ´¢
-							mov.push_back(Curstep);
+							mov.emplace_back(Curstep);
 						}
 					}
 				}
@@ -557,7 +557,7 @@ void Board::generateMoves()
 					if (board[index + 0x10] != 255 && board[index + 0x10] <= 100)
 					{
 						Move Curstep(index, index + 0x10);	//Ðè´æ´¢
-						mov.push_back(Curstep);
+						mov.emplace_back(Curstep);
 					}
 				}
 				break;
