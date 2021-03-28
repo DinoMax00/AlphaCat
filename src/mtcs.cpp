@@ -155,7 +155,7 @@ void Mtcs::printForMtcsDebug()
 {
 	std::cout << win_times << " " << all_times << std::endl;
 	std::cout << tryed_choices.size()<<" "<<this->situation->mov.size()<<std::endl;
-	for (int i = 0; i < tryed_choices.size(); i++) 
+	for (int i = 0; i < (int)tryed_choices.size(); i++) 
 	{
 		std::cout << situation->mov[i].moveToString() << std::endl;
 		std::cout << tryed_choices[i]->win_times << " " << tryed_choices[i]->all_times << std::endl;
