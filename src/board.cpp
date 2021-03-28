@@ -397,7 +397,7 @@ bool Board::checkJiang(Move& mov)
 	for (int i = 0; i < 8; i++)
 	{
 		int to = pos_of_kings[player] + MA_Feasible[i];
-		int leg = to - MA_Leg[player];
+		int leg = to - MA_Leg[i];
 		if (board[leg] == EMPTY)
 		{
 			if ((player == BLACK && board[to] == R_MA) || (player == RED && board[to] == B_MA))
