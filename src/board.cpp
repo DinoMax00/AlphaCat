@@ -81,7 +81,7 @@ void Board::genOneMove(Move& move, bool whether_get_all)
 void Board::deleteOneMove(Move& m) 
 {
 	board[m.from] = board[m.to];
-	board[m.to] = board[m.chessOnTo];
+	board[m.to] = m.chessOnTo;
 }
 
 void Board::printBoardForDebug() 
