@@ -37,14 +37,14 @@ void Board::buildBoardFromFen(std::string fen, bool whether_get_all)
 		else if (i == 'n') board[position_now++] = B_MA;
 		else if (i == 'b') board[position_now++] = B_XIANG;
 		else if (i == 'a') board[position_now++] = B_SHI;
-		else if (i == 'k') board[position_now++] = B_JIANG;
+		else if (i == 'k') { pos_of_kings[BLACK] = position_now; board[position_now++] = B_JIANG; }
 		else if (i == 'c') board[position_now++] = B_PAO;
 		else if (i == 'p') board[position_now++] = B_BING;
 		else if (i == 'R') board[position_now++] = R_JU;
 		else if (i == 'N') board[position_now++] = R_MA;
 		else if (i == 'B') board[position_now++] = R_XIANG;
 		else if (i == 'A') board[position_now++] = R_SHI;
-		else if (i == 'K') board[position_now++] = R_JIANG;
+		else if (i == 'K') { pos_of_kings[RED] = position_now; board[position_now++] = R_JIANG; }
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
@@ -186,6 +186,7 @@ Move Board::randomRunMove()
 	{
 		int index = rand() % mov.size();
 		Log().info(mov[index].moveToString());
+		
 		if (checkJiang(mov[index]))
 		{
 			mov.erase(mov.begin() + index);
@@ -199,15 +200,11 @@ Move Board::randomRunMove()
 
 void Board::updMovs()
 {
-	for (auto m : mov)
+	for (auto &m : mov)
 	{
 		m.chessOnTo = board[m.to];
 	}
 }
-
-
-
-
 
 bool Board::checkJiang(Move& mov)
 {
