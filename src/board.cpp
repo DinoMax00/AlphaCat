@@ -182,13 +182,15 @@ Move Board::randomRunMove()
 	Move x("a0i9");
 	if (mov.empty())
 		return x;
-	int t = 1000;
-	while(t --)
+	while(!mov.empty())
 	{
 		int index = rand() % mov.size();
 		Log().info(mov[index].moveToString());
 		if (checkJiang(mov[index]))
+		{
+			mov.erase(mov.begin() + index);
 			continue;
+		}
 		printBoardForDebug();
 		return mov[index];
 	}
@@ -256,7 +258,7 @@ bool Board::checkJiang(Move& mov)
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				if ((player == BLACK && board[i] == R_PAO) || (player == RED && board[i] == B_PAO))
 				{
 					deleteOneMove(mov);
 					return true;
@@ -295,7 +297,7 @@ bool Board::checkJiang(Move& mov)
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				if ((player == BLACK && board[i] == R_PAO) || (player == RED && board[i] == B_PAO))
 				{
 					deleteOneMove(mov);
 					return true;
@@ -334,7 +336,7 @@ bool Board::checkJiang(Move& mov)
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				if ((player == BLACK && board[i] == R_PAO) || (player == RED && board[i] == B_PAO))
 				{
 					deleteOneMove(mov);
 					return true;
@@ -373,7 +375,7 @@ bool Board::checkJiang(Move& mov)
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				if ((player == BLACK && board[i] == R_PAO) || (player == RED && board[i] == B_PAO))
 				{
 					deleteOneMove(mov);
 					return true;
