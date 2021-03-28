@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <stdarg.h>
 #include "log.h"
 
 void Log::clear()
@@ -23,18 +23,6 @@ void Log::baseMsg()
 	if (out.is_open())
 	{
 		out << __DATE__ << "--" << __TIME__ << ":\n";
-		out.close();
-	}
-	else out.close();
-}
-
-void Log::info(std::string msg)
-{
-	baseMsg();
-	out.open(this->path, std::ios::out | std::ios::binary | std::ios::ate | std::ios::app);
-	if (out.is_open())
-	{
-		out << "INFO: " << msg << std::endl;
 		out.close();
 	}
 	else out.close();

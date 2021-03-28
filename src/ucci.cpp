@@ -4,6 +4,10 @@
 #include "ucci.h"
 #include "log.h"
 
+
+/*
+ *   
+*/
 void UcciEngine::clear()
 {
 	commandStr.clear();
@@ -59,6 +63,12 @@ void UcciEngine::bootEngine()
 		}
 		clear();
 	}
+}
+
+
+void UcciEngine::updWhichPlayer()
+{
+
 }
 
 
@@ -133,8 +143,9 @@ void UcciEngine::run()
 			Log().info(std::string("当前游戏角色: ") + (board.player == RED ? "RED" : "BLACK"));
 		}
 		// 走子
-		else if (commandVec[0] == "go")
+		else if (commandVec[0] == "go" && commandVec.size()>2)
 		{
+			// board.printBoardForDebug();
 			board.generateMoves();
 			if (commandVec[1] == "time")
 			{
@@ -152,7 +163,6 @@ void UcciEngine::run()
 			Log().info("引擎响应->bestmove " + s);
 			// 更新棋盘
 			board.genOneMove(s);
-			board.mov.clear();
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")

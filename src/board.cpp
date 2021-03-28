@@ -1,8 +1,10 @@
 ﻿#include <iostream>
+#include <random>
 
-#include"board.h"
-#include"base.h"
-#include<random>
+#include "board.h"
+#include "base.h"
+#include "log.h"
+
 Board::Board() 
 {
 	buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
@@ -51,6 +53,8 @@ void Board::genOneMove(std::string move)
 {
 	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
+	if (board[start_position] == EMPTY)
+		return;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
 	generateMoves();
@@ -58,6 +62,8 @@ void Board::genOneMove(std::string move)
 
 void Board::genOneMove(Move move)
 {
+	if (board[move.from] == EMPTY)
+		return;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
 	generateMoves();
@@ -65,73 +71,94 @@ void Board::genOneMove(Move move)
 
 void Board::printBoardForDebug() 
 {
+	Log().info("当前棋盘为：");
 	for (int i = 0; i < 256; i++) 
 	{
 		if ((i >> 4) >= 3 && (i >> 4) <= 12 && (i & 15) == 2) //打印列标
 		{
-			std::cout << 12 - ((i >> 4)) << " ";
+			// std::cout << 12 - ((i >> 4)) << " ";
+			Log().add(std::to_string(12 - ((i >> 4)))+" ", false);
 			continue;
 		}
 		if ((i >> 4) == 14 && (i & 15) >= 4 && (i & 15) <= 12) //打印行标
 		{
-			std::cout << char((i & 15) - 4 + 'a') << " ";
+			// std::cout << char((i & 15) - 4 + 'a') << " ";
+			Log().add(std::string("")+char((i & 15) - 4 + 'a')+" ", false);
 			continue;
 		}
 		switch (board[i])
 		{
 			case BOUNDARY:
-				std::cout << "  ";
+				// std::cout << "  ";
+				Log().add("  ", false);
 				break;
 			case B_JU:
-				std::cout << "r ";
+				// std::cout << "r ";
+				Log().add("r ", false);
 				break;
 			case B_MA:
-				std::cout << "n ";
+				// std::cout << "n ";
+				Log().add("n ", false);
 				break;
 			case B_XIANG:
-				std::cout << "b ";
+				// std::cout << "b ";
+				Log().add("b ", false);
 				break;
 			case B_SHI:
-				std::cout << "a ";
+				// std::cout << "a ";
+				Log().add("a ", false);
 				break;
 			case B_JIANG:
-				std::cout << "k ";
+				// std::cout << "k ";
+				Log().add("k ", false);
 				break;
 			case B_PAO:
-				std::cout << "c ";
+				// std::cout << "c ";
+				Log().add("c ", false);
 				break;
 			case B_BING:
-				std::cout << "p ";
+				// std::cout << "p ";
+				Log().add("p ", false);
 				break;
 			case R_JU:
-				std::cout << "R ";
+				// std::cout << "R ";
+				Log().add("R ", false);
 				break;
 			case R_MA:
-				std::cout << "N ";
+				// std::cout << "N ";
+				Log().add("N ", false);
 				break;
 			case R_XIANG:
-				std::cout << "B ";
+				// std::cout << "B ";
+				Log().add("B ", false);
 				break;
 			case R_SHI:
-				std::cout << "A ";
+				// std::cout << "A ";
+				Log().add("A ", false);
 				break;
 			case R_JIANG:
-				std::cout << "K ";
+				// std::cout << "K ";
+				Log().add("K ", false);
 				break;
 			case R_PAO:
-				std::cout << "C ";
+				// std::cout << "C ";
+				Log().add("C ", false);
 				break;
 			case R_BING:
-				std::cout << "P ";
+				// std::cout << "P ";
+				Log().add("P ", false);
 				break;
 			case EMPTY:
-				std::cout << ". ";
+				// std::cout << ". ";
+				Log().add(". ", false);
 				break;
 			default:
-				std::cout << "? ";
+				// std::cout << "? ";
+				Log().add("? ", false);
 				break;
 		}
-		if (i % 16 == 15) std::cout << std::endl;
+		if (i % 16 == 15) 
+			Log().add("\n", false);
 	}
 }
 

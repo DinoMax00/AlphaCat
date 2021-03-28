@@ -24,6 +24,8 @@ private:
     void split();
     // 清空字符串与命令vector
     void clear();
+    // 更新角色
+    void updWhichPlayer();
 public:
     // 引擎启动
     void bootEngine();
