@@ -6,9 +6,10 @@
 int main(int argc, char* argv[])
 {
     Log().clear();
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
     UcciEngine AlphaCat;
     AlphaCat.bootEngine();
     AlphaCat.run();
+    // std::cout << AlphaCat.board.mtcsMove();
     return 0;
 }

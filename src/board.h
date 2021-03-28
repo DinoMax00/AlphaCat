@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "base.h"
 #include "move.h"
 /********************************************************
 类名称：Board
@@ -68,6 +69,7 @@ public:
 	返回值：
 	****************************************/
 	void printBoardForDebug();
+	void printBoardForDebug2();
 
 	/****************************************
 	名称：generateMoves()
@@ -76,6 +78,7 @@ public:
 	返回值：
 	****************************************/
 	void generateMoves();
+	void generateMoves(bool);
 
 	/****************************************
 	名称：deleteOneMove()
@@ -95,8 +98,8 @@ public:
 	Move randomRunMove();
 
 	/****************************************
-	名称：randomRunMove()
-	功能：给出随机走法
+	名称：updMovs()
+	功能：更新mov
 	参数：
 	返回值：
 	****************************************/
@@ -109,6 +112,15 @@ public:
 	返回值：bool 判断是否将军
 	*******************************************/
 	bool checkJiang(Move& mov);
+	bool checkJiang(Move& mov, bool);
+
+	/*******************************************
+	函数名称：mtcsMove
+	功能：蒙特卡洛搜索中的随机走子
+	参数：
+	返回值：GameStatus
+	*******************************************/
+	GameStatus mtcsMove();
 };
 
 

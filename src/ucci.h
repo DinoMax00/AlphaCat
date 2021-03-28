@@ -11,7 +11,7 @@
 class UcciEngine
 {
 private:
-    Board board;
+    
     // 确定哪一边
     bool moved = false;
     // 读入的命令字符串
@@ -27,6 +27,7 @@ private:
     // 更新角色
     void updWhichPlayer();
 public:
+    Board board;
     // 引擎启动
     void bootEngine();
     // 正式启动
