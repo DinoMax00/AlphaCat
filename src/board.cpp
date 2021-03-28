@@ -58,6 +58,10 @@ void Board::genOneMove(std::string& move, bool whether_get_all)
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
 	if (board[start_position] == EMPTY)
 		return;
+	if (board[start_position] == R_JIANG)
+		pos_of_kings[RED] = end_position;
+	if (board[start_position] == B_JIANG)
+		pos_of_kings[BLACK] = end_position;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
 	if(whether_get_all)
@@ -208,7 +212,7 @@ void Board::updMovs()
 
 bool Board::checkJiang(Move& mov)
 {
-	genOneMove(mov, 0);
+	genOneMove(mov, NOT_GET_ALL);
 	bool flag = 0;
 
 	//判断是否有将帅直面
