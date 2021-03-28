@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <random>
 #include <chrono>
 
@@ -16,6 +16,15 @@ Board::Board(std::string fen)
 {
 	buildBoardFromFen(fen);
 	mov.resize(MAX_MOVES);
+}
+
+
+Board::Board(Board* board_from, Move& move)
+{
+	memcpy(this->board, board_from->board, 256);
+	memcpy(this->pos_of_kings, board_from->pos_of_kings, 2);
+	player = !(board_from->player);
+	genOneMove(move);
 }
 
 void Board::buildBoardFromFen(std::string fen, bool whether_get_all)

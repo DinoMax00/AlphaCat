@@ -1,4 +1,4 @@
-﻿#ifndef BOARD_H
+#ifndef BOARD_H
 #define BOARD_H
 
 
@@ -20,11 +20,11 @@ public:
 	bool player;							//当前走棋玩家
 	unsigned char board[256];				//棋盘上某一位上的棋子
 	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
-	unsigned int num_of_move[8];			//每一种棋子的走棋方案数
-	unsigned int num_of_chess;				//当前棋盘的棋子个数
-	unsigned int num_of_rounds;				//回合数
-	unsigned int num_of_no_eat_rounds;		//未吃子的回合数
-	unsigned long long zobrist;				//当前棋盘的Zobrist键值
+	//unsigned int num_of_move[8];			//每一种棋子的走棋方案数
+	//unsigned int num_of_chess;				//当前棋盘的棋子个数
+	//unsigned int num_of_rounds;				//回合数
+	//unsigned int num_of_no_eat_rounds;		//未吃子的回合数
+	//unsigned long long zobrist;				//当前棋盘的Zobrist键值
 
 	std::vector<Move> mov;					//记录当前棋盘所有可行的走法
 	
@@ -44,6 +44,14 @@ public:
 	返回值：构造的Board对象
 	****************************************/
 	Board(std::string fen);
+
+	/****************************************
+	名称：Board()
+	功能：读取FEN格式来初始化对象的构造函数
+	参数：const char* fen，构造当前局面的FEN格式串
+	返回值：构造的Board对象
+	****************************************/
+	Board(Board*, Move&);
 
 	/****************************************
 	名称：buildBoardFromFen()
