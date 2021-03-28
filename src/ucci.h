@@ -6,11 +6,14 @@
 #include <vector>
 
 #include "board.h"
+#include "base.h"
 
 class UcciEngine
 {
 private:
-    Board board;
+    
+    // 确定哪一边
+    bool moved = false;
     // 读入的命令字符串
     std::string commandStr;
     // 命令字符串分割后的结果
@@ -21,11 +24,16 @@ private:
     void split();
     // 清空字符串与命令vector
     void clear();
+    // 更新角色
+    void updWhichPlayer();
 public:
+    Board board;
     // 引擎启动
     void bootEngine();
     // 正式启动
     void run();
 };
+
+
 
 #endif
