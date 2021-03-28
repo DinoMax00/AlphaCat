@@ -18,7 +18,7 @@ public:
 	//成员变量
 	bool player;							//当前走棋玩家
 	unsigned char board[256];				//棋盘上某一位上的棋子
-	unsigned char pos_of_king[2];			//棋盘上将帅的位置
+	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
 	unsigned int num_of_move[8];			//每一种棋子的走棋方案数
 	unsigned int num_of_chess;				//当前棋盘的棋子个数
 	unsigned int num_of_rounds;				//回合数
@@ -101,6 +101,14 @@ public:
 	返回值：
 	****************************************/
 	void updMovs();
+
+	/*******************************************
+	函数名称：checkJiang
+	功能：在generateMoves中进行调用，判断在执行某一次的走子之后，是否构成将军
+	参数：int from, int to,要进行的走子的起点和终点
+	返回值：bool 判断是否将军
+	*******************************************/
+	bool checkJiang(Move& mov);
 };
 
 

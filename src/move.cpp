@@ -22,7 +22,6 @@ std::string Move::moveToString()
 
 Move::Move(int from, int to)
 {
-	
 	this->from = from;
 	this->to = to;
 }

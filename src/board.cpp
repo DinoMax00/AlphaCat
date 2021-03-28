@@ -178,7 +178,11 @@ Move Board::randomRunMove()
 	Move x("a0i9");
 	if (mov.empty())
 		return x;
-	return mov[rand()%mov.size()];
+
+	int index = rand() % mov.size();
+	if (checkJiang(mov[index]))
+		return x;
+	return mov[index];
 }
 
 void Board::updMovs()
@@ -187,4 +191,203 @@ void Board::updMovs()
 	{
 		m.chessOnTo = board[m.to];
 	}
+}
+
+
+
+
+
+bool Board::checkJiang(Move& mov)
+{
+	genOneMove(mov, 0);
+	bool flag = 0;
+
+	//判断是否有将帅直面
+	if ((pos_of_kings[0] & 15) == (pos_of_kings[1] & 15))
+	{
+		flag = 1;
+		int mn = std::min(pos_of_kings[0], pos_of_kings[1]), mx = std::max(pos_of_kings[0], pos_of_kings[1]);
+		for (int i = mn + 16; i < mx; i += 16)
+			if (board[i] != EMPTY)
+				flag = 0;
+	}
+	if (flag)
+	{
+		deleteOneMove(mov);
+		return true;
+	}
+
+	//向四个方向遍历，是否被兵、車和炮将军
+	int cnt = 0; //走直线时路上遇到的子的总个数
+	//向下遍历
+	for (int i = pos_of_kings[player] + 16; board[i] != BOUNDARY; i += 16)
+	{
+		if (board[i] == EMPTY) continue;
+		else
+		{
+			//被兵将军
+			if (i == pos_of_kings[player] + 16)
+			{
+				if ((player == BLACK && board[i] == R_BING) || (player == RED && board[i] == B_BING))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被車将军
+			if (cnt == 0)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被炮将军
+			if (cnt == 1)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			++cnt;
+		}
+		if (cnt > 1) break;
+	}
+
+	cnt = 0;
+	//向上遍历
+	for (int i = pos_of_kings[player] - 16; board[i] != BOUNDARY; i -= 16)
+	{
+		if (board[i] == EMPTY) continue;
+		else
+		{
+			//被兵将军
+			if (i == pos_of_kings[player] - 16)
+			{
+				if ((player == BLACK && board[i] == R_BING) || (player == RED && board[i] == B_BING))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被車将军
+			if (cnt == 0)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被炮将军
+			if (cnt == 1)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			++cnt;
+		}
+		if (cnt > 1) break;
+	}
+
+	cnt = 0;
+	//向左遍历
+	for (int i = pos_of_kings[player] - 1; board[i] != BOUNDARY; i--)
+	{
+		if (board[i] == EMPTY) continue;
+		else
+		{
+			//被兵将军
+			if (i == pos_of_kings[player] - 1)
+			{
+				if ((player == BLACK && board[i] == R_BING) || (player == RED && board[i] == B_BING))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被車将军
+			if (cnt == 0)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被炮将军
+			if (cnt == 1)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			++cnt;
+		}
+		if (cnt > 1) break;
+	}
+
+	cnt = 0;
+	//向右遍历
+	for (int i = pos_of_kings[player] + 1; board[i] != BOUNDARY; i++)
+	{
+		if (board[i] == EMPTY) continue;
+		else
+		{
+			//被兵将军
+			if (i == pos_of_kings[player] + 1)
+			{
+				if ((player == BLACK && board[i] == R_BING) || (player == RED && board[i] == B_BING))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被車将军
+			if (cnt == 0)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			//被炮将军
+			if (cnt == 1)
+			{
+				if ((player == BLACK && board[i] == R_JU) || (player == RED && board[i] == B_JU))
+				{
+					deleteOneMove(mov);
+					return true;
+				}
+			}
+			++cnt;
+		}
+		if (cnt > 1) break;
+	}
+
+	//被马将军
+	for (int i = 0; i < 8; i++)
+	{
+		int to = pos_of_kings[player] + MA_Feasible[i];
+		int leg = to - MA_Leg[player];
+		if (board[leg] == EMPTY)
+		{
+			if ((player == BLACK && board[to] == R_MA) || (player == RED && board[to] == B_MA))
+			{
+				deleteOneMove(mov);
+				return true;
+			}
+		}
+	}
+	deleteOneMove(mov);
+	return false;
 }
