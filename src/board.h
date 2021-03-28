@@ -17,7 +17,7 @@ class Board
 {
 public:
 	//成员变量
-	bool player;							//当前走棋玩家
+	bool player = 1;							//当前走棋玩家
 	unsigned char board[256];				//棋盘上某一位上的棋子
 	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
 	//unsigned int num_of_move[8];			//每一种棋子的走棋方案数

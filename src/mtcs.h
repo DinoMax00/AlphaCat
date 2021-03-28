@@ -6,9 +6,10 @@
 #include"board.h"
 
 const double MTCS_C = 1.414;
-const unsigned int MTCS_TIMES = 10;
+const unsigned int MTCS_TIMES = 200;
 
 class Mtcs {
+public:
 	Board* situation;
 	unsigned int win_times;
 	unsigned int all_times;
@@ -25,7 +26,7 @@ class Mtcs {
 	void selectionOfTry();
 
 	Move& getBestMove();
-
+	std::string getBestMoveString();
 	void printForMtcsDebug();
 
 	//void ExpansionOfNew();
