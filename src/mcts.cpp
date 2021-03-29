@@ -12,7 +12,10 @@ mcts::mcts(Board *bo)
 		is_over = 0;
 	else
 		is_over = 1;
-	p_of_win=0;
+	// if(bo->blackValue<0) bo->blackValue=0;
+	// if(bo->redValue<0) bo->redValue=0;
+	p_of_win=(double)bo->redValue/(bo->redValue+bo->blackValue);
+	point_all=p_of_win;
 	tryed_choices.reserve(MAX_MOVES);
 	father = this;
 	best_move_after = this;
@@ -80,9 +83,9 @@ void mcts::selectionOfTry()
 				if(initial_mcts->situation->player==BLACK)
 					p0 = 1-p0; 
 				if (selected->situation->player == initial_mcts->situation->player)
-					score = (double)i->win_times / i->all_times+p0 + mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = (double)0.3*i->win_times / i->all_times + p0 + mcts_C * sqrt(log(selected->all_times) / i->all_times);
 				else
-					score = ((double)i->all_times - i->win_times) / i->all_times +(1-p0)+ mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = (0.3*(double)i->all_times - i->win_times) / i->all_times +(1-p0)+ mcts_C * sqrt(log(selected->all_times) / i->all_times);
 				
 				if (score > max_score)
 				{
@@ -181,13 +184,13 @@ void mcts::selectionOfTry()
 		next_mcts->initial_mcts = initial_mcts;
 		next_mcts->father = selected;
 
-		next_mcts->p_of_win = (double)next_mcts->situation->redValue/(next_mcts->situation->blackValue+next_mcts->situation->redValue);
+		// next_mcts->p_of_win = (double)next_mcts->situation->redValue/(next_mcts->situation->blackValue+next_mcts->situation->redValue);
 		// if(next_mcts->situation->player==BLACK)
 		// 	next_mcts->p_of_win = 1-p_of_win;
 		// next_mcts->from_move.copyOneMove(to_new_situation);
 
 		selected->tryed_choices.emplace_back(next_mcts);
-
+		// Log().info(next_mcts->p_of_win);
 		while (selected != initial_mcts)
 		{
 			selected->all_times += 1;
@@ -221,7 +224,9 @@ std::string mcts::getBestMoveString()
 	{
 		for (auto i : tryed_choices)
 		{
-			double win_score = (double)i->win_times / i->all_times;
+			double p= i->point_all/i->all_times;
+			if(initial_mcts->situation->player==BLACK) p= 1-p;
+			double win_score = (double)i->win_times / i->all_times*0.3+p;
 			unsigned int wintime = 0;
 			if (win_score > max_win_score || win_score == max_win_score && (i->all_times > wintime || i->is_over))
 			{
@@ -321,6 +326,8 @@ void mcts::printFormctsDebug2()
 	// mcts *now = this;
 	// situation->printBoardForDebug();
 	// Log().add(situation->player);
+	Log().add(std::to_string(point_all/all_times));
+	Log().add(point_all);
 	for(auto t : tryed_choices)
 	{
 		// Log().add(t->situation->player);
@@ -330,5 +337,7 @@ void mcts::printFormctsDebug2()
 		Log().add("result::" + std::to_string(t->win_times) + " " + std::to_string(t->all_times));
 		// std::cout<<std::endl;
 		// t->situation->printBoardForDebug();
+		Log().add(std::to_string(t->point_all/t->all_times));
+		// Log().add(std::to_string(t->point_all));
 	}
 }

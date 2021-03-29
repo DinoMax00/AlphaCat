@@ -123,7 +123,6 @@ public:
 	返回值：GameStatus
 	*******************************************/
 	GameStatus mctsMove();
-
 	void updGameVal();
 };
 
