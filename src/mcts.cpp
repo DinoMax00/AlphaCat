@@ -6,7 +6,7 @@ mcts::mcts(Board* bo)
 	situation = bo;
 	initial_mcts = this;
 	all_times = 1;
-	//´Ë´¦µ÷ÓÃ¿ìËÙ»ñÊ¤»ñµÃ½á¹û
+	//æ­¤å¤„è°ƒç”¨å¿«é€ŸèŽ·èƒœèŽ·å¾—ç»“æžœ
 	win_times = 0;
 	if (!bo->mov.empty())
 		is_over = 0;
@@ -68,15 +68,24 @@ void mcts::selectionOfTry()
 
 		Board* board_play = new Board(selected->situation, to_new_situation);
 		int result = board_play->mctsMove();
+		
 
 		mcts* next_mcts = new mcts(next_board);
 		int x;
+		int times = 1;
+		if(next_board->mov.empty()) times=10;
 		//unsigned int result = situation->mctsMove();
-		if (result <= 0 && next_board->player == initial_mcts->situation->player || result > 0 && next_board->player != initial_mcts->situation->player)
+		if (result <= 0 && next_board->player == initial_mcts->situation->player || result >= 0 && next_board->player != initial_mcts->situation->player)
 			x=next_mcts->win_times = 0;
 		else
-			x=next_mcts->win_times = 1;
-		
+			x=next_mcts->win_times = 1*times;
+		// {
+		// 	std::cout<<"player::"<<next_board->player<<std::endl;
+		// 	next_board->printBoardForDebug2();
+		// 	std::cout<<"result::"<<result<<"   X: "<<x<<std::endl;
+		// 	std::cout<<std::endl;
+		// 	std::cout<<std::endl;
+		// }
 		next_mcts->initial_mcts = initial_mcts;
 		next_mcts->father = selected;
 		selected->tryed_choices.emplace_back(next_mcts);
@@ -85,15 +94,16 @@ void mcts::selectionOfTry()
 		
 		while (selected != initial_mcts) 
 		{
-			 selected->all_times++;
+			 selected->all_times += 1*times;
 			 selected->win_times += x;
 			 selected = selected->father;
 		}
 
-		selected->all_times++;
+		selected->all_times += 1*times;
 		selected->win_times += x;
 	}
-	
+	// printFormctsDebug();
+	printFormctsDebug2();
 }
 
 
@@ -136,7 +146,7 @@ std::string mcts::getBestMoveString()
 	int cnt = 0;
 	for (auto i : tryed_choices)
 	{
-		double win_score = (double)i->win_times / i->all_times;
+		double win_score = (double)i->win_times/i->all_times;
 		//std::cout << situation->mov[cnt].moveToString() << std::endl;
 		//std::cout << i->win_times<<' '<<i->all_times << std::endl;
 		//std::cout << win_score << std::endl;
@@ -153,13 +163,23 @@ std::string mcts::getBestMoveString()
 
 void mcts::printFormctsDebug() 
 {
+	std::cout<<"all results"<<std::endl;
 	std::cout << win_times << " " << all_times << std::endl;
-	std::cout << tryed_choices.size()<<" "<<this->situation->mov.size()<<std::endl;
-	for (int i = 0; i < (int)tryed_choices.size(); i++) 
+	mcts* now=this;
+	int t=0;
+	while(t<tryed_choices.size())
 	{
-		std::cout << situation->mov[i].moveToString() << std::endl;
-		std::cout << tryed_choices[i]->win_times << " " << tryed_choices[i]->all_times << std::endl;
+		std::cout<<"tryed_choices:"<<now->situation->mov[t].moveToString()<<std::endl;
+		std::cout << now->tryed_choices[t]->win_times << " " << now->tryed_choices[t]->all_times << std::endl;
+		t++;
+		std::cout<<std::endl;
 	}
+	// std::cout << tryed_choices.size()<<" "<<this->situation->mov.size()<<std::endl;
+	// for (int i = 0; i < (int)tryed_choices.size(); i++) 
+	// {
+	// 	std::cout << situation->mov[i].moveToString() << std::endl;
+	// 	std::cout << tryed_choices[i]->win_times << " " << tryed_choices[i]->all_times << std::endl;
+	// }
 	//this->situation->printBoardForDebug2();
 	std::cout << std::endl;
 	/*for (auto i : tryed_choices) 
@@ -168,4 +188,22 @@ void mcts::printFormctsDebug()
 		std::cout << i->tryed_choices.size() << std::endl;
 		std::cout << std::endl;
 	}*/
+}
+void mcts::printFormctsDebug2() 
+{
+	// std::cout<<"all results"<<std::endl;
+	Log().info("allresult::"+std::to_string(win_times)+' '+std::to_string(all_times));
+	// std::cout << win_times << " " << all_times << std::endl;
+	mcts* now=this;
+	int t=0;
+	while(t<tryed_choices.size())
+	{
+		// std::cout<<"tryed_choices:"<<now->situation->mov[t].moveToString()<<std::endl;
+		Log().add("tryed_choices:"+now->situation->mov[t].moveToString());
+		// std::cout << now->tryed_choices[t]->win_times << " " << now->tryed_choices[t]->all_times << std::endl;
+		Log().add("result::" + std::to_string(now->tryed_choices[t]->win_times) + " " + std::to_string(now->tryed_choices[t]->all_times));
+		t++;
+		// std::cout<<std::endl;
+	}
+	
 }

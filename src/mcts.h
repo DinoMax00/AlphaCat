@@ -5,8 +5,8 @@
 #include"move.h"
 #include"board.h"
 
-const double mcts_C = 1.414;
-const unsigned int mcts_TIMES = 1000;
+const double mcts_C = 0.5;
+const unsigned int mcts_TIMES = 1500;
 
 class mcts {
 public:
@@ -28,6 +28,7 @@ public:
 	Move& getBestMove();
 	std::string getBestMoveString();
 	void printFormctsDebug();
+	void printFormctsDebug2();
 
 	//void ExpansionOfNew();
 };

@@ -1,1 +1,4 @@
 /AlphaCat
+src/.vscode/
+src/build/
+src/CMakeLists.txt
