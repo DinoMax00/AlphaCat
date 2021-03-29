@@ -33,3 +33,8 @@ Move::Move(std::string move)
 	to = ((12 + '0' - move[3]) << 4) + move[2] - 'a' + 4;
 }
 
+void Move::copyOneMove (Move& rhs)
+{
+	from = rhs.from;
+	to = rhs.to;
+}

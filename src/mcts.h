@@ -17,6 +17,8 @@ public:
 	mcts* initial_mcts;
 	//Move& best_move;
 	mcts* father;
+	mcts* best_move_after;
+	Move from_move;
 	//unsigned int draw_times;
 
 	std::vector<mcts*> tryed_choices;
@@ -25,11 +27,11 @@ public:
 	
 	void selectionOfTry();
 
-	Move& getBestMove();
+	// Move& getBestMove();
 	std::string getBestMoveString();
 	void printFormctsDebug();
 	void printFormctsDebug2();
-
+	mcts* new_world(Board*);
 	//void ExpansionOfNew();
 };
 

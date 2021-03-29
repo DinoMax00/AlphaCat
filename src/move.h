@@ -17,6 +17,7 @@ public:
 	Move(std::string);
 	Move(int, int);
 	std::string moveToString();
+	void copyOneMove(Move&);
 };
 
 const int MA_Feasible[8] = { 0x21,0x1f,0x12,0x0e,-0x21,-0x1f,-0x12,-0x0e };
