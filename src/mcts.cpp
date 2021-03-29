@@ -26,7 +26,8 @@ void mcts::selectionOfTry()
 		//std::cout << situation->player << std::endl;
 		mcts* selected = this;
 		//std::cout << ">>fuck" << std::endl;
-		if (selected->situation->mov.empty() || selected->is_over) Log().info("error by feifei");
+		if (selected->situation->mov.empty() || selected->is_over) //Log().info("error by feifei");
+			return;
 		while (selected->tryed_choices.size() == selected->situation->mov.size())
 		{
 			//std::cout << ">>fuck" << std::endl;
@@ -65,6 +66,28 @@ void mcts::selectionOfTry()
 		}
 		Move& to_new_situation = selected->situation->mov[selected->tryed_choices.size()];
 		Board* next_board = new Board(selected->situation, to_new_situation);
+		
+		if(next_board->mov.empty())
+		{
+			mcts* next_mcts = new mcts(next_board);
+			int win_time;
+			if(selected->situation->player==initial_mcts->situation->player)
+				win_time=100;
+			else win_time=0;
+			next_mcts->win_times=win_time;
+			next_mcts->all_times=100;
+			selected->is_over = true;
+			next_mcts->initial_mcts = initial_mcts;
+			next_mcts->father = selected;
+			// selected->tryed_choices.clear();
+			selected->tryed_choices.emplace_back(next_mcts);
+			while(selected!=initial_mcts){
+				selected=selected->father;
+				selected->all_times+=100;
+				selected->win_times+=100;
+			}
+			continue;
+		}
 
 		Board* board_play = new Board(selected->situation, to_new_situation);
 		int result = board_play->mctsMove();
@@ -73,7 +96,14 @@ void mcts::selectionOfTry()
 		mcts* next_mcts = new mcts(next_board);
 		int x;
 		int times = 1;
-		if(next_board->mov.empty()) times=10;
+		// if(next_board->mov.empty()) times=1;
+		// if(result>0) {
+		// 	int cnt =0;
+		// 	while(result>50 && cnt++<20){
+		// 		board_play = new Board(selected->situation, to_new_situation);
+		// 		result = board_play->mctsMove();
+		// 	}
+		// }
 		//unsigned int result = situation->mctsMove();
 		if (result <= 0 && next_board->player == initial_mcts->situation->player || result >= 0 && next_board->player != initial_mcts->situation->player)
 			x=next_mcts->win_times = 0;
@@ -147,13 +177,15 @@ std::string mcts::getBestMoveString()
 	for (auto i : tryed_choices)
 	{
 		double win_score = (double)i->win_times/i->all_times;
+		unsigned int wintime =0;
 		//std::cout << situation->mov[cnt].moveToString() << std::endl;
 		//std::cout << i->win_times<<' '<<i->all_times << std::endl;
 		//std::cout << win_score << std::endl;
 		//std::cout << std::endl;
-		if (win_score > max_win_score)
+		if (win_score > max_win_score||win_score==max_win_score && i->all_times>wintime)
 		{
 			max_win_score = win_score;
+			wintime = i->all_times;
 			choice = cnt;
 		}
 		cnt++;
