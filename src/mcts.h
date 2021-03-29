@@ -5,8 +5,8 @@
 #include"move.h"
 #include"board.h"
 
-const double mcts_C = 1;
-const unsigned int mcts_TIMES = 15000;
+const double mcts_C = 0.5;
+const unsigned int mcts_TIMES = 10000;
 
 class mcts {
 public:
