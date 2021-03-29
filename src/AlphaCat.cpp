@@ -10,6 +10,5 @@ int main(int argc, char* argv[])
     UcciEngine AlphaCat;
     AlphaCat.bootEngine();
     AlphaCat.run();
-    // std::cout << AlphaCat.board.mctsMove();
     return 0;
 }

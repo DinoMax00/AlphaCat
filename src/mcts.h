@@ -6,7 +6,7 @@
 #include"board.h"
 
 const double mcts_C = 0.5;
-const unsigned int mcts_TIMES = 10000;
+const unsigned int mcts_TIMES = 10;
 
 class mcts {
 public:

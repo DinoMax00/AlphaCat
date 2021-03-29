@@ -203,7 +203,7 @@ std::string mcts::getBestMoveString()
 		return x.moveToString();
 	}
 	int choice = 0;
-	mcts *ans;
+	mcts *ans = this;
 	if(best_move_after!=this)
 		ans = best_move_after;
 	else 
