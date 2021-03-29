@@ -165,6 +165,8 @@ void UcciEngine::run()
 			Log().info("引擎响应->bestmove " + s);
 			// 更新棋盘
 			board.genOneMove(s);
+			Log().add(board.redValue);
+			Log().add(board.blackValue);
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")

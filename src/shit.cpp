@@ -14,7 +14,7 @@ bool Board::checkJiang(Move& mov)
 
 bool Board::checkJiang(Move& mov, bool side)
 {
-	genOneMove(mov, NOT_GET_ALL);
+	genOneMove(mov);
 	bool flag = 0;
 
 	//判断是否有将帅直面

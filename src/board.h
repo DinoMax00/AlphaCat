@@ -16,10 +16,11 @@
 class Board
 {
 public:
-	//成员变量
 	bool player = 1;							//当前走棋玩家
 	unsigned char board[256];				//棋盘上某一位上的棋子
 	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
+	int redValue;							// 红棋子力
+	int blackValue;							// 黑棋子力
 	//unsigned int num_of_move[8];			//每一种棋子的走棋方案数
 	//unsigned int num_of_chess;				//当前棋盘的棋子个数
 	//unsigned int num_of_rounds;				//回合数
@@ -59,7 +60,7 @@ public:
 	参数：string fen，构造当前局面的FEN格式串,bool whether_get_all 默认 GET_ALL对新局面生成所有可行走法
 	返回值：构造的Board对象
 	****************************************/
-	void buildBoardFromFen(std::string fen, bool whether_get_all = GET_ALL);
+	void buildBoardFromFen(std::string fen);
 
 	/****************************************
 	名称：genOneMove()
@@ -67,8 +68,8 @@ public:
 	参数：string move，构造当前局面的移动串,bool whether_get_all 默认 GET_ALL对新局面生成所有可行走法
 	返回值：
 	****************************************/
-	void genOneMove(std::string& move, bool whether_get_all = GET_ALL);
-	void genOneMove(Move& move, bool whether_get_all = GET_ALL);
+	void genOneMove(std::string& move);
+	void genOneMove(Move& move);
 
 	/****************************************
 	名称：printBoardForDebug()
@@ -121,6 +122,8 @@ public:
 	返回值：GameStatus
 	*******************************************/
 	GameStatus mctsMove();
+
+	void updGameVal();
 };
 
 

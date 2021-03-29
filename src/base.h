@@ -24,12 +24,5 @@ enum Chess
 #define LOSS -1
 #define TIE 0
 
-enum Getall
-{
-	GET_ALL = 1,
-	NOT_GET_ALL = 0
-};
-
-
 const int MAX_MOVES = 80;
 #endif

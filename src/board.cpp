@@ -5,6 +5,7 @@
 #include "board.h"
 #include "base.h"
 #include "log.h"
+#include "evaluate.h"
 
 Board::Board() 
 {
@@ -27,7 +28,7 @@ Board::Board(Board* board_from, Move& move)
 	genOneMove(move);
 }
 
-void Board::buildBoardFromFen(std::string fen, bool whether_get_all)
+void Board::buildBoardFromFen(std::string fen)
 {
 	for (int i = 0; i < 256; i++) 
 	{
@@ -58,12 +59,14 @@ void Board::buildBoardFromFen(std::string fen, bool whether_get_all)
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
-	if (whether_get_all)
-		generateMoves();
+	evaluate::updBoardValue(*this);
 }
 
-void Board::genOneMove(std::string& move, bool whether_get_all)
+void Board::genOneMove(std::string& move)
 {
+	Move tmp_move(move);
+	evaluate::updMovValue(*this, tmp_move);
+
 	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
 	if (board[start_position] == EMPTY)
@@ -74,12 +77,12 @@ void Board::genOneMove(std::string& move, bool whether_get_all)
 		pos_of_kings[BLACK] = end_position;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
-	if(whether_get_all)
-		generateMoves();
 }
 
-void Board::genOneMove(Move& move, bool whether_get_all)
+void Board::genOneMove(Move& move)
 {
+	evaluate::updMovValue(*this, move);
+
 	if (board[move.from] == EMPTY)
 		return;
 	if (board[move.from] == R_JIANG)
@@ -88,12 +91,12 @@ void Board::genOneMove(Move& move, bool whether_get_all)
 		pos_of_kings[BLACK] = move.to;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
-	if (whether_get_all)
-		generateMoves();
 }
 
 void Board::deleteOneMove(Move& m) 
 {
+	evaluate::deleteMovValue(*this, m);
+
 	if (board[m.to] == R_JIANG)
 		pos_of_kings[RED] = m.from;
 	if (board[m.to] == B_JIANG)
@@ -322,31 +325,23 @@ GameStatus Board::mctsMove()
 				return all_round;
 		}
 		temp_mov = mov[generator() % mov.size()];
-		/*
-		///////////////////////////
-		std::string s;
-		while (std::getline(std::cin, s))
-		{
-			Log().add(s);
-			if (s == "isready")
-				std::cout << "readyok" << std::endl;
-			if (s == "quit")
-				return 0;
-			if (s[0] == 'g' && s[1] == 'o')
-				break;
-		}
-		std::cout << "bestmove " << temp_mov.moveToString() << std::endl;
-		Log().add(temp_mov.moveToString());
-	    ///////////////////////////
-		*/
 		// 吃子判断
 		if (board[temp_mov.to] != EMPTY)
 			round = 0;
 		else round++;
 
 		// 走子
-		genOneMove(temp_mov, NOT_GET_ALL);
+		genOneMove(temp_mov);
 		cur_side = !cur_side;
 	}
 	return TIE;
+}
+
+void Board::updGameVal()
+{
+	evaluate::updBoardValue(*this);
+	if (player == RED)
+		gameVal = redValue - blackValue;
+	else
+		gameVal = blackValue - redValue;
 }
