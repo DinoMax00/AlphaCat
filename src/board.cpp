@@ -26,6 +26,8 @@ Board::Board(Board* board_from, Move& move)
 	memcpy(this->pos_of_kings, board_from->pos_of_kings, 2);
 	player = !(board_from->player);
 	genOneMove(move);
+	generateMoves();
+	updGameVal();
 }
 
 void Board::buildBoardFromFen(std::string fen)
@@ -340,8 +342,6 @@ GameStatus Board::mctsMove()
 void Board::updGameVal()
 {
 	evaluate::updBoardValue(*this);
-	if (player == RED)
-		gameVal = redValue - blackValue;
-	else
-		gameVal = blackValue - redValue;
+	// gameVal = redValue - blackValue;
 }
+

@@ -21,6 +21,7 @@ public:
 	unsigned char pos_of_kings[2];			//棋盘上将帅的位置
 	int redValue;							// 红棋子力
 	int blackValue;							// 黑棋子力
+	// int gameVal;							// 棋子力
 	//unsigned int num_of_move[8];			//每一种棋子的走棋方案数
 	//unsigned int num_of_chess;				//当前棋盘的棋子个数
 	//unsigned int num_of_rounds;				//回合数

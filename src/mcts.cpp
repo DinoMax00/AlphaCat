@@ -12,6 +12,7 @@ mcts::mcts(Board *bo)
 		is_over = 0;
 	else
 		is_over = 1;
+	p_of_win=0;
 	tryed_choices.reserve(MAX_MOVES);
 	father = this;
 	best_move_after = this;
@@ -35,50 +36,54 @@ void mcts::selectionOfTry()
 			mcts *next = selected;
 			for (auto i : selected->tryed_choices)
 			{
-				if (i->is_over)
-				{
-					if (selected->situation->player == initial_mcts->situation->player && i->win_times == i->all_times)
-					{
-						selected->is_over = true;
-						mcts *t = selected;
-						// selected->tryed_choices.clear();
-						selected->tryed_choices.emplace_back(i);
-						selected->best_move_after=i;
-						int win_time = 100;
-						t->all_times += win_time;
-						t->win_times = t->all_times;
-						while (t != initial_mcts)
-						{
-							t = t->father;
-							t->all_times += win_time;
-							t->win_times += win_time;
-						}
-					}
-					else if (selected->situation->player != initial_mcts->situation->player && i->win_times == 0)
-					{
-						selected->is_over = true;
-						mcts *t = selected;
-						// selected->tryed_choices.clear();
-						selected->tryed_choices.emplace_back(i);
-						selected->best_move_after=i;
-						int win_time = 100;
-						t->win_times = 0;
-						t->all_times += win_time;
-						while (t != initial_mcts)
-						{
-							t = t->father;
-							t->all_times += win_time;
-						}
-					}
-					continue;
-				}
+				// if (i->is_over)
+				// {
+				// 	if (selected->situation->player == initial_mcts->situation->player && i->win_times == i->all_times)
+				// 	{
+				// 		selected->is_over = true;
+				// 		mcts *t = selected;
+				// 		// selected->tryed_choices.clear();
+				// 		selected->tryed_choices.emplace_back(i);
+				// 		selected->best_move_after=i;
+				// 		int win_time = 100;
+				// 		t->all_times += win_time;
+				// 		t->win_times = t->all_times;
+				// 		while (t != initial_mcts)
+				// 		{
+				// 			t = t->father;
+				// 			t->all_times += win_time;
+				// 			t->win_times += win_time;
+				// 		}
+				// 	}
+				// 	else if (selected->situation->player != initial_mcts->situation->player && i->win_times == 0)
+				// 	{
+				// 		selected->is_over = true;
+				// 		mcts *t = selected;
+				// 		// selected->tryed_choices.clear();
+				// 		selected->tryed_choices.emplace_back(i);
+				// 		selected->best_move_after=i;
+				// 		int win_time = 100;
+				// 		t->win_times = 0;
+				// 		t->all_times += win_time;
+				// 		while (t != initial_mcts)
+				// 		{
+				// 			t = t->father;
+				// 			t->all_times += win_time;
+				// 		}
+				// 	}
+				// 	continue;
+				// }
 				// if (i->situation->mov.empty() || i->is_over)
 				// 	continue;
 				double score = -10000;
+				double p0 = i->point_all/i->all_times;
+				if(initial_mcts->situation->player==BLACK)
+					p0 = 1-p0; 
 				if (selected->situation->player == initial_mcts->situation->player)
-					score = (double)i->win_times / i->all_times + mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = (double)i->win_times / i->all_times+p0 + mcts_C * sqrt(log(selected->all_times) / i->all_times);
 				else
-					score = ((double)i->all_times - i->win_times) / i->all_times + mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = ((double)i->all_times - i->win_times) / i->all_times +(1-p0)+ mcts_C * sqrt(log(selected->all_times) / i->all_times);
+				
 				if (score > max_score)
 				{
 					max_score = score;
@@ -109,36 +114,36 @@ void mcts::selectionOfTry()
 		mcts *next_mcts = new mcts(next_board);
 		next_mcts->from_move.copyOneMove(to_new_situation);
 
-		if (next_board->mov.empty())
-		{
-			// next_board->printBoardForDebug();
-			// selected->situation->printBoardForDebug();
-			int win_time;
-			if (selected->situation->player == initial_mcts->situation->player)
-				win_time = 100;
-			else
-				win_time = 0;
-			next_mcts->win_times = win_time;
-			next_mcts->all_times = 100;
-			next_mcts->initial_mcts = initial_mcts;
-			next_mcts->father = selected;
+		// if (next_board->mov.empty())
+		// {
+		// 	// next_board->printBoardForDebug();
+		// 	// selected->situation->printBoardForDebug();
+		// 	int win_time;
+		// 	if (selected->situation->player == initial_mcts->situation->player)
+		// 		win_time = 100;
+		// 	else
+		// 		win_time = 0;
+		// 	next_mcts->win_times = win_time;
+		// 	next_mcts->all_times = 100;
+		// 	next_mcts->initial_mcts = initial_mcts;
+		// 	next_mcts->father = selected;
 
-			selected->all_times+=100;
-			selected->win_times+=win_time;
-			selected->is_over = true;
+		// 	selected->all_times+=100;
+		// 	selected->win_times+=win_time;
+		// 	selected->is_over = true;
 
-			// selected->tryed_choices.clear();
-			selected->best_move_after=next_mcts;
-			selected->tryed_choices.emplace_back(next_mcts);
+		// 	// selected->tryed_choices.clear();
+		// 	selected->best_move_after=next_mcts;
+		// 	selected->tryed_choices.emplace_back(next_mcts);
 
-			while (selected != initial_mcts)
-			{
-				selected = selected->father;
-				selected->all_times += 100;
-				selected->win_times += win_time;
-			}
-			continue;
-		}
+		// 	while (selected != initial_mcts)
+		// 	{
+		// 		selected = selected->father;
+		// 		selected->all_times += 100;
+		// 		selected->win_times += win_time;
+		// 	}
+		// 	continue;
+		// }
 
 		Board *board_play = new Board(selected->situation, to_new_situation);
 		int result = board_play->mctsMove();
@@ -175,6 +180,10 @@ void mcts::selectionOfTry()
 
 		next_mcts->initial_mcts = initial_mcts;
 		next_mcts->father = selected;
+
+		next_mcts->p_of_win = (double)next_mcts->situation->redValue/(next_mcts->situation->blackValue+next_mcts->situation->redValue);
+		// if(next_mcts->situation->player==BLACK)
+		// 	next_mcts->p_of_win = 1-p_of_win;
 		// next_mcts->from_move.copyOneMove(to_new_situation);
 
 		selected->tryed_choices.emplace_back(next_mcts);
@@ -183,10 +192,12 @@ void mcts::selectionOfTry()
 		{
 			selected->all_times += 1;
 			selected->win_times += actual_result;
+			selected->point_all += next_mcts->p_of_win;
 			selected = selected->father;
 		}
 
 		selected->all_times += 1;
+		selected->point_all += next_mcts->p_of_win;
 		selected->win_times += actual_result;
 	}
 	// printFormctsDebug();
