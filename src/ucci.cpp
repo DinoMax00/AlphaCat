@@ -78,7 +78,32 @@ void UcciEngine::run()
 		// 设定限时
 		else if (commandVec[0] == "go" && commandVec[1]=="time")
 		{
+<<<<<<< Updated upstream
 			std::cout << std::stoi(commandVec[2]) << std::endl;
+=======
+			// board.printBoardForDebug();
+			board.generateMoves();
+			if (commandVec[1] == "time")
+			{
+				// 时间设定
+				// std::cout << std::stoi(commandVec[2]) << std::endl;
+			}
+			// 获取响应
+			//std::string  s = board.randomRunMove().moveToString();
+			mcts mcts_now(&board);
+			mcts_now.selectionOfTry();
+			std::string s = mcts_now.getBestMoveString();
+			if (s == "a0i9") {
+				std::cout << "nobestmove" << std::endl;
+				Log().info("引擎响应->nobestmove");
+				return;
+			}
+			std::cout << "bestmove " << s << std::endl;
+			Log().info("引擎响应->bestmove " + s);
+			// 更新棋盘
+			board.genOneMove(s);
+			Log().add(board.redValue);
+>>>>>>> Stashed changes
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")
