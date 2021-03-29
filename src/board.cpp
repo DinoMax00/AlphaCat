@@ -27,6 +27,7 @@ Board::Board(Board* board_from, Move& move)
 	player = !(board_from->player);
 	genOneMove(move);
 	generateMoves();
+	updGameVal();
 }
 
 void Board::buildBoardFromFen(std::string fen)
@@ -44,7 +45,7 @@ void Board::buildBoardFromFen(std::string fen)
 			for (int j = 0; j < empty; j++)
 				board[position_now++] = EMPTY;
 		}
-		else if (i == '/') position_now += 7;//跳到下一行的第一位
+		else if (i == '/') position_now += 7;//跳到下一行的第一�?
 		else if (i == 'r') board[position_now++] = B_JU;
 		else if (i == 'n') board[position_now++] = B_MA;
 		else if (i == 'b') board[position_now++] = B_XIANG;
@@ -307,7 +308,7 @@ GameStatus Board::mctsMove()
 	uint32_t round = 0, all_round = 0;
 	bool cur_side = player;
 	Move temp_mov;
-	// 随机数
+	// 随机�?
 	unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 	std::mt19937 generator(seed);
 	// 模拟棋局
@@ -340,8 +341,6 @@ GameStatus Board::mctsMove()
 void Board::updGameVal()
 {
 	evaluate::updBoardValue(*this);
-	if (player == RED)
-		gameVal = redValue - blackValue;
-	else
-		gameVal = blackValue - redValue;
+	// gameVal = redValue - blackValue;
 }
+

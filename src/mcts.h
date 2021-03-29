@@ -13,6 +13,8 @@ public:
 	Board* situation;
 	unsigned int win_times;
 	unsigned int all_times;
+	double p_of_win;
+	double point_all;
 	bool is_over;
 	mcts* initial_mcts;
 	//Move& best_move;
