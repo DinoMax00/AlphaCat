@@ -301,7 +301,7 @@ Move Board::randomRunMove()
 
 GameStatus Board::mctsMove()
 {
-	uint32_t round = 0;
+	uint32_t round = 0, all_round = 0;
 	bool cur_side = player;
 	Move temp_mov;
 	// 随机数
@@ -310,6 +310,7 @@ GameStatus Board::mctsMove()
 	// 模拟棋局
 	while (round < 60)
 	{
+		all_round++;
 		// 生成走法
 		generateMoves(cur_side);
 		// 胜负
@@ -318,34 +319,33 @@ GameStatus Board::mctsMove()
 			if (cur_side == player) 
 				return LOSS;
 			else 
-				return WIN;
+				return all_round;
 		}
-		/*
-		* 调节选择吃子概率
-		while (true)
-		{
-			temp_mov = mov[generator() % mov.size()];
-			if (board[temp_mov.to] == EMPTY)
-			{
-				if (generator() % 100 > 60) break;
-			}
-			else break;
-		}
-		*/
 		temp_mov = mov[generator() % mov.size()];
+		/*
+		///////////////////////////
+		std::string s;
+		while (std::getline(std::cin, s))
+		{
+			Log().add(s);
+			if (s == "isready")
+				std::cout << "readyok" << std::endl;
+			if (s == "quit")
+				return 0;
+			if (s[0] == 'g' && s[1] == 'o')
+				break;
+		}
+		std::cout << "bestmove " << temp_mov.moveToString() << std::endl;
+		Log().add(temp_mov.moveToString());
+	    ///////////////////////////
+		*/
 		// 吃子判断
 		if (board[temp_mov.to] != EMPTY)
 			round = 0;
 		else round++;
 
-		// std::cout << mov.size() << " " << round << std::endl;
-
-		// printBoardForDebug2();
-		// getchar();
-
 		// 走子
-		genOneMove(temp_mov);
-		// getchar();
+		genOneMove(temp_mov, NOT_GET_ALL);
 		cur_side = !cur_side;
 	}
 	return TIE;
