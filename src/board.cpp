@@ -45,7 +45,7 @@ void Board::buildBoardFromFen(std::string fen)
 			for (int j = 0; j < empty; j++)
 				board[position_now++] = EMPTY;
 		}
-		else if (i == '/') position_now += 7;//跳到下一行的第一位
+		else if (i == '/') position_now += 7;//跳到下一行的第一�?
 		else if (i == 'r') board[position_now++] = B_JU;
 		else if (i == 'n') board[position_now++] = B_MA;
 		else if (i == 'b') board[position_now++] = B_XIANG;
@@ -66,13 +66,13 @@ void Board::buildBoardFromFen(std::string fen)
 
 void Board::genOneMove(std::string& move)
 {
-	Move tmp_move(move);
-	evaluate::updMovValue(*this, tmp_move);
-
 	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
 	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
 	if (board[start_position] == EMPTY)
 		return;
+	Move tmp_move(move);
+	evaluate::updMovValue(*this, tmp_move);
+
 	if (board[start_position] == R_JIANG)
 		pos_of_kings[RED] = end_position;
 	if (board[start_position] == B_JIANG)
@@ -83,10 +83,9 @@ void Board::genOneMove(std::string& move)
 
 void Board::genOneMove(Move& move)
 {
-	evaluate::updMovValue(*this, move);
-
 	if (board[move.from] == EMPTY)
 		return;
+	evaluate::updMovValue(*this, move);
 	if (board[move.from] == R_JIANG)
 		pos_of_kings[RED] = move.to;
 	if (board[move.from] == B_JIANG)
@@ -309,7 +308,7 @@ GameStatus Board::mctsMove()
 	uint32_t round = 0, all_round = 0;
 	bool cur_side = player;
 	Move temp_mov;
-	// 随机数
+	// 随机�?
 	unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 	std::mt19937 generator(seed);
 	// 模拟棋局
