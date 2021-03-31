@@ -1,4 +1,11 @@
-﻿#include <iostream>
+﻿/*****************************************************************//**
+ * \file   ucci.cpp
+ * \brief  ucci协议源文件
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
+#include <iostream>
 #include <string>
 
 #include "ucci.h"
@@ -70,31 +77,31 @@ void UcciEngine::updWhichPlayer()
 		if (commandVec[3] == "b")
 		{
 			if (commandVec.size() <= 9)
-				board.player = BLACK;
+				board.player = BLACK_PLAYER;
 			else if ((commandVec.size() - 9) % 2)
-				board.player = RED;
+				board.player = RED_PLAYER;
 			else
-				board.player = BLACK;
+				board.player = BLACK_PLAYER;
 		}
 		else
 		{
 			if (commandVec.size() <= 9)
-				board.player = RED;
+				board.player = RED_PLAYER;
 			else if ((commandVec.size() - 9) % 2)
-				board.player = BLACK;
+				board.player = BLACK_PLAYER;
 			else
-				board.player = RED;
+				board.player = RED_PLAYER;
 		}
 	}
 	else if (commandVec[1] == "startpos")
 	{
 		// 更新游戏角色
 		if (commandVec.size() <= 3)
-			board.player = RED;
+			board.player = RED_PLAYER;
 		else if ((commandVec.size() - 3) % 2)
-			board.player = BLACK;
+			board.player = BLACK_PLAYER;
 		else
-			board.player = RED;
+			board.player = RED_PLAYER;
 	}
 }
 
@@ -139,7 +146,7 @@ void UcciEngine::run()
 			{
 				board.genOneMove(commandVec[commandVec.size() - 1]);
 			}
-			Log().info(std::string("当前游戏角色: ") + (board.player == RED ? "RED" : "BLACK"));
+			Log().info(std::string("当前游戏角色: ") + (board.player == RED_PLAYER ? "RED" : "BLACK"));
 		}
 		// 走子
 		else if (commandVec[0] == "go" && commandVec.size()>2)
@@ -152,10 +159,12 @@ void UcciEngine::run()
 				// std::cout << std::stoi(commandVec[2]) << std::endl;
 			}
 			// 获取响应
-			// std::string  s = board.randomRunMove().moveToString();
+			std::string  s = board.randomRunMove().moveToString();
+			/*
 			mcts mcts_now(&board);
 			mcts_now.selectionOfTry();
 			std::string s = mcts_now.getBestMoveString();
+			*/
 			if (s == "a0i9") {
 				std::cout << "nobestmove" << std::endl;
 				Log().info("引擎响应->nobestmove");

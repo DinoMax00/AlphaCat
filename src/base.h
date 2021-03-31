@@ -1,8 +1,15 @@
+﻿/*****************************************************************//**
+ * \file   base.h
+ * \brief  项目中使用到的常量、类型、宏定义
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
+
 #ifndef BASE_H
 #define BASE_H
 
-// 与游戏有关的基本参数
-
+/// 棋子类型
 enum Chess
 {
 	EMPTY = 0,
@@ -16,13 +23,18 @@ enum Chess
 	R_BING = 7, B_BING = 107
 };
 
-#define RED 1
-#define BLACK 0
+/// 游戏结果，用于随机快速走子函数
+typedef int GameStatus;
+constexpr auto WIN = 1;
+constexpr auto LOSS = -1;
+constexpr auto TIE = 0;
 
-#define GameStatus int
-#define WIN 1
-#define LOSS -1
-#define TIE 0
+/// 当前执子
+typedef bool player_type;
+constexpr auto RED_PLAYER = 1; ///< 红棋
+constexpr auto BLACK_PLAYER = 0; ///< 黑棋
 
-const int MAX_MOVES = 80;
+/// 一回合中预期最大走子方法数
+constexpr auto MAX_MOVES = 80;
+
 #endif

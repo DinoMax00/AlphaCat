@@ -1,9 +1,17 @@
+/*****************************************************************//**
+ * \file   mcts.h
+ * \brief  蒙特卡洛搜索头文件
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
 #ifndef mcts_H
 #define mcts_H
-#include<string>
-#include<vector>
-#include"move.h"
-#include"board.h"
+
+#include <string>
+#include <vector>
+#include "move.h"
+#include "board.h"
 
 const double mcts_C = 0.5;
 const unsigned int mcts_TIMES = 15000;
@@ -26,7 +34,7 @@ public:
 	std::vector<mcts*> tryed_choices;
 
 	mcts(Board*);
-	
+
 	void selectionOfTry();
 
 	// Move& getBestMove();

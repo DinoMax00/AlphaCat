@@ -1,3 +1,10 @@
+﻿/*****************************************************************//**
+ * \file   board.cpp
+ * \brief  棋盘类源文件
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -10,24 +17,23 @@
 Board::Board() 
 {
 	buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
-	mov.resize(MAX_MOVES);
+	move_vec.resize(MAX_MOVES);
 }
 
 Board::Board(std::string fen)
 {
 	buildBoardFromFen(fen);
-	mov.resize(MAX_MOVES);
+	move_vec.resize(MAX_MOVES);
 }
 
 
-Board::Board(Board* board_from, Move& move)
+Board::Board(Board* board_pre, Move& move)
 {
-	memcpy(this->board, board_from->board, 256);
-	memcpy(this->pos_of_kings, board_from->pos_of_kings, 2);
-	player = !(board_from->player);
+	memcpy(this->board, board_pre->board, 256);
+	memcpy(this->pos_of_kings, board_pre->pos_of_kings, 2);
+	player = !(board_pre->player);
 	genOneMove(move);
 	generateMoves();
-	updGameVal();
 }
 
 void Board::buildBoardFromFen(std::string fen)
@@ -45,19 +51,19 @@ void Board::buildBoardFromFen(std::string fen)
 			for (int j = 0; j < empty; j++)
 				board[position_now++] = EMPTY;
 		}
-		else if (i == '/') position_now += 7;//跳到下一行的第一�?
+		else if (i == '/') position_now += 7;
 		else if (i == 'r') board[position_now++] = B_JU;
 		else if (i == 'n') board[position_now++] = B_MA;
 		else if (i == 'b') board[position_now++] = B_XIANG;
 		else if (i == 'a') board[position_now++] = B_SHI;
-		else if (i == 'k') { pos_of_kings[BLACK] = position_now; board[position_now++] = B_JIANG; }
+		else if (i == 'k') { pos_of_kings[BLACK_PLAYER] = position_now; board[position_now++] = B_JIANG; }
 		else if (i == 'c') board[position_now++] = B_PAO;
 		else if (i == 'p') board[position_now++] = B_BING;
 		else if (i == 'R') board[position_now++] = R_JU;
 		else if (i == 'N') board[position_now++] = R_MA;
 		else if (i == 'B') board[position_now++] = R_XIANG;
 		else if (i == 'A') board[position_now++] = R_SHI;
-		else if (i == 'K') { pos_of_kings[RED] = position_now; board[position_now++] = R_JIANG; }
+		else if (i == 'K') { pos_of_kings[RED_PLAYER] = position_now; board[position_now++] = R_JIANG; }
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
@@ -74,9 +80,9 @@ void Board::genOneMove(std::string& move)
 	evaluate::updMovValue(*this, tmp_move);
 
 	if (board[start_position] == R_JIANG)
-		pos_of_kings[RED] = end_position;
+		pos_of_kings[RED_PLAYER] = end_position;
 	if (board[start_position] == B_JIANG)
-		pos_of_kings[BLACK] = end_position;
+		pos_of_kings[BLACK_PLAYER] = end_position;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
 }
@@ -87,23 +93,23 @@ void Board::genOneMove(Move& move)
 		return;
 	evaluate::updMovValue(*this, move);
 	if (board[move.from] == R_JIANG)
-		pos_of_kings[RED] = move.to;
+		pos_of_kings[RED_PLAYER] = move.to;
 	if (board[move.from] == B_JIANG)
-		pos_of_kings[BLACK] = move.to;
+		pos_of_kings[BLACK_PLAYER] = move.to;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
 }
 
-void Board::deleteOneMove(Move& m) 
+void Board::deleteOneMove(Move& move_pre) 
 {
-	evaluate::deleteMovValue(*this, m);
+	evaluate::deleteMovValue(*this, move_pre);
 
-	if (board[m.to] == R_JIANG)
-		pos_of_kings[RED] = m.from;
-	if (board[m.to] == B_JIANG)
-		pos_of_kings[BLACK] = m.from;
-	board[m.from] = board[m.to];
-	board[m.to] = m.chessOnTo;
+	if (board[move_pre.to] == R_JIANG)
+		pos_of_kings[RED_PLAYER] = move_pre.from;
+	if (board[move_pre.to] == B_JIANG)
+		pos_of_kings[BLACK_PLAYER] = move_pre.from;
+	board[move_pre.from] = board[move_pre.to];
+	board[move_pre.to] = move_pre.chessOnTo;
 }
 
 void Board::printBoardForDebug() 
@@ -296,10 +302,10 @@ void Board::printBoardForDebug2()
 Move Board::randomRunMove() 
 {
 	Move x("a0i9");
-	if (mov.empty())
+	if (move_vec.empty())
 		return x;
-	int index = rand() % mov.size();		
-	return mov[index];
+	int index = rand() % move_vec.size();		
+	return move_vec[index];
 }
 
 
@@ -308,7 +314,7 @@ GameStatus Board::mctsMove()
 	uint32_t round = 0, all_round = 0;
 	bool cur_side = player;
 	Move temp_mov;
-	// 随机�?
+	// 随机�?
 	unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 	std::mt19937 generator(seed);
 	// 模拟棋局
@@ -318,14 +324,14 @@ GameStatus Board::mctsMove()
 		// 生成走法
 		generateMoves(cur_side);
 		// 胜负
-		if (mov.size() == 0)
+		if (move_vec.size() == 0)
 		{
 			if (cur_side == player) 
 				return LOSS;
 			else 
 				return all_round;
 		}
-		temp_mov = mov[generator() % mov.size()];
+		temp_mov = move_vec[generator() % move_vec.size()];
 		// 吃子判断
 		if (board[temp_mov.to] != EMPTY)
 			round = 0;
@@ -336,11 +342,5 @@ GameStatus Board::mctsMove()
 		cur_side = !cur_side;
 	}
 	return TIE;
-}
-
-void Board::updGameVal()
-{
-	evaluate::updBoardValue(*this);
-	// gameVal = redValue - blackValue;
 }
 

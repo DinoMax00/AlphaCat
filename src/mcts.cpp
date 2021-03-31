@@ -1,3 +1,10 @@
+﻿/*****************************************************************//**
+ * \file   mcts.cpp
+ * \brief  蒙特卡洛树搜索源文件
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
 #include "mcts.h"
 #include <math.h>
 #include "log.h"
@@ -8,13 +15,13 @@ mcts::mcts(Board *bo)
 	all_times = 1;
 	//此处调用快速获胜获得结果
 	win_times = 0;
-	if (!bo->mov.empty())
+	if (!bo->move_vec.empty())
 		is_over = 0;
 	else
 		is_over = 1;
 	// if(bo->blackValue<0) bo->blackValue=0;
 	// if(bo->redValue<0) bo->redValue=0;
-	p_of_win=(double)bo->redValue/(bo->redValue+bo->blackValue);
+	p_of_win=(double)bo->redValue/((double)bo->redValue+bo->blackValue);
 	point_all=p_of_win;
 	tryed_choices.reserve(MAX_MOVES);
 	father = this;
@@ -30,9 +37,9 @@ void mcts::selectionOfTry()
 		//std::cout << situation->player << std::endl;
 		mcts *selected = this;
 		//std::cout << ">>fuck" << std::endl;
-		if (selected->situation->mov.empty() || selected->is_over) //Log().info("error by feifei");
+		if (selected->situation->move_vec.empty() || selected->is_over) //Log().info("error by feifei");
 			break;
-		while (selected->tryed_choices.size() == selected->situation->mov.size() && !selected->is_over)
+		while (selected->tryed_choices.size() == selected->situation->move_vec.size() && !selected->is_over)
 		{
 			//std::cout << ">>fuck" << std::endl;
 			double max_score = -1;
@@ -80,7 +87,7 @@ void mcts::selectionOfTry()
 				// 	continue;
 				double score = -10000;
 				double p0 = i->point_all/i->all_times;
-				if(initial_mcts->situation->player==BLACK)
+				if(initial_mcts->situation->player==BLACK_PLAYER)
 					p0 = 1-p0; 
 				if (selected->situation->player == initial_mcts->situation->player)
 					score = (double)0.3*i->win_times / i->all_times + p0 + mcts_C * sqrt(log(selected->all_times) / i->all_times);
@@ -112,7 +119,7 @@ void mcts::selectionOfTry()
 		// 	break;
 		// }
 		if(initial_mcts->is_over||selected->is_over) break;
-		Move to_new_situation = selected->situation->mov[selected->tryed_choices.size()];
+		Move to_new_situation = selected->situation->move_vec[selected->tryed_choices.size()];
 		Board *next_board = new Board(selected->situation, to_new_situation);
 		mcts *next_mcts = new mcts(next_board);
 		next_mcts->from_move.copyOneMove(to_new_situation);
@@ -225,7 +232,7 @@ std::string mcts::getBestMoveString()
 		for (auto i : tryed_choices)
 		{
 			double p= i->point_all/i->all_times;
-			if(initial_mcts->situation->player==BLACK) p= 1-p;
+			if(initial_mcts->situation->player==BLACK_PLAYER) p= 1-p;
 			double win_score = (double)i->win_times / i->all_times*0.3+p;
 			unsigned int wintime = 0;
 			if (win_score > max_win_score || win_score == max_win_score && (i->all_times > wintime || i->is_over))
@@ -296,9 +303,9 @@ void mcts::printFormctsDebug()
 	std::cout << win_times << " " << all_times << std::endl;
 	mcts *now = this;
 	int t = 0;
-	while (t < tryed_choices.size())
+	while (t < (int)tryed_choices.size())
 	{
-		std::cout << "tryed_choices:" << now->situation->mov[t].moveToString() << std::endl;
+		std::cout << "tryed_choices:" << now->situation->move_vec[t].moveToString() << std::endl;
 		std::cout << now->tryed_choices[t]->win_times << " " << now->tryed_choices[t]->all_times << std::endl;
 		t++;
 		std::cout << std::endl;

@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   evaluate.cpp
+ * \brief  估值函数源文件
+ * 
+ * \author AlphaCat
+ * \date   March 2021
+ *********************************************************************/
 #include <iostream>
 
 #include "evaluate.h"
@@ -22,7 +29,7 @@ void evaluate::updBoardValue(Board& gameBoard)
 		else if(gameBoard.board[i] < 108 && gameBoard.board[i] > 100)// 黑棋
 			gameBoard.blackValue += evaluate::valChessPos[gameBoard.board[i] - 100][evaluate::transferPosOfBlack(i)];
 	}
-	if (gameBoard.player == RED)
+	if (gameBoard.player == RED_PLAYER)
 		gameBoard.gameVal = gameBoard.redValue - gameBoard.blackValue;
 	else
 		gameBoard.gameVal = gameBoard.blackValue - gameBoard.redValue;
@@ -49,7 +56,7 @@ void evaluate::updMovValue(Board& gameBoard, Move& mov)
 		gameBoard.blackValue += evaluate::valChessPos[gameBoard.board[mov.from] - 100][evaluate::transferPosOfBlack(mov.to)];
 
 	}
-	if (gameBoard.player == RED)
+	if (gameBoard.player == RED_PLAYER)
 		gameBoard.gameVal = gameBoard.redValue - gameBoard.blackValue;
 	else
 		gameBoard.gameVal = gameBoard.blackValue - gameBoard.redValue;
@@ -77,7 +84,7 @@ void evaluate::deleteMovValue(Board& gameBoard, Move& mov)
 		gameBoard.blackValue += evaluate::valChessPos[gameBoard.board[mov.to] - 100][evaluate::transferPosOfBlack(mov.from)];
 
 	}
-	if (gameBoard.player == RED)
+	if (gameBoard.player == RED_PLAYER)
 		gameBoard.gameVal = gameBoard.redValue - gameBoard.blackValue;
 	else
 		gameBoard.gameVal = gameBoard.blackValue - gameBoard.redValue;

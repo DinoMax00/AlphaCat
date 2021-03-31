@@ -7,14 +7,14 @@
 #include "log.h"
 
 
-bool Board::checkJiang(Move& mov)
+bool Board::checkJiang(Move& move)
 {
-	return checkJiang(mov, player);
+	return checkJiang(move, player);
 }
 
-bool Board::checkJiang(Move& mov, bool side)
+bool Board::checkJiang(Move& move, player_type side)
 {
-	genOneMove(mov);
+	genOneMove(move);
 	bool flag = 0;
 
 	//判断是否有将帅直面
@@ -28,7 +28,7 @@ bool Board::checkJiang(Move& mov, bool side)
 	}
 	if (flag)
 	{
-		deleteOneMove(mov);
+		deleteOneMove(move);
 		return true;
 	}
 
@@ -43,27 +43,27 @@ bool Board::checkJiang(Move& mov, bool side)
 			//被兵将军
 			if (i == pos_of_kings[side] + 16)
 			{
-				if ((side == BLACK && board[i] == R_BING) || (side == RED && board[i] == B_BING))
+				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被車将军
 			if (cnt == 0)
 			{
-				if ((side == BLACK && board[i] == R_JU) || (side == RED && board[i] == B_JU))
+				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((side == BLACK && board[i] == R_PAO) || (side == RED && board[i] == B_PAO))
+				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
@@ -82,27 +82,27 @@ bool Board::checkJiang(Move& mov, bool side)
 			//被兵将军
 			if (i == pos_of_kings[side] - 16)
 			{
-				if ((side == BLACK && board[i] == R_BING) || (side == RED && board[i] == B_BING))
+				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被車将军
 			if (cnt == 0)
 			{
-				if ((side == BLACK && board[i] == R_JU) || (side == RED && board[i] == B_JU))
+				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((side == BLACK && board[i] == R_PAO) || (side == RED && board[i] == B_PAO))
+				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
@@ -121,27 +121,27 @@ bool Board::checkJiang(Move& mov, bool side)
 			//被兵将军
 			if (i == pos_of_kings[side] - 1)
 			{
-				if ((side == BLACK && board[i] == R_BING) || (side == RED && board[i] == B_BING))
+				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被車将军
 			if (cnt == 0)
 			{
-				if ((side == BLACK && board[i] == R_JU) || (side == RED && board[i] == B_JU))
+				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((side == BLACK && board[i] == R_PAO) || (side == RED && board[i] == B_PAO))
+				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
@@ -160,27 +160,27 @@ bool Board::checkJiang(Move& mov, bool side)
 			//被兵将军
 			if (i == pos_of_kings[side] + 1)
 			{
-				if ((side == BLACK && board[i] == R_BING) || (side == RED && board[i] == B_BING))
+				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被車将军
 			if (cnt == 0)
 			{
-				if ((side == BLACK && board[i] == R_JU) || (side == RED && board[i] == B_JU))
+				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
 			//被炮将军
 			if (cnt == 1)
 			{
-				if ((side == BLACK && board[i] == R_PAO) || (side == RED && board[i] == B_PAO))
+				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
 				{
-					deleteOneMove(mov);
+					deleteOneMove(move);
 					return true;
 				}
 			}
@@ -196,14 +196,14 @@ bool Board::checkJiang(Move& mov, bool side)
 		int leg = to - MA_Leg[i];
 		if (board[leg] == EMPTY)
 		{
-			if ((side == BLACK && board[to] == R_MA) || (side == RED && board[to] == B_MA))
+			if ((side == BLACK_PLAYER && board[to] == R_MA) || (side == RED_PLAYER && board[to] == B_MA))
 			{
-				deleteOneMove(mov);
+				deleteOneMove(move);
 				return true;
 			}
 		}
 	}
-	deleteOneMove(mov);
+	deleteOneMove(move);
 	return false;
 }
 
@@ -212,16 +212,16 @@ void Board::generateMoves()
 	generateMoves(player);
 }
 
-void Board::generateMoves(bool side)
+void Board::generateMoves(player_type side)
 {
-	mov.clear();
+	move_vec.clear();
 	for (int index = 0x34; index <= 0xcc; index++)
 	{
 		switch (board[index])
 		{
 			case R_JU:	//车
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				for (int temp = index + 0x10; board[temp] != 255; temp += 0x10)
 				{
@@ -229,13 +229,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -249,13 +249,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -269,13 +269,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -289,13 +289,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] >= 100 && board[temp] < 255)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -307,7 +307,7 @@ void Board::generateMoves(bool side)
 			}
 			case B_JU:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				for (int temp = index + 0x10; board[temp] != 255; temp += 0x10)
 				{
@@ -315,13 +315,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -335,13 +335,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -355,13 +355,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -375,13 +375,13 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (board[temp] <= 100)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 					else
@@ -393,7 +393,7 @@ void Board::generateMoves(bool side)
 			}
 			case R_MA:
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				for (int i = 0; i < 8; i++)
 				{
@@ -401,14 +401,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + MA_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + MA_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case B_MA:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				for (int i = 0; i < 8; i++)
 				{
@@ -416,14 +416,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + MA_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + MA_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case R_XIANG:
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -432,14 +432,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + XIANG_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case B_XIANG:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -447,14 +447,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + XIANG_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + XIANG_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case R_SHI:
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -463,14 +463,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + SHI_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case B_SHI:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -479,14 +479,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + SHI_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + SHI_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case R_JIANG:
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -495,14 +495,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + JIANG_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case B_JIANG:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				for (int i = 0; i < 4; i++)
 				{
@@ -511,14 +511,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + JIANG_Feasible[i]);	//需存储
 						Curstep.chessOnTo = board[index + JIANG_Feasible[i]];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case R_PAO:				//炮比较麻烦
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				bool flag = false;
 				for (int temp = index + 0x10; board[temp] != 255; temp += 0x10)
@@ -527,7 +527,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -542,7 +542,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -553,7 +553,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -568,7 +568,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -579,7 +579,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -594,7 +594,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -605,7 +605,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -620,7 +620,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -628,7 +628,7 @@ void Board::generateMoves(bool side)
 			}
 			case B_PAO:				//炮比较麻烦
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				bool flag = false;
 				for (int temp = index + 0x10; board[temp] != 255; temp += 0x10)
@@ -637,7 +637,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -652,7 +652,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -663,7 +663,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -678,7 +678,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -689,7 +689,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -704,7 +704,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -715,7 +715,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 					else if (!flag && board[temp] < 255)
 					{
@@ -730,7 +730,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, temp);
 						Curstep.chessOnTo = board[temp];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						break;
 					}
 				}
@@ -738,7 +738,7 @@ void Board::generateMoves(bool side)
 			}
 			case R_BING:
 			{
-				if (side == BLACK)
+				if (side == BLACK_PLAYER)
 					break;
 				if (!(index & 0x80))	//已过河
 				{
@@ -748,7 +748,7 @@ void Board::generateMoves(bool side)
 						{
 							Move Curstep(index, index + BING_R_Feasible[i]);	//需存储
 							Curstep.chessOnTo = board[index + BING_R_Feasible[i]];
-							if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+							if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						}
 					}
 				}
@@ -758,14 +758,14 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index - 0x10);	//需存储
 						Curstep.chessOnTo = board[index - 0x10];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
 			case B_BING:
 			{
-				if (side == RED)
+				if (side == RED_PLAYER)
 					break;
 				if (index & 0x80)	//已过河
 				{
@@ -775,7 +775,7 @@ void Board::generateMoves(bool side)
 						{
 							Move Curstep(index, index + BING_B_Feasible[i]);	//需存储
 							Curstep.chessOnTo = board[index + BING_B_Feasible[i]];
-							if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+							if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						}
 					}
 				}
@@ -785,7 +785,7 @@ void Board::generateMoves(bool side)
 					{
 						Move Curstep(index, index + 0x10);	//需存储
 						Curstep.chessOnTo = board[index + 0x10];
-						if (!checkJiang(Curstep, side)) mov.emplace_back(Curstep);
+						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
