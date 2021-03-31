@@ -1,9 +1,9 @@
 ﻿/*****************************************************************//**
- * \file   board.h
- * \brief  棋盘类头文件
+ * @file   board.h
+ * @brief  棋盘类头文件
  * 
- * \author  AlphaCat
- * \date   March 2021
+ * @author  AlphaCat
+ * @date   March 2021
  *********************************************************************/
 #ifndef BOARD_H
 #define BOARD_H
@@ -34,93 +34,93 @@ public:
 	std::vector<Move> move_vec;					///< 记录当前棋盘所有可行的走法
 	
 	/**
-	* \brief 无参构造函数
-	* \param 形参 参数说明
+	* @brief 无参构造函数
+	* @param 形参 参数说明
 	*/
 	Board();
 
 	/**
-	* \brief fen串解析构造函数
-	* \param fen 棋局fen串
+	* @brief fen串解析构造函数
+	* @param fen 棋局fen串
 	*/
 	Board(std::string fen);
 
 	/**
-	* \brief 由已有棋盘生成一个走指定一步之后的局面棋盘
-	* \param board_pre 之前的棋盘
-	* \param move 一步移动
+	* @brief 由已有棋盘生成一个走指定一步之后的局面棋盘
+	* @param board_pre 之前的棋盘
+	* @param move 一步移动
 	*/
 	Board(Board* board_pre, Move& move);
 
 	/**
-	 * \brief 通过fen串更改棋盘局面
-	 * \param fen fen串
+	 * @brief 通过fen串更改棋盘局面
+	 * @param fen fen串
 	 */
 	void buildBoardFromFen(std::string fen);
 
 	/**
-	 * \brief 由一个长度为4的移动命令对棋盘进行一步移动
-	 * \param move 一步移动
+	 * @brief 由一个长度为4的移动命令对棋盘进行一步移动
+	 * @param move 一步移动
 	 */
 	void genOneMove(std::string& move);
 
 	/**
-	 * \brief 由一个move类对棋盘进行一步移动
-	 * \param move 一步移动
+	 * @brief 由一个move类对棋盘进行一步移动
+	 * @param move 一步移动
 	 */
 	void genOneMove(Move& move);
 
 	/**
-	 * \brief 输出棋盘到终端
+	 * @brief 输出棋盘到终端
 	 */
 	void printBoardForDebug();
 
 	/**
-	 * \brief 输出棋盘到日志
+	 * @brief 输出棋盘到日志
 	 */
 	void printBoardForDebug2();
 
 	/**
-	 * \brief 走法生成
+	 * @brief 走法生成
 	 * 
 	 */
 	void generateMoves();
 	void generateMoves(player_type);
 
 	/**
-	 * \brief 在棋盘上撤销一步移动
-	 * \param move_pre 之前采取的移动
+	 * @brief 在棋盘上撤销一步移动
+	 * @param move_pre 之前采取的移动
 	 */
 	void deleteOneMove(Move& move_pre);
 
 
 	/**
-	 * \brief 随机走一步，用于引擎测试
-	 * \return 一步合法的走子
+	 * @brief 随机走一步，用于引擎测试
+	 * @return 一步合法的走子
 	 */
 	Move randomRunMove();
 
 	/**
-	 * \brief 检测一步棋走后是否还会被将军，用于合法走子判断
+	 * @brief 检测一步棋走后是否还会被将军，用于合法走子判断
 	 * 
-	 * \param move 走法
-	 * \return true表示走后还会被将军
+	 * @param move 走法
+	 * @return true表示走后还会被将军
 	 */
 	bool checkJiang(Move& move);
 
 	/**
-	 * \brief 检测指定一方一步棋走后是否还会被将军，用于合法走子判断
+	 * @brief 检测指定一方一步棋走后是否还会被将军，用于合法走子判断
 	 * 
-	 * \param move 走法
-	 * \param side 要检测的玩家
-	 * \return true表示走后还会被将军
+	 * @param move 走法
+	 * @param side 要检测的玩家
+	 * @return true表示走后还会被将军
 	 */
 	bool checkJiang(Move& move, player_type side);
 
 	/**
-	 * \brief 为蒙特卡洛生成一盘随机走子
+	 * @brief 为蒙特卡洛生成一盘随机走子
 	 * 
-	 * \return 游戏结果 当为胜时返回回合数
+	 * @return 游戏结果 当为胜时返回回合数
 	 */
 	GameStatus mctsMove();
 };
