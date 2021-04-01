@@ -161,7 +161,7 @@ void UcciEngine::run()
 			// 获取响应
 			std::string  s = board.randomRunMove().moveToString();
 			/*
-			mcts mcts_now(&board);
+			Mcts mcts_now(&board);
 			mcts_now.selectionOfTry();
 			std::string s = mcts_now.getBestMoveString();
 			*/

@@ -17,7 +17,7 @@ bool Board::checkJiang(Move& move, player_type side)
 	genOneMove(move);
 	bool flag = 0;
 
-	//ÅÐ¶ÏÊÇ·ñÓÐ½«Ë§Ö±Ãæ
+	//åˆ¤æ–­æ˜¯å¦æœ‰å°†å¸…ç›´é¢
 	if ((pos_of_kings[0] & 15) == (pos_of_kings[1] & 15))
 	{
 		flag = 1;
@@ -32,15 +32,15 @@ bool Board::checkJiang(Move& move, player_type side)
 		return true;
 	}
 
-	//ÏòËÄ¸ö·½Ïò±éÀú£¬ÊÇ·ñ±»±ø¡¢Ü‡ºÍÅÚ½«¾ü
-	int cnt = 0; //×ßÖ±ÏßÊ±Â·ÉÏÓöµ½µÄ×ÓµÄ×Ü¸öÊý
-	//ÏòÏÂ±éÀú
+	//å‘å››ä¸ªæ–¹å‘éåŽ†ï¼Œæ˜¯å¦è¢«å…µã€è»Šå’Œç‚®å°†å†›
+	int cnt = 0; //èµ°ç›´çº¿æ—¶è·¯ä¸Šé‡åˆ°çš„å­çš„æ€»ä¸ªæ•°
+	//å‘ä¸‹éåŽ†
 	for (int i = pos_of_kings[side] + 16; board[i] != BOUNDARY; i += 16)
 	{
 		if (board[i] == EMPTY) continue;
 		else
 		{
-			//±»±ø½«¾ü
+			//è¢«å…µå°†å†›
 			if (i == pos_of_kings[side] + 16)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
@@ -49,7 +49,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»Ü‡½«¾ü
+			//è¢«è»Šå°†å†›
 			if (cnt == 0)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
@@ -58,7 +58,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»ÅÚ½«¾ü
+			//è¢«ç‚®å°†å†›
 			if (cnt == 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
@@ -73,13 +73,13 @@ bool Board::checkJiang(Move& move, player_type side)
 	}
 
 	cnt = 0;
-	//ÏòÉÏ±éÀú
+	//å‘ä¸ŠéåŽ†
 	for (int i = pos_of_kings[side] - 16; board[i] != BOUNDARY; i -= 16)
 	{
 		if (board[i] == EMPTY) continue;
 		else
 		{
-			//±»±ø½«¾ü
+			//è¢«å…µå°†å†›
 			if (i == pos_of_kings[side] - 16)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
@@ -88,7 +88,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»Ü‡½«¾ü
+			//è¢«è»Šå°†å†›
 			if (cnt == 0)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
@@ -97,7 +97,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»ÅÚ½«¾ü
+			//è¢«ç‚®å°†å†›
 			if (cnt == 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
@@ -112,13 +112,13 @@ bool Board::checkJiang(Move& move, player_type side)
 	}
 
 	cnt = 0;
-	//Ïò×ó±éÀú
+	//å‘å·¦éåŽ†
 	for (int i = pos_of_kings[side] - 1; board[i] != BOUNDARY; i--)
 	{
 		if (board[i] == EMPTY) continue;
 		else
 		{
-			//±»±ø½«¾ü
+			//è¢«å…µå°†å†›
 			if (i == pos_of_kings[side] - 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
@@ -127,7 +127,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»Ü‡½«¾ü
+			//è¢«è»Šå°†å†›
 			if (cnt == 0)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
@@ -136,7 +136,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»ÅÚ½«¾ü
+			//è¢«ç‚®å°†å†›
 			if (cnt == 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
@@ -151,13 +151,13 @@ bool Board::checkJiang(Move& move, player_type side)
 	}
 
 	cnt = 0;
-	//ÏòÓÒ±éÀú
+	//å‘å³éåŽ†
 	for (int i = pos_of_kings[side] + 1; board[i] != BOUNDARY; i++)
 	{
 		if (board[i] == EMPTY) continue;
 		else
 		{
-			//±»±ø½«¾ü
+			//è¢«å…µå°†å†›
 			if (i == pos_of_kings[side] + 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_BING) || (side == RED_PLAYER && board[i] == B_BING))
@@ -166,7 +166,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»Ü‡½«¾ü
+			//è¢«è»Šå°†å†›
 			if (cnt == 0)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_JU) || (side == RED_PLAYER && board[i] == B_JU))
@@ -175,7 +175,7 @@ bool Board::checkJiang(Move& move, player_type side)
 					return true;
 				}
 			}
-			//±»ÅÚ½«¾ü
+			//è¢«ç‚®å°†å†›
 			if (cnt == 1)
 			{
 				if ((side == BLACK_PLAYER && board[i] == R_PAO) || (side == RED_PLAYER && board[i] == B_PAO))
@@ -189,7 +189,7 @@ bool Board::checkJiang(Move& move, player_type side)
 		if (cnt > 1) break;
 	}
 
-	//±»Âí½«¾ü
+	//è¢«é©¬å°†å†›
 	for (int i = 0; i < 8; i++)
 	{
 		int to = pos_of_kings[side] + MA_Feasible[i];
@@ -219,7 +219,7 @@ void Board::generateMoves(player_type side)
 	{
 		switch (board[index])
 		{
-			case R_JU:	//³µ
+			case R_JU:	//è½¦
 			{
 				if (side == BLACK_PLAYER)
 					break;
@@ -399,7 +399,7 @@ void Board::generateMoves(player_type side)
 				{
 					if (board[index + MA_Feasible[i]] != 255 && (!board[index + MA_Feasible[i]] || board[index + MA_Feasible[i]] >= 100) && !board[index + MA_Leg[i]])
 					{
-						Move Curstep(index, index + MA_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + MA_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + MA_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -414,7 +414,7 @@ void Board::generateMoves(player_type side)
 				{
 					if (board[index + MA_Feasible[i]] != 255 && board[index + MA_Feasible[i]] <= 100 && !board[index + MA_Leg[i]])
 					{
-						Move Curstep(index, index + MA_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + MA_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + MA_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -430,7 +430,7 @@ void Board::generateMoves(player_type side)
 					if (board[index + XIANG_Feasible[i]] != 255 && (!board[index + XIANG_Feasible[i]] || board[index + XIANG_Feasible[i]] >= 100)
 						&& !board[index + (XIANG_Feasible[i] / 2)] && ((index + XIANG_Feasible[i]) & 0x80))
 					{
-						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + XIANG_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + XIANG_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -445,7 +445,7 @@ void Board::generateMoves(player_type side)
 				{
 					if (board[index + XIANG_Feasible[i]] != 255 && board[index + XIANG_Feasible[i]] <= 100 && !board[index + (XIANG_Feasible[i] / 2)] && !((index + XIANG_Feasible[i]) & 0x80))
 					{
-						Move Curstep(index, index + XIANG_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + XIANG_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + XIANG_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -461,7 +461,7 @@ void Board::generateMoves(player_type side)
 					if (board[index + SHI_Feasible[i]] != 255 && (!board[index + SHI_Feasible[i]] || board[index + SHI_Feasible[i]] >= 100)
 						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 11) <= 1)
 					{
-						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + SHI_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + SHI_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -477,7 +477,7 @@ void Board::generateMoves(player_type side)
 					if (board[index + SHI_Feasible[i]] != 255 && board[index + SHI_Feasible[i]] <= 100 && (index + SHI_Feasible[i] % 16 >= 7)
 						&& abs((index + SHI_Feasible[i]) % 16 - 8) <= 1 && abs((index + SHI_Feasible[i]) / 16 - 4) <= 1)
 					{
-						Move Curstep(index, index + SHI_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + SHI_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + SHI_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -493,7 +493,7 @@ void Board::generateMoves(player_type side)
 					if (board[index + JIANG_Feasible[i]] != 255 && (!board[index + JIANG_Feasible[i]] || board[index + JIANG_Feasible[i]] >= 100)
 						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 11) <= 1)
 					{
-						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + JIANG_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + JIANG_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -509,14 +509,14 @@ void Board::generateMoves(player_type side)
 					if (board[index + JIANG_Feasible[i]] != 255 && board[index + JIANG_Feasible[i]] <= 100
 						&& abs((index + JIANG_Feasible[i]) % 16 - 8) <= 1 && abs((index + JIANG_Feasible[i]) / 16 - 4) <= 1)
 					{
-						Move Curstep(index, index + JIANG_Feasible[i]);	//Ðè´æ´¢
+						Move Curstep(index, index + JIANG_Feasible[i]);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + JIANG_Feasible[i]];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
 				}
 				break;
 			}
-			case R_PAO:				//ÅÚ±È½ÏÂé·³
+			case R_PAO:				//ç‚®æ¯”è¾ƒéº»çƒ¦
 			{
 				if (side == BLACK_PLAYER)
 					break;
@@ -626,7 +626,7 @@ void Board::generateMoves(player_type side)
 				}
 				break;
 			}
-			case B_PAO:				//ÅÚ±È½ÏÂé·³
+			case B_PAO:				//ç‚®æ¯”è¾ƒéº»çƒ¦
 			{
 				if (side == RED_PLAYER)
 					break;
@@ -740,13 +740,13 @@ void Board::generateMoves(player_type side)
 			{
 				if (side == BLACK_PLAYER)
 					break;
-				if (!(index & 0x80))	//ÒÑ¹ýºÓ
+				if (!(index & 0x80))	//å·²è¿‡æ²³
 				{
 					for (int i = 0; i < 3; i++)
 					{
 						if (board[index + BING_R_Feasible[i]] != 255 && (!board[index + BING_R_Feasible[i]] || board[index + BING_R_Feasible[i]] >= 100))
 						{
-							Move Curstep(index, index + BING_R_Feasible[i]);	//Ðè´æ´¢
+							Move Curstep(index, index + BING_R_Feasible[i]);	//éœ€å­˜å‚¨
 							Curstep.chessOnTo = board[index + BING_R_Feasible[i]];
 							if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						}
@@ -756,7 +756,7 @@ void Board::generateMoves(player_type side)
 				{
 					if (board[index - 0x10] != 255 && (!board[index - 0x10] || board[index - 0x10] >= 100))
 					{
-						Move Curstep(index, index - 0x10);	//Ðè´æ´¢
+						Move Curstep(index, index - 0x10);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index - 0x10];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}
@@ -767,13 +767,13 @@ void Board::generateMoves(player_type side)
 			{
 				if (side == RED_PLAYER)
 					break;
-				if (index & 0x80)	//ÒÑ¹ýºÓ
+				if (index & 0x80)	//å·²è¿‡æ²³
 				{
 					for (int i = 0; i < 3; i++)
 					{
 						if (board[index + BING_B_Feasible[i]] != 255 && board[index + BING_B_Feasible[i]] <= 100)
 						{
-							Move Curstep(index, index + BING_B_Feasible[i]);	//Ðè´æ´¢
+							Move Curstep(index, index + BING_B_Feasible[i]);	//éœ€å­˜å‚¨
 							Curstep.chessOnTo = board[index + BING_B_Feasible[i]];
 							if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 						}
@@ -783,7 +783,7 @@ void Board::generateMoves(player_type side)
 				{
 					if (board[index + 0x10] != 255 && board[index + 0x10] <= 100)
 					{
-						Move Curstep(index, index + 0x10);	//Ðè´æ´¢
+						Move Curstep(index, index + 0x10);	//éœ€å­˜å‚¨
 						Curstep.chessOnTo = board[index + 0x10];
 						if (!checkJiang(Curstep, side)) move_vec.emplace_back(Curstep);
 					}

@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   move.cpp
- * \brief  Æå×ÓÒÆ¶¯ÀàÔ´ÎÄ¼þ
+ * \brief  ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½Ô´ï¿½Ä¼ï¿½
  * 
  * \author AlphaCat
  * \date   March 2021
@@ -34,10 +34,10 @@ Move::Move(int from, int to)
 }
 
 
-Move::Move(std::string move)
+Move::Move(std::string move_str)
 {
-	from = ((12 + '0' - move[1]) << 4) + move[0] - 'a' + 4;
-	to = ((12 + '0' - move[3]) << 4) + move[2] - 'a' + 4;
+	from = ((12 + '0' - move_str[1]) << 4) + move_str[0] - 'a' + 4;
+	to = ((12 + '0' - move_str[3]) << 4) + move_str[2] - 'a' + 4;
 }
 
 void Move::copyOneMove (Move& rhs)

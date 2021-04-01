@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   ucci.h
- * \brief  ucciĞ­ÒéÍ·ÎÄ¼ş
+ * \brief  ucciåè®®å¤´æ–‡ä»¶
  * 
  * \author AlphaCat
  * \date   March 2021
@@ -18,26 +18,48 @@
 class UcciEngine
 {
 private:
-    
-    // È·¶¨ÄÄÒ»±ß
-    bool moved = false;
-    // ¶ÁÈëµÄÃüÁî×Ö·û´®
-    std::string commandStr;
-    // ÃüÁî×Ö·û´®·Ö¸îºóµÄ½á¹û
-    std::vector<std::string> commandVec;
-    // ¶ÁÈëÃüÁî
-    void getCommand();
-    // ·Ö¸î×Ö·û´®
-    void split();
-    // Çå¿Õ×Ö·û´®ÓëÃüÁîvector
-    void clear();
-    // ¸üĞÂ½ÇÉ«
-    void updWhichPlayer();
-public:
+    /// æ£‹ç›˜
     Board board;
-    // ÒıÇæÆô¶¯
+    /// è¯»å…¥çš„å‘½ä»¤å­—ç¬¦ä¸²
+    std::string commandStr;
+    /// å‘½ä»¤å­—ç¬¦ä¸²åˆ†å‰²åå­˜æ”¾çš„Vec
+    std::vector<std::string> commandVec;
+    
+    /**
+     * @brief è·å–ä¸€æ¡å‘½ä»¤å¹¶å­˜å…¥commandStr
+     * 
+     */
+    void getCommand();
+
+    /**
+     * @brief å¯¹å‘½ä»¤å­—ç¬¦ä¸²æŒ‰ç©ºæ ¼è¿›è¡Œåˆ†å‰²å¹¶å­˜å…¥commandVec
+     * 
+     */
+    void split();
+
+    /**
+     * @brief æ¸…ç©ºå‘½ä»¤å­—ç¬¦ä¸²ä¸å‘½ä»¤Vec
+     * 
+     */
+    void clear();
+
+    /**
+     * @brief æ›´æ–°å½“å‰æ‰§å­
+     * 
+     */
+    void updWhichPlayer();
+
+public:
+    /**
+     * @brief å¯¹å¤–è°ƒç”¨å¼•æ“é¢„å¯åŠ¨çš„æ¥å£
+     * 
+     */
     void bootEngine();
-    // ÕıÊ½Æô¶¯
+
+    /**
+     * @brief å¯¹å¤–è°ƒç”¨å¼•æ“è¿è¡Œçš„æ¥å£
+     * 
+     */
     void run();
 };
 

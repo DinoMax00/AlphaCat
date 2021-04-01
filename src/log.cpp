@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   log.cpp
- * \brief  日志类源文件
+ * \brief  鏃ュ織绫绘簮鏂囦欢
  * 
  * \author AlphaCat
  * \date   March 2021
@@ -17,7 +17,7 @@ void Log::clear()
 	if (out.is_open())
 	{
 		out << __DATE__ << "--" << __TIME__ << ":\n";
-		out << "程序启动" << std::endl;
+		out << "绋嬪簭鍚姩" << std::endl;
 		out.close();
 	}
 	else out.close();

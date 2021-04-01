@@ -1,9 +1,9 @@
 ﻿/*****************************************************************//**
- * \file   base.h
- * \brief  项目中使用到的常量、类型、宏定义
+ * @file   base.h
+ * @brief  项目中使用到的常量、类型、宏定义
  * 
- * \author AlphaCat
- * \date   March 2021
+ * @author AlphaCat
+ * @date   March 2021
  *********************************************************************/
 
 #ifndef BASE_H
@@ -22,6 +22,21 @@ enum Chess
 	R_PAO = 6, B_PAO = 106,
 	R_BING = 7, B_BING = 107
 };
+
+/// 马移动位置
+const int MA_Feasible[8] = { 0x21,0x1f,0x12,0x0e,-0x21,-0x1f,-0x12,-0x0e };
+/// 马别腿位置
+const int MA_Leg[8] = { 0x10,0x10,0x01,-0x01,-0x10,-0x10,-0x01,0x01 };
+/// 相移动位置
+const int XIANG_Feasible[4] = { 0x22,0x1e,-0x22,-0x1e };
+/// 士移动位置
+const int SHI_Feasible[4] = { 0x11,0x0f,-0x11,-0x0f };
+/// 将移动位置
+const int JIANG_Feasible[4] = { 0x10,0x01,-0x10,-0x01 };
+/// 兵移动位置
+const int BING_R_Feasible[3] = { 0x01,-0x01,-0x10 };
+/// 卒移动位置
+const int BING_B_Feasible[3] = { 0x01,-0x01,0x10 };
 
 /// 游戏结果，用于随机快速走子函数
 typedef int GameStatus;

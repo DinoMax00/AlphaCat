@@ -1,9 +1,9 @@
 /*****************************************************************//**
- * \file   move.h
- * \brief  �����ƶ���ͷ�ļ�
+ * @file   move.h
+ * @brief  棋子移动类头文件
  * 
- * \author AlphaCat
- * \date   March 2021
+ * @author AlphaCat
+ * @date   March 2021
  *********************************************************************/
 #ifndef MOVE_H
 #define MOVE_H
@@ -13,26 +13,56 @@
 
 #include "base.h"
 
+/**
+ * @brief 棋子移动类
+ * 封装了棋子的一次走动
+ * 
+ */
 class Move
 {
 public:
+	/// 起始位置
 	unsigned char from = 0;
+	/// 目标位置
 	unsigned char to = 0;
+	/// 记录目标位置上的棋子，方便撤回操作
 	unsigned char chessOnTo = EMPTY;
 	   
+	/**
+	 * @brief 默认构造函数
+	 * 
+	 */
 	Move();
-	Move(std::string);
-	Move(int, int);
+
+	/**
+	 * @brief 根据描述移动的字符串构造Move
+	 * 
+	 * @param move_str 长度为4的移动描述字符串
+	 */
+	Move(std::string move_str);
+
+	/**
+	 * @brief 通过始末位置构造Move
+	 * 
+	 * @param from 起始位置
+	 * @param to 目标位置
+	 */
+	Move(int from, int to);
+
+	/**
+	 * @brief 将Move类描述的移动转为一个长度为4的字符串
+	 * 
+	 * @return std::string 移动描述字符串
+	 */
 	std::string moveToString();
-	void copyOneMove(Move&);
+
+	/**
+	 * @brief 复制一个Move类
+	 * 
+	 * @param 要复制的对象
+	 */
+	void copyOneMove(Move& rhs);
 };
 
-const int MA_Feasible[8] = { 0x21,0x1f,0x12,0x0e,-0x21,-0x1f,-0x12,-0x0e };
-const int MA_Leg[8] = { 0x10,0x10,0x01,-0x01,-0x10,-0x10,-0x01,0x01 };
-const int XIANG_Feasible[4] = { 0x22,0x1e,-0x22,-0x1e };
-const int SHI_Feasible[4] = { 0x11,0x0f,-0x11,-0x0f };
-const int JIANG_Feasible[4] = { 0x10,0x01,-0x10,-0x01 };
-const int BING_R_Feasible[3] = { 0x01,-0x01,-0x10 };
-const int BING_B_Feasible[3] = { 0x01,-0x01,0x10 };
 
 #endif 

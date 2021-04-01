@@ -1,11 +1,11 @@
 /*****************************************************************//**
- * \file   AlphaCat.cpp
- * \brief  AlphaCat≥Ã–Ú»Îø⁄
+ * @file   AlphaCat.cpp
+ * @brief  AlphaCatÁ®ãÂ∫èÂÖ•Âè£
  * 
- * \license: MIT
- * \copyright: Copyright 2021 TongJi
- * \birth: created by Dino FeiFei PPZ AYi on 2021-xx-xx
- * \version V0.0.3
+ * @license: MIT
+ * @copyright: Copyright 2021 TongJi
+ * @birth: created by Dino FeiFei PPZ AYi on 2021-xx-xx
+ * @version V0.0.0.3
  *********************************************************************/
 #include <iostream>
 #include <ctime>

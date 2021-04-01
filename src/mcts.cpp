@@ -8,7 +8,7 @@
 #include "mcts.h"
 #include <math.h>
 #include "log.h"
-mcts::mcts(Board *bo)
+Mcts::Mcts(Board *bo)
 {
 	situation = bo;
 	initial_mcts = this;
@@ -28,14 +28,14 @@ mcts::mcts(Board *bo)
 	best_move_after = this;
 }
 
-void mcts::selectionOfTry()
+void Mcts::selectionOfTry()
 {
 	int i = 0;
-	while (i++ < mcts_TIMES)
+	while (i++ < MCTS_TIMES)
 	{
 		//printFormctsDebug();
 		//std::cout << situation->player << std::endl;
-		mcts *selected = this;
+		Mcts *selected = this;
 		//std::cout << ">>fuck" << std::endl;
 		if (selected->situation->move_vec.empty() || selected->is_over) //Log().info("error by feifei");
 			break;
@@ -43,7 +43,7 @@ void mcts::selectionOfTry()
 		{
 			//std::cout << ">>fuck" << std::endl;
 			double max_score = -1;
-			mcts *next = selected;
+			Mcts *next = selected;
 			for (auto i : selected->tryed_choices)
 			{
 				// if (i->is_over)
@@ -51,7 +51,7 @@ void mcts::selectionOfTry()
 				// 	if (selected->situation->player == initial_mcts->situation->player && i->win_times == i->all_times)
 				// 	{
 				// 		selected->is_over = true;
-				// 		mcts *t = selected;
+				// 		Mcts *t = selected;
 				// 		// selected->tryed_choices.clear();
 				// 		selected->tryed_choices.emplace_back(i);
 				// 		selected->best_move_after=i;
@@ -68,7 +68,7 @@ void mcts::selectionOfTry()
 				// 	else if (selected->situation->player != initial_mcts->situation->player && i->win_times == 0)
 				// 	{
 				// 		selected->is_over = true;
-				// 		mcts *t = selected;
+				// 		Mcts *t = selected;
 				// 		// selected->tryed_choices.clear();
 				// 		selected->tryed_choices.emplace_back(i);
 				// 		selected->best_move_after=i;
@@ -90,9 +90,9 @@ void mcts::selectionOfTry()
 				if(initial_mcts->situation->player==BLACK_PLAYER)
 					p0 = 1-p0; 
 				if (selected->situation->player == initial_mcts->situation->player)
-					score = (double)0.3*i->win_times / i->all_times + p0 + mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = (double)0.3*i->win_times / i->all_times + p0 + MCTS_C * sqrt(log(selected->all_times) / i->all_times);
 				else
-					score = (0.3*(double)i->all_times - i->win_times) / i->all_times +(1-p0)+ mcts_C * sqrt(log(selected->all_times) / i->all_times);
+					score = (0.3*(double)i->all_times - i->win_times) / i->all_times +(1-p0)+ MCTS_C * sqrt(log(selected->all_times) / i->all_times);
 				
 				if (score > max_score)
 				{
@@ -121,7 +121,7 @@ void mcts::selectionOfTry()
 		if(initial_mcts->is_over||selected->is_over) break;
 		Move to_new_situation = selected->situation->move_vec[selected->tryed_choices.size()];
 		Board *next_board = new Board(selected->situation, to_new_situation);
-		mcts *next_mcts = new mcts(next_board);
+		Mcts *next_mcts = new Mcts(next_board);
 		next_mcts->from_move.copyOneMove(to_new_situation);
 
 		// if (next_board->mov.empty())
@@ -178,7 +178,7 @@ void mcts::selectionOfTry()
 		// 		result = 1;
 		// }
 
-		// mcts *next_mcts = new mcts(next_board);
+		// Mcts *next_mcts = new Mcts(next_board);
 
 		// next_mcts->from_move.copyOneMove(to_new_situation);
 
@@ -214,7 +214,7 @@ void mcts::selectionOfTry()
 	printFormctsDebug2();
 }
 
-std::string mcts::getBestMoveString()
+std::string Mcts::getBestMoveString()
 {
 	double max_win_score = -1;
 	if (tryed_choices.empty())
@@ -224,7 +224,7 @@ std::string mcts::getBestMoveString()
 		return x.moveToString();
 	}
 	int choice = 0;
-	mcts *ans = this;
+	Mcts *ans = this;
 	if(best_move_after!=this)
 		ans = best_move_after;
 	else 
@@ -246,7 +246,7 @@ std::string mcts::getBestMoveString()
 	}
 	return ans->from_move.moveToString();
 }
-// Move &mcts::getBestMove()
+// Move &Mcts::getBestMove()
 // {
 // 	// double max_win_score = -1
 // 	int max_win_score = -1;
@@ -273,7 +273,7 @@ std::string mcts::getBestMoveString()
 // 	}
 // 	return situation->mov[choice];
 // }
-mcts *mcts::new_world(Board *new_world_)
+Mcts *Mcts::new_world(Board *new_world_)
 {
 	for (auto i : best_move_after->tryed_choices)
 	{
@@ -293,15 +293,15 @@ mcts *mcts::new_world(Board *new_world_)
 			return i;
 		}
 	}
-	mcts *ans = new mcts(new_world_);
+	Mcts *ans = new Mcts(new_world_);
 	return ans;
 }
 
-void mcts::printFormctsDebug()
+void Mcts::printFormctsDebug()
 {
 	std::cout << "all results" << std::endl;
 	std::cout << win_times << " " << all_times << std::endl;
-	mcts *now = this;
+	Mcts *now = this;
 	int t = 0;
 	while (t < (int)tryed_choices.size())
 	{
@@ -325,12 +325,12 @@ void mcts::printFormctsDebug()
 		std::cout << std::endl;
 	}*/
 }
-void mcts::printFormctsDebug2()
+void Mcts::printFormctsDebug2()
 {
 	// std::cout<<"all results"<<std::endl;
 	Log().info("allresult::" + std::to_string(win_times) + ' ' + std::to_string(all_times));
 	// std::cout << win_times << " " << all_times << std::endl;
-	// mcts *now = this;
+	// Mcts *now = this;
 	// situation->printBoardForDebug();
 	// Log().add(situation->player);
 	Log().add(std::to_string(point_all/all_times));
