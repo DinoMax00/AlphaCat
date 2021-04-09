@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 
+#include "search.h"
 #include "ucci.h"
 #include "log.h"
 #include "mcts.h"
@@ -159,7 +160,8 @@ void UcciEngine::run()
 				// std::cout << std::stoi(commandVec[2]) << std::endl;
 			}
 			// 获取响应
-			std::string  s = board.randomRunMove().moveToString();
+			searcher search;
+			std::string  s = search.getBestMove(board).moveToString();
 			/*
 			Mcts mcts_now(&board);
 			mcts_now.selectionOfTry();
