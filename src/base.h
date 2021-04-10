@@ -53,6 +53,6 @@ constexpr auto BLACK_PLAYER = 0; ///< 黑棋
 constexpr auto MAX_MOVES = 80;
 
 /// 迭代加深搜索深度
-constexpr auto MAX_SEARCH_DEPTH = 4;
+constexpr auto MAX_SEARCH_DEPTH = 5;
 
 #endif

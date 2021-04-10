@@ -14,6 +14,7 @@ public:
 private:
 	int searchAlphaBeta(Board&, int depth, int alpha, int beta);
 	int best;
+	Move moveInDep[MAX_SEARCH_DEPTH + 1][MAX_MOVES];
 };
 
 #endif
