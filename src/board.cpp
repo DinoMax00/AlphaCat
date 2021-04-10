@@ -67,7 +67,6 @@ void Board::buildBoardFromFen(std::string fen)
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
 	}
-	evaluate::updBoardValue(*this);
 }
 
 void Board::genOneMove(std::string& move)
@@ -77,7 +76,6 @@ void Board::genOneMove(std::string& move)
 	if (board[start_position] == EMPTY)
 		return;
 	Move tmp_move(move);
-	evaluate::updMovValue(*this, tmp_move);
 
 	if (board[start_position] == R_JIANG)
 		pos_of_kings[RED_PLAYER] = end_position;
@@ -91,7 +89,6 @@ void Board::genOneMove(Move& move)
 {
 	if (board[move.from] == EMPTY)
 		return;
-	evaluate::updMovValue(*this, move);
 	if (board[move.from] == R_JIANG)
 		pos_of_kings[RED_PLAYER] = move.to;
 	if (board[move.from] == B_JIANG)
@@ -102,14 +99,22 @@ void Board::genOneMove(Move& move)
 
 void Board::deleteOneMove(Move& move_pre) 
 {
-	evaluate::deleteMovValue(*this, move_pre);
-
 	if (board[move_pre.to] == R_JIANG)
 		pos_of_kings[RED_PLAYER] = move_pre.from;
 	if (board[move_pre.to] == B_JIANG)
 		pos_of_kings[BLACK_PLAYER] = move_pre.from;
 	board[move_pre.from] = board[move_pre.to];
 	board[move_pre.to] = move_pre.chessOnTo;
+}
+
+int Board::getGameVal()
+{
+	evaluate::updBoardValue(*this);
+	if (player == RED_PLAYER)
+		gameVal = redValue - blackValue;
+	else 
+		gameVal = blackValue - redValue;
+	return gameVal;
 }
 
 void Board::printBoardForDebug() 

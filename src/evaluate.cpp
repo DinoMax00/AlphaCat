@@ -1,6 +1,6 @@
 /*****************************************************************/ /**
  * \file   evaluate.cpp
- * \brief  ???????????
+ * \brief  估值函数源文件
  * 
  * \author AlphaCat
  * \date   March 2021
@@ -23,10 +23,11 @@ int transferPosOfBlack(int pos)
 	return 256 - pos;
 }
 
+/*
 void evaluate::updBoardValue(Board &gameBoard)
 {
 	gameBoard.redValue = gameBoard.blackValue = 0;
-	for (int i = 0; i < 256; i++)
+	for (int i = 0x34; i <= 0xcc; i++)
 	{
 		if (gameBoard.board[i] < 8 && gameBoard.board[i] > 0)
 			gameBoard.redValue += evaluate::valChessPos[gameBoard.board[i]][i];
@@ -86,3 +87,71 @@ void evaluate::deleteMovValue(Board &gameBoard, Move &mov)
 	else
 		gameBoard.gameVal = gameBoard.blackValue - gameBoard.redValue;
 }
+*/
+
+// 棋子基础子力分
+int baseValue(unsigned char* board, player_type player)
+{
+	int ans = 0;
+	for (int i = 0x34; i <= 0xcc; i++)
+	{
+		if (player == RED_PLAYER && board[i] > 0 && board[i] < 8)
+		{
+			ans += evaluate::valChessBase[board[i]];
+		}
+		if (player == BLACK_PLAYER && board[i] > 100 && board[i] < 108)
+		{
+			ans += evaluate::valChessBase[board[i] - 100];
+		}
+	}
+	return ans;
+}
+
+// 棋子位置分
+int posValue(unsigned char* board, player_type player)
+{
+	int ans = 0;
+	for (int i = 0x34; i <= 0xcc; i++)
+	{
+		if (player == RED_PLAYER && board[i] > 0 && board[i] < 8)
+		{
+			ans += evaluate::valChessPos[board[i]][i];
+		}
+		if (player == BLACK_PLAYER && board[i] > 100 && board[i] < 108)
+		{
+			ans += evaluate::valChessPos[board[i] - 100][transferPosOfBlack(i)];
+		}
+	}
+	return ans;
+}
+
+// 棋子灵活度评分
+int moveValue(unsigned char* board, std::vector<Move>& move_vec, player_type player)
+{
+	int ans = 0;
+	for (auto m : move_vec)
+	{
+		unsigned char chess = board[m.from];
+		if (player == RED_PLAYER && chess > 0 && chess < 8)
+		{
+			ans += evaluate::valChessMove[chess];
+		}
+		if (player == BLACK_PLAYER && chess > 100 && chess < 108)
+		{
+			ans += evaluate::valChessMove[chess - 100];
+		}
+	}
+	return ans;
+}
+
+// 更新局面评估函数
+void evaluate::updBoardValue(Board& gameBoard)
+{
+	gameBoard.redValue = gameBoard.blackValue = 0;
+	gameBoard.generateMoves();
+	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER) + posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
+	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER) + posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
+}
+
+
+

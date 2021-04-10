@@ -124,6 +124,11 @@ public:
 	 * @return 游戏结果 当为胜时返回回合数
 	 */
 	GameStatus mctsMove();
+
+	/**
+	 * @brief 更新并返回局面估值函数
+	 */
+	int getGameVal();
 };
 
 

@@ -3,7 +3,7 @@
 
 Move searcher::getBestMove(Board &now)
 {
-	now.printBoardForDebug();
+	// now.printBoardForDebug();
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
@@ -22,7 +22,7 @@ Move searcher::getBestMove(Board &now)
 int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta, int top)
 {
 	if (depth == 0)
-		return now.gameVal;
+		return now.getGameVal();
 	now.generateMoves();
 	int size = now.move_vec.size();
 	for (int i = 0; i < size; i++)
