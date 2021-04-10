@@ -12,7 +12,7 @@ class searcher
 public:
 	Move getBestMove(Board&);
 private:
-	int searchAlphaBeta(Board&, int depth, int alpha, int beta);
+	int searchAlphaBeta(Board&, int depth, int alpha, int beta, int top);
 	int best;
 	Move moveInDep[MAX_SEARCH_DEPTH + 1][MAX_MOVES];
 };
