@@ -6,7 +6,7 @@ Move searcher::getBestMove(Board &now)
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
-	int val = searchAlphaBeta(now, MAX_SEARCH_DEPTH, -inf, inf);
+		int val = searchAlphaBeta(now, MAX_SEARCH_DEPTH, -inf, inf);
 	now.generateMoves();
 	x = now.move_vec[best];
 	return x;
@@ -22,8 +22,10 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 		moveInDep[depth][i] = now.move_vec[i];
 	for (int i = 0; i < size; i++)
 	{
+		now.player ^= 1;
 		now.genOneMove(moveInDep[depth][i]);
 		int val = -searchAlphaBeta(now, depth - 1, -beta, -alpha);
+		now.player ^= 1;
 		now.deleteOneMove(moveInDep[depth][i]);
 		if (val >= beta)
 			return beta;
