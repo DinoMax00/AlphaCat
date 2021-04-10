@@ -7,8 +7,9 @@ Move searcher::getBestMove(Board &now)
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
-	int dep = 1, start = clock(), end = clock();
-	while (end - start < 1000)
+	int dep = 1;
+	start = clock(), end = clock();
+	while (end - start < TIME_LIMIT)
 	{
 		int val = searchAlphaBeta(now, dep, -inf, inf, dep);
 		now.generateMoves();
@@ -21,7 +22,7 @@ Move searcher::getBestMove(Board &now)
 
 int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta, int top)
 {
-	if (depth == 0)
+	if (depth == 0 || clock()-start > TIME_LIMIT)
 		return now.getGameVal();
 	now.generateMoves();
 	int size = now.move_vec.size();

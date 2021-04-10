@@ -132,6 +132,7 @@ int moveValue(unsigned char* board, std::vector<Move>& move_vec, player_type pla
 	for (auto m : move_vec)
 	{
 		unsigned char chess = board[m.from];
+		// std::cout << (int)m.from << " " << (int)chess << std::endl;
 		if (player == RED_PLAYER && chess > 0 && chess < 8)
 		{
 			ans += evaluate::valChessMove[chess];
@@ -147,10 +148,11 @@ int moveValue(unsigned char* board, std::vector<Move>& move_vec, player_type pla
 // 更新局面评估函数
 void evaluate::updBoardValue(Board& gameBoard)
 {
-	gameBoard.redValue = gameBoard.blackValue = 0;
-	gameBoard.generateMoves();
-	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER) + posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
-	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER) + posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
+	gameBoard.generateMoves(RED_PLAYER);
+	//std::cout << baseValue(gameBoard.board, RED_PLAYER) << " " << posValue(gameBoard.board, RED_PLAYER) << " " << moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER) << std::endl;
+	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER) + 4*posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
+	gameBoard.generateMoves(BLACK_PLAYER);
+	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER) + 4*posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
 }
 
 
