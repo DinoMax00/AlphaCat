@@ -3,11 +3,10 @@
 
 Move searcher::getBestMove(Board &now)
 {
-	// now.printBoardForDebug();
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
-	int dep = 1;
+	int dep = 5;
 	start = clock(), end = clock();
 	while (end - start < TIME_LIMIT)
 	{
