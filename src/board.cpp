@@ -109,12 +109,7 @@ void Board::deleteOneMove(Move& move_pre)
 
 int Board::getGameVal()
 {
-	evaluate::updBoardValue(*this);
-	if (player == RED_PLAYER)
-		gameVal = redValue - blackValue;
-	else 
-		gameVal = blackValue - redValue;
-	return gameVal;
+	return evaluate::updBoardValue(*this);
 }
 
 void Board::printBoardForDebug() 

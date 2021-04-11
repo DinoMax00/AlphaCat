@@ -24,18 +24,18 @@ int transferPosOfBlack(int pos)
 }
 
 // 棋子基础子力分
-int baseValue(unsigned char* board, player_type player)
+int baseValue(unsigned char* board, player_type player, int state)
 {
 	int ans = 0;
 	for (int i = 0x34; i <= 0xcc; i++)
 	{
 		if (player == RED_PLAYER && board[i] > 0 && board[i] < 8)
 		{
-			ans += evaluate::valChessBase[board[i]];
+			ans += evaluate::valChessBase[state][board[i]];
 		}
 		if (player == BLACK_PLAYER && board[i] > 100 && board[i] < 108)
 		{
-			ans += evaluate::valChessBase[board[i] - 100];
+			ans += evaluate::valChessBase[state][board[i] - 100];
 		}
 	}
 	return ans;
@@ -80,12 +80,35 @@ int moveValue(unsigned char* board, std::vector<Move>& move_vec, player_type pla
 }
 
 // 更新局面评估函数
-void evaluate::updBoardValue(Board& gameBoard)
+int evaluate::updBoardValue(Board& gameBoard)
 {
+	// 查看对局进度
+	int num = 0, state = 0;
+	for (int i = 0x34; i <= 0xcc; i++)
+	{
+		if (gameBoard.board[i] != EMPTY && gameBoard.board[i] != BOUNDARY)
+			num++;
+	}
+	if (num >= 28)
+		state = 0;
+	else if (num >= 14)
+		state = 1;
+	else
+		state = 2;
+	// 
 	gameBoard.generateMoves(RED_PLAYER);
-	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER) + 25*posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
+	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER, state) + posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
 	gameBoard.generateMoves(BLACK_PLAYER);
-	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER) + 25*posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
+	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER, state) + posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
+	
+	if (gameBoard.player == RED_PLAYER) {
+		gameBoard.gameVal = gameBoard.redValue - gameBoard.blackValue;
+	}
+	else {
+		gameBoard.gameVal = gameBoard.blackValue - gameBoard.redValue;
+	}
+	
+	return gameBoard.gameVal;
 }
 
 
