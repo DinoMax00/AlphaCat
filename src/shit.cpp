@@ -14,7 +14,7 @@ bool Board::checkJiang(Move& move)
 
 bool Board::checkJiang(Move& move, player_type side)
 {
-	//return false;
+	// return false;
 	genOneMove(move);
 	bool flag = 0;
 

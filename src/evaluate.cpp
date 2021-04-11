@@ -96,10 +96,10 @@ int evaluate::updBoardValue(Board& gameBoard)
 	else
 		state = 2;
 	// 
-	gameBoard.generateMoves(RED_PLAYER);
-	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER, state) + posValue(gameBoard.board, RED_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
-	gameBoard.generateMoves(BLACK_PLAYER);
-	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER, state) + posValue(gameBoard.board, BLACK_PLAYER) + moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
+	// gameBoard.generateMoves(RED_PLAYER);
+	gameBoard.redValue = baseValue(gameBoard.board, RED_PLAYER, state) + posValue(gameBoard.board, RED_PLAYER); // +moveValue(gameBoard.board, gameBoard.move_vec, RED_PLAYER);
+	// gameBoard.generateMoves(BLACK_PLAYER);
+	gameBoard.blackValue = baseValue(gameBoard.board, BLACK_PLAYER, state) + posValue(gameBoard.board, BLACK_PLAYER); // +moveValue(gameBoard.board, gameBoard.move_vec, BLACK_PLAYER);
 	
 	if (gameBoard.player == RED_PLAYER) {
 		gameBoard.gameVal = gameBoard.redValue - gameBoard.blackValue;

@@ -72,11 +72,10 @@ void Board::buildBoardFromFen(std::string fen)
 void Board::genOneMove(std::string& move)
 {
 	unsigned char start_position = ((12 - move[1] - '0') << 4) + move[0] - 'a' + 4;
-	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4;
+	unsigned char end_position = ((12 - move[3] - '0') << 4) + move[2] - 'a' + 4; 
 	if (board[start_position] == EMPTY)
 		return;
 	Move tmp_move(move);
-
 	if (board[start_position] == R_JIANG)
 		pos_of_kings[RED_PLAYER] = end_position;
 	if (board[start_position] == B_JIANG)
