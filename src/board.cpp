@@ -38,6 +38,7 @@ Board::Board(Board* board_pre, Move& move)
 
 void Board::buildBoardFromFen(std::string fen)
 {
+	Zobrist = 0;
 	for (int i = 0; i < 256; i++) 
 	{
 		board[i] = BOUNDARY;
@@ -66,6 +67,7 @@ void Board::buildBoardFromFen(std::string fen)
 		else if (i == 'K') { pos_of_kings[RED_PLAYER] = position_now; board[position_now++] = R_JIANG; }
 		else if (i == 'C') board[position_now++] = R_PAO;
 		else if (i == 'P') board[position_now++] = R_BING;
+		Zobrist ^= hashNum.getHash(board[position_now - 1], position_now - 1);
 	}
 }
 
@@ -82,6 +84,9 @@ void Board::genOneMove(std::string& move)
 		pos_of_kings[BLACK_PLAYER] = end_position;
 	board[end_position] = board[start_position];
 	board[start_position] = EMPTY;
+	Zobrist ^= hashNum.getHash(tmp_move.chessOnTo, tmp_move.to);
+	Zobrist ^= hashNum.getHash(board[tmp_move.to], tmp_move.from);
+	Zobrist ^= hashNum.getHash(board[tmp_move.to], tmp_move.to);
 }
 
 void Board::genOneMove(Move& move)
@@ -94,6 +99,9 @@ void Board::genOneMove(Move& move)
 		pos_of_kings[BLACK_PLAYER] = move.to;
 	board[move.to] = board[move.from];
 	board[move.from] = EMPTY;
+	Zobrist ^= hashNum.getHash(move.chessOnTo, move.to);
+	Zobrist ^= hashNum.getHash(board[move.to], move.from);
+	Zobrist ^= hashNum.getHash(board[move.to], move.to);
 }
 
 void Board::deleteOneMove(Move& move_pre) 
@@ -104,6 +112,9 @@ void Board::deleteOneMove(Move& move_pre)
 		pos_of_kings[BLACK_PLAYER] = move_pre.from;
 	board[move_pre.from] = board[move_pre.to];
 	board[move_pre.to] = move_pre.chessOnTo;
+	Zobrist ^= hashNum.getHash(move_pre.chessOnTo, move_pre.to);
+	Zobrist ^= hashNum.getHash(board[move_pre.from], move_pre.from);
+	Zobrist ^= hashNum.getHash(board[move_pre.from], move_pre.to);
 }
 
 int Board::getGameVal()
