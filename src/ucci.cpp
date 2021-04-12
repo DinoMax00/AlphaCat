@@ -12,6 +12,7 @@
 #include "ucci.h"
 #include "log.h"
 #include "mcts.h"
+
 void UcciEngine::clear()
 {
 	commandStr.clear();
@@ -134,18 +135,27 @@ void UcciEngine::run()
 			updWhichPlayer();
 			if (commandVec[1] == "fen")
 			{
-				if (commandVec.size() <= 9)
+				// 更新最近吃子局面 
+				board.buildBoardFromFen(commandVec[2]);
+				// 更新后续局面
+				if (commandVec.size() > 9)
 				{
-					board.buildBoardFromFen(commandVec[2]);
-				}
-				else
-				{
-					board.genOneMove(commandVec[commandVec.size() - 1]);
+					for (int i = 9; i < commandVec.size(); i++) {
+						board.genOneMove(commandVec[i]);
+					}
 				}
 			}
 			else if (commandVec[1] == "startpos" && commandVec.size() > 3)
 			{
-				board.genOneMove(commandVec[commandVec.size() - 1]);
+				// 更新局面
+				board.buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+				// 更新后续局面
+				if (commandVec.size() > 3)
+				{
+					for (int i = 3; i < commandVec.size(); i++) {
+						board.genOneMove(commandVec[i]);
+					}
+				}
 			}
 			Log().info(std::string("当前游戏角色: ") + (board.player == RED_PLAYER ? "RED" : "BLACK"));
 		}
@@ -162,11 +172,8 @@ void UcciEngine::run()
 			// 获取响应
 			searcher search;
 			std::string  s = search.getBestMove(board).moveToString();
-			/*
-			Mcts mcts_now(&board);
-			mcts_now.selectionOfTry();
-			std::string s = mcts_now.getBestMoveString();
-			*/
+			// 测试走子
+			// std::string s = board.randomRunMove().moveToString();
 			if (s == "a0i9") {
 				std::cout << "nobestmove" << std::endl;
 				Log().info("引擎响应->nobestmove");
