@@ -32,26 +32,17 @@ long long Hash::getHash(unsigned char chess, unsigned char pos)
 int Hash::searchFromTransTable(long long Zobrist, int dep, player_type player, int alpha, int beta)
 {
 	int num = (int)(Zobrist & (long long)0xFFFFF);
-	if (TT[player][num].Zobrist == Zobrist && TT[player][num].dep == dep)
+	if (TT[player][num].Zobrist == Zobrist)
 	{
-		switch (TT[player][num].flag)
+		if (TT[player][num].dep >= dep)
 		{
-		case 0:
-			return TT[player][num].value;
-			break;
-		case 1:
-			if (TT[player][num].value >= beta)
-			{
+			if (TT[player][num].flag == 0)
 				return TT[player][num].value;
-			}
-			break;
-		case 2:
-			if (TT[player][num].value <= alpha)
-			{
-				return TT[player][num].value;
-			}
-			break;
-		}
+			if (TT[player][num].flag == 1 && TT[player][num].value <= alpha)
+				return alpha;
+			if (TT[player][num].flag == 2 && TT[player][num].value >= beta)
+				return beta;
+		}	
 	}
 	return -10000000;
 }
@@ -59,6 +50,8 @@ int Hash::searchFromTransTable(long long Zobrist, int dep, player_type player, i
 void Hash::saveInTransTable(long long Zobrist, int dep, player_type player, int flag, int value)
 {
 	int num = (int)(Zobrist & (long long)0xFFFFF);
+	if (TT[player][num].dep > dep)
+		return;
 	TT[player][num].Zobrist = Zobrist;
 	TT[player][num].dep = dep;
 	TT[player][num].flag = flag;
