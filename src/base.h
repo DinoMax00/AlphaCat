@@ -56,6 +56,6 @@ constexpr auto MAX_MOVES = 80;
 constexpr auto MAX_SEARCH_DEPTH = 5;
 
 /// 最大搜索时间
-constexpr auto TIME_LIMIT = 6000;
+constexpr auto TIME_LIMIT = 1000;
 
 #endif

@@ -7,17 +7,23 @@ Move searcher::getBestMove(Board& now)
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
-	// start = end = clock();
-	// while (end - start < TIME_LIMIT)
+	start = end = clock();
+	// while ()
 	// 非迭代加深版
-	max_deep = 5;
-	while (max_deep<6)
+	max_deep = 1;
+	while (end - start < TIME_LIMIT)
 	{
 		int val = searchAlphaBeta(now, max_deep, -inf, inf);
 		now.generateMoves();
-		x = now.move_vec[best];
+		if (end - start < TIME_LIMIT)
+			x = now.move_vec[best];
+		else
+			break;
 		++max_deep;
+		end = clock();
 	}
+	Log debug;
+	debug.info(int(max_deep));
 	return x;
 }
 
@@ -42,6 +48,9 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 		moveInDep[depth][i] = now.move_vec[i];
 	for (int i = 0; i < size; i++)
 	{
+		end = clock();
+		if (end - start >= TIME_LIMIT)
+			break;
 		now.player ^= 1;
 		now.genOneMove(moveInDep[depth][i]);
 		val = -searchAlphaBeta(now, depth - 1, -beta, -alpha);
