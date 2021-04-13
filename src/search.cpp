@@ -23,9 +23,17 @@ Move searcher::getBestMove(Board& now)
 
 int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 {
-	if (depth == 0 || (now.board[now.pos_of_kings[now.player]] != R_JIANG && now.board[now.pos_of_kings[now.player]] != B_JIANG)) {
-		return now.getGameVal();
+	int hashf = 1, val = now.hashNum.searchFromTransTable(now.Zobrist, depth, now.player, alpha, beta);
+	if (val != -10000000)
+		return val;
+
+	if (depth == 0 || (now.board[now.pos_of_kings[now.player]] != R_JIANG && now.board[now.pos_of_kings[now.player]] != B_JIANG)) 
+	{
+		val = now.getGameVal();
+		now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, 0, val);
+		return val;
 	}
+
 	now.generateMoves();
 	int size = now.move_vec.size();
 	if (!size)
@@ -34,20 +42,25 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 		moveInDep[depth][i] = now.move_vec[i];
 	for (int i = 0; i < size; i++)
 	{
-		int val;
 		now.player ^= 1;
 		now.genOneMove(moveInDep[depth][i]);
 		val = -searchAlphaBeta(now, depth - 1, -beta, -alpha);
 		now.player ^= 1;
 		now.deleteOneMove(moveInDep[depth][i]);
 		if (val >= beta)
+		{
+			now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, 2, beta);
 			return beta;
+		}
+			
 		if (val > alpha)
 		{
+			hashf = 0;
 			alpha = val;
 			if (depth == max_deep)
 				best = i;
 		}
 	}
+	now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, hashf, alpha);
 	return alpha;
 }

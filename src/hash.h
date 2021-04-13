@@ -5,25 +5,25 @@
 #include<ctime>
 #include<cstdlib>
 
+struct TransTable
+{
+	long long Zobrist;
+	int dep;
+	int flag;
+	int value;
+};
+
 class Hash
 {
 public:
 	Hash();
 	long long getHash(unsigned char chess, unsigned char pos);
+	int searchFromTransTable(long long Zobrist, int dep, player_type player, int alpha, int beta);
+	void saveInTransTable(long long Zobrist, int dep, player_type player, int flag, int value);
 private:
 	long long rand64();
 	long long hash[14][256];
+	TransTable* TT[2];
 };
-
-class TransTable
-{
-public:
-	long long Zobrist;
-	int max_dep;
-	int dep;
-	int flag;
-	int value;
-};
-TransTable* Table[2];
 
 #endif

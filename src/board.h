@@ -31,7 +31,7 @@ public:
 	int redValue;							///< 红棋子力
 	int blackValue;							///< 黑棋子力
 	int gameVal;                            ///< 局面子力，gameVal = player_value - oppsite_Value
-	long long Zobrist = 0;						///< 当前局面的Zobrist键值
+	long long Zobrist = 0;					///< 当前局面的Zobrist键值
 	Hash hashNum;							///< 生成的Hash数组
 
 	std::vector<Move> move_vec;					///< 记录当前棋盘所有可行的走法
