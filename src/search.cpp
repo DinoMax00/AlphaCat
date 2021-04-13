@@ -23,20 +23,20 @@ Move searcher::getBestMove(Board& now)
 		end = clock();
 	}
 	Log debug;
-	debug.info(int(max_deep));
+	debug.info(int(max_deep - 1));
 	return x;
 }
 
 int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 {
-	int hashf = 1, val = now.hashNum.searchFromTransTable(now.Zobrist, depth, now.player, alpha, beta);
+	int hashf = hashAlpha, val = now.hashNum.searchFromTransTable(now.Zobrist, depth, now.player, alpha, beta);
 	if (val != -10000000)
 		return val;
 
 	if (depth == 0 || (now.board[now.pos_of_kings[now.player]] != R_JIANG && now.board[now.pos_of_kings[now.player]] != B_JIANG)) 
 	{
 		val = now.getGameVal();
-		now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, 0, val);
+		now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, hashExact, val);
 		return val;
 	}
 
@@ -58,13 +58,13 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 		now.deleteOneMove(moveInDep[depth][i]);
 		if (val >= beta)
 		{
-			now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, 2, beta);
+			now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, hashBeta, beta);
 			return beta;
 		}
 			
 		if (val > alpha)
 		{
-			hashf = 0;
+			hashf = hashExact;
 			alpha = val;
 			if (depth == max_deep)
 				best = i;

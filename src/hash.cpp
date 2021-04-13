@@ -36,11 +36,11 @@ int Hash::searchFromTransTable(long long Zobrist, int dep, player_type player, i
 	{
 		if (TT[player][num].dep >= dep)
 		{
-			if (TT[player][num].flag == 0)
+			if (TT[player][num].flag == hashExact)
 				return TT[player][num].value;
-			if (TT[player][num].flag == 1 && TT[player][num].value <= alpha)
+			if (TT[player][num].flag == hashAlpha && TT[player][num].value <= alpha)
 				return alpha;
-			if (TT[player][num].flag == 2 && TT[player][num].value >= beta)
+			if (TT[player][num].flag == hashBeta && TT[player][num].value >= beta)
 				return beta;
 		}	
 	}

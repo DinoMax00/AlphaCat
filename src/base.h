@@ -58,4 +58,8 @@ constexpr auto MAX_SEARCH_DEPTH = 5;
 /// 最大搜索时间
 constexpr auto TIME_LIMIT = 1000;
 
+constexpr auto hashExact = 0;
+constexpr auto hashAlpha = 1;
+constexpr auto hashBeta = 2;
+
 #endif
