@@ -133,5 +133,6 @@ public:
 	int getGameVal();
 };
 
+const long long zor_red = 0xA0CE2AF90C452F58;
 
 #endif

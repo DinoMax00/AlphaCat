@@ -1,15 +1,20 @@
 #include "search.h"
 #include "log.h"
+#include "opbook.h"
 #include<time.h>
 
 Move searcher::getBestMove(Board& now)
 {
+	opBook opb;
 	Move x("a0i9");
 	if (now.move_vec.empty())
 		return x;
 	start = end = clock();
 	// while ()
 	// 非迭代加深版
+	int opb_search = opb.opBook_search(now.Zobrist);
+	if (opb_search != -1)
+		return Move(opb_search / 256 + 1, opb_search % 256 + 1);
 	max_deep = 1;
 	while (end - start < TIME_LIMIT)
 	{
@@ -33,7 +38,7 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 	if (val != -10000000)
 		return val;
 
-	if (depth == 0 || (now.board[now.pos_of_kings[now.player]] != R_JIANG && now.board[now.pos_of_kings[now.player]] != B_JIANG)) 
+	if (depth == 0 || (now.board[now.pos_of_kings[now.player]] != R_JIANG && now.board[now.pos_of_kings[now.player]] != B_JIANG))
 	{
 		val = now.getGameVal();
 		now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, hashExact, val);
@@ -61,7 +66,7 @@ int searcher::searchAlphaBeta(Board& now, int depth, int alpha, int beta)
 			now.hashNum.saveInTransTable(now.Zobrist, depth, now.player, hashBeta, beta);
 			return beta;
 		}
-			
+
 		if (val > alpha)
 		{
 			hashf = hashExact;
