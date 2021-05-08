@@ -140,7 +140,7 @@ void UcciEngine::run()
 				// 更新后续局面
 				if (commandVec.size() > 9)
 				{
-					for (int i = 9; i < commandVec.size(); i++) {
+					for (int i = 9; i < (int)commandVec.size(); i++) {
 						board.genOneMove(commandVec[i]);
 					}
 				}
@@ -177,7 +177,7 @@ void UcciEngine::run()
 			if (s == "a0i9") {
 				std::cout << "nobestmove" << std::endl;
 				Log().info("引擎响应->nobestmove");
-				return;
+				continue;
 			}
 			std::cout << "bestmove " << s << std::endl;
 			Log().info("引擎响应->bestmove " + s);

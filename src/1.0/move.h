@@ -1,4 +1,4 @@
-/*****************************************************************//**
+﻿/*****************************************************************//**
  * @file   move.h
  * @brief  棋子移动类头文件
  * 
@@ -12,6 +12,7 @@
 #include <string>
 
 #include "base.h"
+
 
 /**
  * @brief 棋子移动类
@@ -27,6 +28,8 @@ public:
 	unsigned char to = 0;
 	/// 记录目标位置上的棋子，方便撤回操作
 	unsigned char chessOnTo = EMPTY;
+	/// 记录移动后的局面估值 用于排序
+	int val = 0;
 	   
 	/**
 	 * @brief 默认构造函数
@@ -62,6 +65,14 @@ public:
 	 * @param 要复制的对象
 	 */
 	void copyOneMove(Move& rhs);
+
+	/**
+	 * @brief 运算符重载
+	 */
+	bool operator < (const Move& x) const
+	{
+		return this->val > x.val;
+	}
 };
 
 

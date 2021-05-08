@@ -18,7 +18,7 @@ int opBook::opBook_search(unsigned long long obj)
 	//temp << obj << std::endl;
 	while (left<=right)
 	{
-		infile.seekg(48 * mid, std::ios::beg);
+		infile.seekg(1ll * 48 * mid, std::ios::beg);
 		unsigned long long now;
 		infile >> now;
 		if (obj == now)
@@ -34,7 +34,7 @@ int opBook::opBook_search(unsigned long long obj)
 	while (1)
 	{
 		unsigned long long now;
-		infile.seekg(48 * mid, std::ios::beg);
+		infile.seekg(1ll * 48 * mid, std::ios::beg);
 		infile >> now;
 		if (obj != now)
 			break;
@@ -45,7 +45,7 @@ int opBook::opBook_search(unsigned long long obj)
 	{
 		int now_move, now_score;
 		unsigned long long now;
-		infile.seekg(48 * mid, std::ios::beg);
+		infile.seekg(1ll * 48 * mid, std::ios::beg);
 		infile >> now >> now_move >> now_score;
 		if (obj != now)
 			break;

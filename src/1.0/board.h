@@ -15,7 +15,6 @@
 #include "move.h"
 #include "hash.h"
 
-
 /**
  * @brief 棋盘类
  * 通过16*16的棋盘来表示棋盘，以减小9*10的棋盘的除法对效率影响周围放置哨兵进行越界检测
@@ -23,7 +22,7 @@
 class Board
 {
 private:
-
+	int getMoveVal(Move &);
 public:
 	player_type player = RED_PLAYER;		///< 当前走棋玩家
 	unsigned char board[256];				///< 一维棋盘数组
@@ -34,7 +33,7 @@ public:
 	long long Zobrist = 0;					///< 当前局面的Zobrist键值
 	Hash hashNum;							///< 生成的Hash数组
 
-	std::vector<Move> move_vec;					///< 记录当前棋盘所有可行的走法
+	std::vector<Move> move_vec;				///< 记录当前棋盘所有可行的走法
 	
 	/**
 	* @brief 无参构造函数
@@ -74,12 +73,12 @@ public:
 	void genOneMove(Move& move);
 
 	/**
-	 * @brief 输出棋盘到终端
+	 * @brief 输出棋盘到日志
 	 */
 	void printBoardForDebug();
 
 	/**
-	 * @brief 输出棋盘到日志
+	 * @brief 输出棋盘到终端
 	 */
 	void printBoardForDebug2();
 
@@ -131,6 +130,8 @@ public:
 	 * @brief 更新并返回局面估值函数
 	 */
 	int getGameVal();
+
+	void sort();
 };
 
 const long long zor_red = 0xA0CE2AF90C452F58;

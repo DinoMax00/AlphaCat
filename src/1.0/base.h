@@ -50,13 +50,13 @@ constexpr auto RED_PLAYER = 1; ///< 红棋
 constexpr auto BLACK_PLAYER = 0; ///< 黑棋
 
 /// 一回合中预期最大走子方法数
-constexpr auto MAX_MOVES = 80;
+constexpr auto MAX_MOVES = 128;
 
 /// 迭代加深搜索深度
 constexpr auto MAX_SEARCH_DEPTH = 5;
 
 /// 最大搜索时间
-constexpr auto TIME_LIMIT = 1000;
+constexpr auto TIME_LIMIT = 10000;
 
 constexpr auto hashExact = 0;
 constexpr auto hashAlpha = 1;

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <algorithm>
 
 #include "board.h"
 #include "base.h"
@@ -223,89 +224,69 @@ void Board::printBoardForDebug2()
 		if ((i >> 4) >= 3 && (i >> 4) <= 12 && (i & 15) == 2) //打印列标
 		{
 			std::cout << 12 - ((i >> 4)) << " ";
-			//Log().add(std::to_string(12 - ((i >> 4)))+" ", false);
 			continue;
 		}
 		if ((i >> 4) == 14 && (i & 15) >= 4 && (i & 15) <= 12) //打印行标
 		{
 			std::cout << char((i & 15) - 4 + 'a') << " ";
-			//Log().add(std::string("")+char((i & 15) - 4 + 'a')+" ", false);
 			continue;
 		}
 		switch (board[i])
 		{
 			case BOUNDARY:
 				std::cout << "  ";
-				//Log().add("  ", false);
 				break;
 			case B_JU:
 				std::cout << "r ";
-				//Log().add("r ", false);
 				break;
 			case B_MA:
 				std::cout << "n ";
-				//Log().add("n ", false);
 				break;
 			case B_XIANG:
 				std::cout << "b ";
-				//Log().add("b ", false);
 				break;
 			case B_SHI:
 				std::cout << "a ";
-				//Log().add("a ", false);
 				break;
 			case B_JIANG:
 				std::cout << "k ";
-				//Log().add("k ", false);
 				break;
 			case B_PAO:
 				std::cout << "c ";
-				//Log().add("c ", false);
 				break;
 			case B_BING:
 				std::cout << "p ";
-				//Log().add("p ", false);
 				break;
 			case R_JU:
 				std::cout << "R ";
-				//Log().add("R ", false);
 				break;
 			case R_MA:
 				std::cout << "N ";
-				//Log().add("N ", false);
 				break;
 			case R_XIANG:
 				std::cout << "B ";
-				//Log().add("B ", false);
 				break;
 			case R_SHI:
 				std::cout << "A ";
-				//Log().add("A ", false);
 				break;
 			case R_JIANG:
 				std::cout << "K ";
-				//Log().add("K ", false);
 				break;
 			case R_PAO:
 				std::cout << "C ";
-				//Log().add("C ", false);
 				break;
 			case R_BING:
 				std::cout << "P ";
-				//Log().add("P ", false);
 				break;
 			case EMPTY:
 				std::cout << ". ";
-				//Log().add(". ", false);
 				break;
 			default:
 				std::cout << "? ";
-				//Log().add("? ", false);
 				break;
 		}
 		if (i % 16 == 15)
 			std::cout << std::endl;
-			//Log().add("\n", false);
 	}
 }
 
@@ -324,7 +305,7 @@ GameStatus Board::mctsMove()
 	uint32_t round = 0, all_round = 0;
 	bool cur_side = player;
 	Move temp_mov;
-	// 随机�?
+	// 随机种子
 	unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 	std::mt19937 generator(seed);
 	// 模拟棋局
@@ -352,5 +333,24 @@ GameStatus Board::mctsMove()
 		cur_side = !cur_side;
 	}
 	return TIE;
+}
+
+int Board::getMoveVal(Move & mov)
+{
+	this->genOneMove(mov);
+	int val = this->getGameVal();
+	this->deleteOneMove(mov);
+	return val;
+}
+
+void Board::sort()
+{
+	// 先对所有走法赋予估值
+	for (auto& it : this->move_vec)
+	{
+		it.val = this->getMoveVal(it);
+	}
+	// 排序
+	std::sort(this->move_vec.begin(), this->move_vec.end());
 }
 
