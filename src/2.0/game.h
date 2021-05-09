@@ -61,7 +61,7 @@ public:
 	// 着法生成
 	void genAllMoves(Move moves[]);		// 生成所有着法
 	void genCapMoves(Move moves[]);		// 生成吃子着法
-	void genNotCapMoves(Move moves[]);	// 生成不吃子着法
+	int genNotCapMoves(Move moves[]);	// 生成不吃子着法
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端

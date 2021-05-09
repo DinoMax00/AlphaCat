@@ -39,7 +39,6 @@ void Game::initGame()
 
 void Game::putChess(int32_t sq, int32_t pc, bool del)
 {
-	// ·ÅÆå×Ó
 	if (del)
 	{
 		this->board[sq] = 0;
@@ -80,7 +79,6 @@ void Game::buildFromFen(std::string fen)
 	while (pos < len)
 	{
 		char ch = fen[pos];
-		std::cout << (int)pos << " " << ch << std::endl;
 		if (ch == '/')
 		{
 			// »»ÐÐ
@@ -118,7 +116,6 @@ void Game::takeOneMove(int32_t move)
 {
 	int src = getSrc(move);
 	int dst = getDst(move);
-
 	int chessOnSrc = this->board[src];
 	int chessOnDst = this->board[dst];
 	
