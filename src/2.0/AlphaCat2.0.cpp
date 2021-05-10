@@ -6,6 +6,7 @@
  * @copyright: Copyright 2021 TongJi
  * @birth: created by Dino FeiFei PPZ AYi on 2021-xx-xx
  *********************************************************************/
+
 #include <iostream>
 #include <ctime>
 #include "log.h"
@@ -18,16 +19,16 @@ int main(int argc, char* argv[])
 {
     preGenInit();
     Game test;
-    test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
-    test.cur_player = BLACK;
+    test.buildFromFen("9/9/3k5/9/9/9/4R4/3A5/8r/4K4");
+    test.printForDebug();
     Move move[120];
-    int num = test.genNotCapMoves(move);
+    int num = test.genNonCapMoves(move);
     for (int i = 0; i < num; i++)
     {
         char ch = getchar();
         test.takeOneMove(move[i].step);
         test.printForDebug();
-        test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+        test.buildFromFen("9/9/3k5/9/9/9/4R4/3A5/8r/4K4");
     }
     
     return 0;

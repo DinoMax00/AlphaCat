@@ -3,9 +3,35 @@
 
 #include <stdint.h>
 
+// 借助“位行”和“位列”生成车炮着法的预置结构
+// [0]表示最大位置 右、下
+struct SlideMoveStruct
+{
+	uint8_t NonCap[2];	// 车 炮不吃子
+	uint8_t JuCap[2];		// 车吃子
+	uint8_t PaoCap[2];	// 炮吃子
+};
+
+// 借助“位行”和“位列”判断车炮着法合理性的预置结构
+struct SlideMaskStruct {
+	uint16_t NonCap;
+	uint16_t JuCap;
+	uint16_t PaoCap;
+}; 
+
 // 生成预置走法
 struct Pregen
 {
+	// 位行 位列屏蔽位
+	uint16_t bitRowMask[256];		// 位行屏蔽位
+	uint16_t bitColMask[256];		// 位列屏蔽位
+
+	// “位行”和“位列”生成车炮着法 
+	SlideMoveStruct rowMoveTab[9][512];		// 某一行向左 向右 存储的是在这一行的第x列(3 - 11)
+	SlideMoveStruct colMoveTab[10][1024];	// 某一列向上 向下 存储的是某一行第一个元素的位置(row << 16)
+	SlideMaskStruct rowMaskTab[9][512];
+	SlideMaskStruct colMaskTab[10][1024];
+
 	// 着法预生成数组
 	uint8_t preJiangMoves[256][8];	// 将
 	uint8_t preShiMoves[256][8];	// 士

@@ -1,5 +1,7 @@
 #include <string.h>
 #include <iostream>
+
+#include "pregen.h"
 #include "game.h"
 
 
@@ -22,6 +24,9 @@ Game::Game()
 	// 清空棋盘
 	std::memset(this->board, 0, sizeof(this->board));
 	std::memset(this->pieces, 0, sizeof(this->pieces));
+	std::memset(this->bitCol, 0, sizeof(this->bitCol));
+	std::memset(this->bitRow, 0, sizeof(this->bitRow));
+	this->bitPieces = 0;
 	// 初始化游戏角色
 	this->cur_player = RED;
 	this->red_val = this->black_val = 0;
@@ -32,6 +37,9 @@ void Game::initGame()
 	// 清空棋盘
 	std::memset(this->board, 0, sizeof(this->board));
 	std::memset(this->pieces, 0, sizeof(this->pieces));
+	std::memset(this->bitCol, 0, sizeof(this->bitCol));
+	std::memset(this->bitRow, 0, sizeof(this->bitRow));
+	this->bitPieces = 0;
 	// 初始化游戏角色
 	this->cur_player = RED;
 	this->red_val = this->black_val = 0;
@@ -49,6 +57,10 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 		this->board[sq] = pc;
 		this->pieces[pc] = sq;
 	}
+	// 更新位行 位列
+	this->bitRow[getIdxRow(sq)] ^= preGen.bitRowMask[sq];
+	this->bitCol[getIdxCol(sq)] ^= preGen.bitColMask[sq];
+	this->bitPieces ^= 1 << (pc - 16);
 	// 更新估值
 
 	// 更新zobr键值

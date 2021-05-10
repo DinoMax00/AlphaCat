@@ -44,10 +44,16 @@ private:
 	void putChess(int32_t sq, int32_t pc, bool del = false);		// 把一个棋子放在棋盘上，del为true则是移除棋子
 public:
 	bool cur_player = RED;	// 当前游戏角色
-	uint8_t	board[256];		// 棋盘数组
-	uint8_t	pieces[48];		// 每个棋子的位置
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值
+	uint32_t bitPieces;		// 16-32号棋子是否在棋盘上
+
+	uint8_t	board[256];		// 棋盘数组
+	uint8_t	pieces[48];		// 每个棋子的位置
+	uint16_t bitRow[16];	// 位行
+	uint16_t bitCol[16];	// 位列
+
+	
 
 	// 方法
 	Game();					// 默认构造函数 用于初始化
@@ -59,9 +65,9 @@ public:
 	void deleteOneMove(int32_t move);	// 撤回一步移动
 
 	// 着法生成
-	void genAllMoves(Move moves[]);		// 生成所有着法
-	void genCapMoves(Move moves[]);		// 生成吃子着法
-	int genNotCapMoves(Move moves[]);	// 生成不吃子着法
+	int genAllMoves(Move moves[]);		// 生成所有着法
+	int genCapMoves(Move moves[]);		// 生成吃子着法
+	int genNonCapMoves(Move moves[]);	// 生成不吃子着法
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端

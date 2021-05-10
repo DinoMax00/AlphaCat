@@ -1,4 +1,5 @@
 #include "pregen.h"
+#include "game.h"
 
 // 位置是否在棋盘中
 inline bool inBoard(int pos)
@@ -51,7 +52,143 @@ Pregen preGen;
 
 void preGenInit()
 {
-	int src, dst, cnt = 0;
+	SlideMoveStruct move_temp;
+	SlideMaskStruct mask_temp;
+	int src, dst, cnt = 0, k;
+	// 初始化屏蔽位行与屏蔽位列
+	for (src = 0; src < 256; src++)
+	{
+		if (inBoard(src))
+		{
+			preGen.bitRowMask[src] = 1 << (getIdxCol(src) - BOARD_LEFT);
+			preGen.bitColMask[src] = 1 << (getIdxRow(src) - BOARD_TOP);
+		}
+		else
+		{
+			preGen.bitRowMask[src] = 0;
+			preGen.bitColMask[src] = 0;
+		}
+	}
+
+	// 车 炮 横向
+	for (int i = 0; i < 9; i++)
+	{
+		// 枚举2^9种棋子信息
+		for (int j = 0; j < 512; j++)
+		{
+			move_temp.NonCap[0] = move_temp.NonCap[1] =
+				move_temp.JuCap[0] = move_temp.JuCap[1] =
+				move_temp.PaoCap[0] = move_temp.PaoCap[1] =
+				i + BOARD_LEFT;
+			mask_temp = {0, 0, 0};
+
+			// 向右
+			for (k = i + 1; k <= 8; k++)
+			{	
+				if (j & (1 << k))
+				{
+					move_temp.JuCap[0] = k + BOARD_LEFT;
+					mask_temp.JuCap |= 1 << k;
+					break;
+				}
+				move_temp.NonCap[0] = k + BOARD_LEFT;
+				mask_temp.NonCap |= 1 << k;
+			}
+			for (k++; k <= 8; k++)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.PaoCap[0] = k + BOARD_LEFT;
+					mask_temp.PaoCap |= 1 << k;
+					break;
+				}
+			}
+			// 向左
+			for (k = i - 1; k >= 0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.JuCap[1] = k + BOARD_LEFT;
+					mask_temp.JuCap |= 1 << k;
+					break;
+				}
+				move_temp.NonCap[1] = k + BOARD_LEFT;
+				mask_temp.NonCap |= 1 << k;
+			}
+			for (k--; k >= 0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.PaoCap[1] = k + BOARD_LEFT;
+					mask_temp.PaoCap |= 1 << k;
+					break;
+				}
+			}
+
+			preGen.rowMoveTab[i][j] = move_temp;
+			preGen.rowMaskTab[i][j] = mask_temp;
+		}
+	}
+
+	// 车 炮 纵向
+	for (int i = 0; i < 10; i++)
+	{
+		// 每列10行 2^10
+		for (int j = 0; j < 1024; j++)
+		{
+			move_temp.NonCap[0] = move_temp.NonCap[1] =
+				move_temp.JuCap[0] = move_temp.JuCap[1] =
+				move_temp.PaoCap[0] = move_temp.PaoCap[1] =
+				(i + BOARD_TOP) << 4;
+			mask_temp = { 0, 0, 0 };
+
+			// 向下
+			for (k = i + 1; k <= 9; k++)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.JuCap[0] = (k + BOARD_TOP) << 4;
+					mask_temp.JuCap |= 1 << k;
+					break;
+				}
+				move_temp.NonCap[0] = (k + BOARD_TOP) << 4;
+				mask_temp.NonCap |= 1 << k;
+			}
+			for (k++; k <= 9; k++)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.PaoCap[0] = (k + BOARD_TOP) << 4;
+					mask_temp.PaoCap |= 1 << k;
+					break;
+				}
+			}
+			// 向上
+			for (k = i - 1; k >= 0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.JuCap[1] = (k + BOARD_TOP) << 4;
+					mask_temp.JuCap |= 1 << k;
+					break;
+				}
+				move_temp.NonCap[1] = (k + BOARD_TOP) << 4;
+				mask_temp.NonCap |= 1 << k;
+			}
+			for (k--; k >=0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.PaoCap[1] = (k + BOARD_TOP) << 4;
+					mask_temp.PaoCap |= 1 << k;
+					break;
+				}
+			}
+			preGen.colMoveTab[i][j] = move_temp;
+			preGen.colMaskTab[i][j] = mask_temp;
+		}
+	}
+
 	// 着法预生成数组
 	for (src = 0; src < 256; src++)
 	{

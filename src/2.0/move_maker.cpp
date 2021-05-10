@@ -4,13 +4,28 @@
 #include "game.h"
 #include "pregen.h"
 
-// 不吃子着法, 返回着法数量
-int Game::genNotCapMoves(Move moves[]) 
+
+// 生成所有着法
+int Game::genAllMoves(Move moves[])
 {
-	int tag = sideTag(this->cur_player);
-	int src = 0, dst = 0;
-	uint8_t* p, * p_leg;
+	return this->genCapMoves(moves) + this->genNonCapMoves(moves);
+}
+
+// 吃子着法，返回着法数量
+int Game::genCapMoves(Move moves[])
+{
 	int cnt = 0;
+	return cnt;
+}
+
+// 不吃子着法, 返回着法数量
+int Game::genNonCapMoves(Move moves[]) 
+{
+	SlideMoveStruct* p_bit;					// 指向位行 位列数组的指针
+	int tag = sideTag(this->cur_player);	// 游戏角色tag
+	int src = 0, dst = 0;					// 走子起止位置
+	uint8_t* p, * p_leg;					// 指向预置走法的指针
+	int cnt = 0;							// 走法计数器
 
 	// 将的着法
 	src = this->pieces[JIANG_FROM + tag];
@@ -95,6 +110,51 @@ int Game::genNotCapMoves(Move moves[])
 				if (this->board[dst] == 0)
 					moves[cnt++].step = getMoveType(src, dst);
 				p++;
+			}
+		}
+	}
+
+	// 炮和车的着法 走直线，不作区分
+	for (int i = JU_FROM; i <= PAO_TO; i++)
+	{
+		src = this->pieces[tag + i];
+		if (src)
+		{
+			// 获取行列
+			int x = getIdxRow(src);
+			int y = getIdxCol(src);
+
+			p_bit = preGen.rowMoveTab[y - BOARD_LEFT] + this->bitRow[x];
+			// 向右
+			dst = p_bit->NonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
+	
+			while (dst != src)
+			{
+				moves[cnt++].step = getMoveType(src, dst);
+				dst--;
+			}
+			// 向左
+			dst = p_bit->NonCap[1] + (x << 4);
+			while (dst != src)
+			{
+				moves[cnt++].step = getMoveType(src, dst);
+				dst++;
+			}
+
+			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
+			// 向下
+			dst = p_bit->NonCap[0] + y;
+			while (dst != src)
+			{
+				moves[cnt++].step = getMoveType(src, dst);
+				dst -= 16;
+			}
+			// 向上
+			dst = p_bit->NonCap[1] + y;
+			while (dst != src)
+			{
+				moves[cnt++].step = getMoveType(src, dst);
+				dst += 16;
 			}
 		}
 	}
