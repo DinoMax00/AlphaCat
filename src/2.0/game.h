@@ -36,6 +36,28 @@ constexpr uint8_t PAO_TO = 10;
 constexpr uint8_t BING_FROM = 11;
 constexpr uint8_t BING_TO = 15;
 
+// 各种棋子的屏蔽位
+constexpr uint32_t JIANG_BITPIECE = 1 << JIANG_FROM;
+constexpr uint32_t SHI_BITPIECE = (1 << SHI_FROM) | (1 << SHI_TO);
+constexpr uint32_t XIANG_BITPIECE = (1 << XIANG_FROM) | (1 << XIANG_TO);
+constexpr uint32_t MA_BITPIECE = (1 << MA_FROM) | (1 << MA_TO);
+constexpr uint32_t JU_BITPIECE = (1 << JU_FROM) | (1 << JU_TO);
+constexpr uint32_t PAO_BITPIECE = (1 << PAO_FROM) | (1 << PAO_TO);
+constexpr uint32_t BING_BITPIECE = (1 << BING_FROM) | (1 << (BING_FROM + 1)) |
+    (1 << (BING_FROM + 2)) | (1 << (BING_FROM + 3)) | (1 << BING_TO);
+constexpr uint32_t ATTACK_BITPIECE = MA_BITPIECE | JU_BITPIECE | PAO_BITPIECE | BING_BITPIECE;
+
+/* 棋子序号对应的棋子类型
+ *
+ * 棋子序号从0到47，其中0到15不用，16到31表示红子，32到47表示黑子。
+ * 每方的棋子顺序依次是：帅仕仕相相马马车车炮炮兵兵兵兵兵(将士士象象马马车车炮炮卒卒卒卒卒)
+ * 提示：判断棋子是红子用"pc < 32"，黑子用"pc >= 32"
+ */
+const int pieceType[48] = {
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6,
+  0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6
+};
 
 class Game
 {
@@ -46,7 +68,11 @@ public:
 	bool cur_player = RED;	// 当前游戏角色
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值
-	uint32_t bitPieces;		// 16-32号棋子是否在棋盘上
+	union {
+    uint32_t bitPieces;		// 16-32号棋子是否在棋盘上 ????16-47吧
+	uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
+	};
+		
 
 	uint8_t	board[256];		// 棋盘数组
 	uint8_t	pieces[48];		// 每个棋子的位置
@@ -71,6 +97,9 @@ public:
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端
+
+	// 根据子力局面评估
+	void evaBoard();
 };
 
 
@@ -134,6 +163,11 @@ inline int32_t stringToMove(std::string str)
 	int src = coordToPos('9' - str[1] + BOARD_TOP, str[0] - 'a' + BOARD_LEFT);
 	int dst = coordToPos('9' - str[3] + BOARD_TOP, str[2] - 'a' + BOARD_LEFT);
 	return getMoveType(src, dst);
+}
+
+// 双方的棋子
+inline uint32_t bothBitpiece(uint32_t bitPiece) {
+  return bitPiece + (bitPiece << 16);
 }
 
 // 获取棋子大写字母对应的数字
