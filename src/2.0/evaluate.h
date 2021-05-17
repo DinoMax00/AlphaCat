@@ -7,6 +7,8 @@ struct EVALSTRUCT {
   uint8_t blackPieces[7][256];
 };
 
+extern EVALSTRUCT normalEval;
+
 // 16位中有多少个1
 inline int popCnt16(uint16_t w) {
   int n;

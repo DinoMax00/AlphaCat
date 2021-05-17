@@ -4,6 +4,7 @@
 
 #include "pregen.h"
 #include "game.h"
+#include "evaluate.h"
 
 
 /* 匈牙利记号约定：
@@ -63,7 +64,29 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 	this->bitCol[getIdxCol(sq)] ^= preGen.bitColMask[sq];
 	this->bitPieces ^= 1 << (pc - 16);
 	// 更新估值
-
+	int pt = pieceType[pc];
+	if (pc < 32)
+	{
+		if (del)
+		{
+			this->red_val -= normalEval.redPieces[pt][sq];
+		}
+		else
+		{
+			this->red_val += normalEval.redPieces[pt][sq];
+		}
+	}
+	else
+	{
+		if (del)
+		{
+			this->black_val -= normalEval.blackPieces[pt][sq];
+		}
+		else
+		{
+			this->black_val += normalEval.blackPieces[pt][sq];
+		}
+	}
 	// 更新zobr键值
 }
 
@@ -125,26 +148,59 @@ void Game::buildFromFen(std::string fen)
 	}
 }
 
-void Game::takeOneMove(int32_t move)
+int Game::takeOneMove(int32_t move)
 {
+	int pt;
 	int src = getSrc(move);
 	int dst = getDst(move);
 	int chessOnSrc = this->board[src];
 	int chessOnDst = this->board[dst];
 	
+	// 更新终止位置
 	if (chessOnDst)
 	{
 		// 目标位置有子
 		this->pieces[chessOnDst] = 0;
+		this->bitPieces ^= 1 << (chessOnDst - 16);
+		pt = pieceType[chessOnDst];
+		if (chessOnDst < 32)
+		{
+			this->red_val -= normalEval.redPieces[pt][dst];
+		}
+		else
+		{
+			this->black_val -= normalEval.blackPieces[pt][dst];
+			pt += 7;
+		}
+		// 更新zobr
+		/////////////////////////////////////////////////
 	}
 	else
 	{
-		//
+		// 没有吃子 更新目标位置的位行位列
+		this->bitRow[getIdxRow(dst)] ^= preGen.bitRowMask[dst];
+		this->bitCol[getIdxCol(dst)] ^= preGen.bitColMask[dst];
 	}
 
+	// 更新起始位置
 	this->board[src] = 0;
 	this->board[dst] = chessOnSrc;
 	this->pieces[chessOnSrc] = dst;
+	this->bitRow[getIdxRow(src)] ^= preGen.bitColMask[src];
+	this->bitCol[getIdxCol(src)] ^= preGen.bitColMask[src];
+	pt = pieceType[chessOnSrc];
+	if (chessOnSrc < 32)
+	{
+		this->red_val += normalEval.redPieces[pt][dst] - normalEval.redPieces[pt][src];
+	}
+	else
+	{
+		this->black_val += normalEval.blackPieces[pt][dst] - normalEval.blackPieces[pt][dst];
+		pt += 7;
+	}
+	// 更新zobr
+	/////////////////////////////////////////////////
+	return chessOnDst;
 }
 
 void Game::deleteOneMove(int32_t move, int captured)

@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <ctime>
+
 #include "log.h"
 #include "ucci.h"
 #include "game.h"
@@ -20,19 +21,21 @@ int main(int argc, char* argv[])
     preGenInit();
     Game test;
     test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+    test.evaBoard();
+    std::cout << test.red_val << " " << test.black_val << std::endl;
     test.printForDebug();
     // test.changePlayer();
     Move move[120];
-    int num = test.genCapMoves(move);
+    int num = test.genAllMoves(move);
     for (int i = 0; i < num; i++)
     {
         char ch = getchar();
         test.takeOneMove(move[i].step);
         test.printForDebug();
-        test.evaBoard();
         std::cout << test.red_val << " " << test.black_val << std::endl;
         test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+        test.evaBoard();
     }
-    getchar();
+    char ch = getchar();
     return 0;
 }

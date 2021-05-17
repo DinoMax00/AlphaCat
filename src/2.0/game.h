@@ -87,7 +87,7 @@ public:
 
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
-	void takeOneMove(int32_t move);		// 一步移动
+	int takeOneMove(int32_t move);		// 一步移动
 	void deleteOneMove(int32_t move, int captured);	// 撤回一步移动
 
 	// 着法生成
