@@ -19,17 +19,17 @@ int main(int argc, char* argv[])
 {
     preGenInit();
     Game test;
-    test.buildFromFen("9/9/3k5/9/9/9/4R4/3A5/8r/4K4");
+    test.buildFromFen("rnbakabnr/9/1c5c1/9/9/9/9/1C5C1/9/RNBAKABNR");
     test.printForDebug();
     Move move[120];
-    int num = test.genNonCapMoves(move);
+    int num = test.genCapMoves(move);
     for (int i = 0; i < num; i++)
     {
         char ch = getchar();
         test.takeOneMove(move[i].step);
         test.printForDebug();
-        test.buildFromFen("9/9/3k5/9/9/9/4R4/3A5/8r/4K4");
+        test.buildFromFen("rnbakabnr/9/1c5c1/9/9/9/9/1C5C1/9/RNBAKABNR");
     }
-    
+    getchar();
     return 0;
 }

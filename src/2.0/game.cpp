@@ -1,5 +1,6 @@
 #include <string.h>
 #include <iostream>
+#include <Windows.h>
 
 #include "pregen.h"
 #include "game.h"
@@ -148,7 +149,7 @@ void Game::takeOneMove(int32_t move)
 
 void Game::printForDebug()
 {
-	std::cout << "______________________\n";
+	std::cout << "_______________________________\n";
 	// 打印棋盘
 	int row = 9;
 	for (int i = 0x33; i <= 0xcb; i += 16)
@@ -157,60 +158,62 @@ void Game::printForDebug()
 		for (int j = i; j <= i + 8; j++)
 		{
 			int temp = this->board[j];
-			if (temp == 0) std::cout << "*";
+			if (temp == 0) std::cout << "* ";
 			else if (temp >= 32) {
 				temp -= 32;
 				if (temp >= 11) {
-					std::cout << "b";
+					std::cout << "兵";
 				}
 				else if (temp >= 9) {
-					std::cout << "p";
+					std::cout << "炮";
 				}
 				else if (temp >= 7) {
-					std::cout << "c";
+					std::cout << "车";
 				}
 				else if (temp >= 5) {
-					std::cout << "m";
+					std::cout << "马";
 				}
 				else if (temp >= 3) {
-					std::cout << "x";
+					std::cout << "象";
 				}
 				else if (temp >= 1) {
-					std::cout << "s";
+					std::cout << "仕";
 				}
 				else if (temp >= 0) {
-					std::cout << "j";
+					std::cout << "将";
 				}
 			}
 			else if (temp >= 16) {
 				temp -= 16;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 				if (temp >= 11) {
-					std::cout << "B";
+					std::cout << "兵";
 				}
 				else if (temp >= 9) {
-					std::cout << "P";
+					std::cout << "炮";
 				}
 				else if (temp >= 7) {
-					std::cout << "C";
+					std::cout << "车";
 				}
 				else if (temp >= 5) {
-					std::cout << "M";
+					std::cout << "马";
 				}
 				else if (temp >= 3) {
-					std::cout << "X";
+					std::cout << "相";
 				}
 				else if (temp >= 1) {
-					std::cout << "S";
+					std::cout << "士";
 				}
 				else if (temp >= 0) {
-					std::cout << "J";
+					std::cout << "帅";
 				}
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
 			}
 			std::cout << " ";
 		}
 		std::cout << "|\n";
 	}
 	// 
-	std::cout << "----------------------\n";
-	std::cout << "   a b c d e f g h i\n";
+	std::cout << "-------------------------------\n";
+	std::cout << "   a  b  c  d  e  f  g  h  i\n";
 }
