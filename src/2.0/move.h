@@ -11,6 +11,11 @@ struct Move
 	uint8_t	captureed; // 被吃子
 	uint8_t chk;	   // 着法是否将军
 };
+union CapMove
+{
+	Move mov;
+	int val;
+};
 
 
 #endif
