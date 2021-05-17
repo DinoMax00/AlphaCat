@@ -8,7 +8,9 @@
 // 生成所有着法
 int Game::genAllMoves(Move moves[])
 {
-	return this->genCapMoves(moves) + this->genNonCapMoves(moves);
+	int cnt = this->genCapMoves(moves);
+	cnt += this->genNonCapMoves(moves, cnt - 1);
+	return cnt;
 }
 
 // 吃子着法，返回着法数量	未来需加入评分
@@ -190,7 +192,7 @@ int Game::genCapMoves(Move moves[])
 }
 
 // 不吃子着法, 返回着法数量
-int Game::genNonCapMoves(Move moves[]) 
+int Game::genNonCapMoves(Move moves[], int start)
 {
 	SlideMoveStruct* p_bit;					// 指向位行 位列数组的指针
 	int tag = sideTag(this->cur_player);	// 游戏角色tag
@@ -208,7 +210,7 @@ int Game::genNonCapMoves(Move moves[])
 			dst = *p;
 			// 是否吃子
 			if (this->board[dst] == 0)
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[start + cnt++].step = getMoveType(src, dst);
 			p++;
 		}
 	}
@@ -224,7 +226,7 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+					moves[start + cnt++].step = getMoveType(src, dst);
 				p++;
 			}
 		}
@@ -242,7 +244,7 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+					moves[start + cnt++].step = getMoveType(src, dst);
 				p++;
 				p_leg++;
 			}
@@ -261,7 +263,7 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+					moves[start + cnt++].step = getMoveType(src, dst);
 				p++;
 				p_leg++;
 			}
@@ -279,7 +281,7 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+					moves[start + cnt++].step = getMoveType(src, dst);
 				p++;
 			}
 		}
@@ -300,14 +302,14 @@ int Game::genNonCapMoves(Move moves[])
 			dst = p_bit->NonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[start + cnt++].step = getMoveType(src, dst);
 				dst--;
 			}
 			// 向左
 			dst = p_bit->NonCap[1] + (x << 4);
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[start + cnt++].step = getMoveType(src, dst);
 				dst++;
 			}
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
@@ -315,19 +317,94 @@ int Game::genNonCapMoves(Move moves[])
 			dst = p_bit->NonCap[0] + y;
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[start + cnt++].step = getMoveType(src, dst);
 				dst -= 16;
 			}
 			// 向上
 			dst = p_bit->NonCap[1] + y;
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[start + cnt++].step = getMoveType(src, dst);
 				dst += 16;
 			}
 		}
 	}
-
-	
 	return cnt;
+}
+
+
+bool Game::detectCheck()
+//返回值仅为将军判断，后期视需求改动
+{
+	SlideMaskStruct* p_bitrow, * p_bitcol;
+	int tag = sideTag(this->cur_player);
+	int opptag = 48 - tag;
+	int src = 0, dst = 0;
+
+
+	src = this->pieces[JIANG_FROM + tag];
+	if (!src)
+		return 0;
+	int x = getIdxRow(src);
+	int y = getIdxCol(src);
+	p_bitrow = preGen.rowMaskTab[y - BOARD_LEFT] + this->bitRow[x];
+	p_bitcol = preGen.colMaskTab[x - BOARD_TOP] + this->bitCol[y];
+
+	// 将帅照面
+	dst = this->pieces[JIANG_FROM + opptag];
+	if (dst)
+		if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
+			return true;
+
+	// 被马将军
+	for (int i = MA_FROM; i <= MA_TO; i++)
+	{
+		dst = this->pieces[i + opptag];
+		if (dst)
+		{
+			int p_leg = dst + preMaLegTab[src - dst + 256];
+			if (p_leg != dst && this->board[p_leg] == 0)	//同时判断能否吃到子+别腿
+				return true;
+		}
+	}
+
+	// 被兵将军，搜索左右两格
+	for (dst = src - 1; dst <= src + 1; dst += 2)
+	{
+		int piece = this->board[dst];
+		if (pieceType[piece] == 6 && (piece & opptag))
+			return true;
+	}
+	//搜索前方
+	{
+		int piece = this->board[src - 16 + tag << 5];	//需测试
+		if (pieceType[piece] == 6 && (piece & opptag))
+			return true;
+	}
+
+	// 被炮将军
+	for (int i = PAO_FROM; i <= PAO_TO; i++)
+	{
+		dst = this->pieces[i + opptag];
+		if (dst)
+		{
+			if (x == getIdxRow(dst) && (p_bitrow->PaoCap & preGen.bitRowMask[dst]))
+				return true;
+			else if (y == getIdxCol(dst) && (p_bitcol->PaoCap & preGen.bitColMask[dst]))
+				return true;
+		}
+	}
+
+	// 被车将军
+	for (int i = JU_FROM; i <= JU_TO; i++)
+	{
+		dst = this->pieces[i + opptag];
+		if (dst)
+		{
+			if (x == getIdxRow(dst) && (p_bitrow->JuCap & preGen.bitRowMask[dst]))
+				return true;
+			else if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
+				return true;
+		}
+	}
 }

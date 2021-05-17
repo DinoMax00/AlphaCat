@@ -13,8 +13,8 @@
 
 #include "move.h"
 
-// 游戏角色
-constexpr bool RED	= true;
+ // 游戏角色
+constexpr bool RED = true;
 constexpr bool BLACK = false;
 // 棋盘定位 0x33-0xcb
 constexpr uint8_t BOARD_LEFT = 3;
@@ -44,7 +44,7 @@ constexpr uint32_t MA_BITPIECE = (1 << MA_FROM) | (1 << MA_TO);
 constexpr uint32_t JU_BITPIECE = (1 << JU_FROM) | (1 << JU_TO);
 constexpr uint32_t PAO_BITPIECE = (1 << PAO_FROM) | (1 << PAO_TO);
 constexpr uint32_t BING_BITPIECE = (1 << BING_FROM) | (1 << (BING_FROM + 1)) |
-    (1 << (BING_FROM + 2)) | (1 << (BING_FROM + 3)) | (1 << BING_TO);
+(1 << (BING_FROM + 2)) | (1 << (BING_FROM + 3)) | (1 << BING_TO);
 constexpr uint32_t ATTACK_BITPIECE = MA_BITPIECE | JU_BITPIECE | PAO_BITPIECE | BING_BITPIECE;
 
 /* 棋子序号对应的棋子类型
@@ -69,22 +69,22 @@ public:
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值
 	union {
-    uint32_t bitPieces;		// 16-32号棋子是否在棋盘上 ????16-47吧
-	uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
+		uint32_t bitPieces;		// 16-32号棋子是否在棋盘上 ????16-47吧
+		uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
 	};
-		
+
 
 	uint8_t	board[256];		// 棋盘数组
 	uint8_t	pieces[48];		// 每个棋子的位置
 	uint16_t bitRow[16];	// 位行
 	uint16_t bitCol[16];	// 位列
 
-	
+
 
 	// 方法
 	Game();					// 默认构造函数 用于初始化
 	void changePlayer();	// 对换角色
-	
+
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
 	void takeOneMove(int32_t move);		// 一步移动
@@ -93,7 +93,10 @@ public:
 	// 着法生成
 	int genAllMoves(Move moves[]);		// 生成所有着法
 	int genCapMoves(Move moves[]);		// 生成吃子着法
-	int genNonCapMoves(Move moves[]);	// 生成不吃子着法
+	int genNonCapMoves(Move moves[], int start = 0);	// 生成不吃子着法
+
+	//将军检测
+	bool detectCheck();
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端
@@ -136,7 +139,7 @@ inline int getIdxRow(int idx)
 // 获取位置的列信息 位运算取模
 inline int getIdxCol(int idx)
 {
-	return idx & 15; 
+	return idx & 15;
 }
 
 // 起点终点组合成一个move类型
@@ -167,7 +170,7 @@ inline int32_t stringToMove(std::string str)
 
 // 双方的棋子
 inline uint32_t bothBitpiece(uint32_t bitPiece) {
-  return bitPiece + (bitPiece << 16);
+	return bitPiece + (bitPiece << 16);
 }
 
 // 获取棋子大写字母对应的数字
