@@ -1,6 +1,46 @@
 #ifndef EVALUATE_H
 #define EVALUATE_H
 
+// 局面预评价结构
+struct EVALSTRUCT {
+  uint8_t redPieces[7][256];
+  uint8_t blackPieces[7][256];
+};
+
+// 16位中有多少个1
+inline int popCnt16(uint16_t w) {
+  int n;
+  n = ((w >> 1) & 0x5555) + (w & 0x5555);
+  n = ((n >> 2) & 0x3333) + (n & 0x3333);
+  n = ((n >> 4) & 0x0f0f) + (n & 0x0f0f);
+  return (n >> 8) + (n & 0x00ff); 
+}
+
+// 32位中有多少个1
+inline int popCnt32(uint32_t dw) {
+  int n;
+  n = ((dw >> 1) & 0x55555555) + (dw & 0x55555555);
+  n = ((n >> 2) & 0x33333333) + (n & 0x33333333);
+  n = ((n >> 4) & 0x0f0f0f0f) + (n & 0x0f0f0f0f);
+  n = ((n >> 8) & 0x00ff00ff) + (n & 0x00ff00ff);
+  return (n >> 16) + (n & 0x0000ffff);
+}
+
+// 获得翻转位置
+inline int squareFlip(int sq) {
+  return 254 - sq;
+}
+
+// 棋子在黑色的棋盘那一半
+inline bool blackHalf(int sq) {
+  return (sq & 0x80) == 0;
+}
+
+// 棋子在红色的棋盘那一半
+inline bool redHalf(int sq) {
+  return (sq & 0x80) != 0;
+}
+
 // 1. 开中局、有进攻机会的帅(将)和兵(卒)，参照“梦入神蛋”
 static const uint8_t midGameJiangBingAttack[256] = {
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -240,45 +280,5 @@ static const uint8_t endGamePao[256] = {
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
-
-// 局面预评价结构
-struct EVALSTRUCT {
-  uint8_t redPieces[7][256];
-  uint8_t blackPieces[7][256];
-};
-
-// 16位中有多少个1
-inline int popCnt16(uint16_t w) {
-  int n;
-  n = ((w >> 1) & 0x5555) + (w & 0x5555);
-  n = ((n >> 2) & 0x3333) + (n & 0x3333);
-  n = ((n >> 4) & 0x0f0f) + (n & 0x0f0f);
-  return (n >> 8) + (n & 0x00ff); 
-}
-
-// 32位中有多少个1
-inline int popCnt32(uint32_t dw) {
-  int n;
-  n = ((dw >> 1) & 0x55555555) + (dw & 0x55555555);
-  n = ((n >> 2) & 0x33333333) + (n & 0x33333333);
-  n = ((n >> 4) & 0x0f0f0f0f) + (n & 0x0f0f0f0f);
-  n = ((n >> 8) & 0x00ff00ff) + (n & 0x00ff00ff);
-  return (n >> 16) + (n & 0x0000ffff);
-}
-
-// 获得翻转位置
-inline int squareFlip(int sq) {
-  return 254 - sq;
-}
-
-// 棋子在黑色的棋盘那一半
-inline bool blackHalf(int sq) {
-  return (sq & 0x80) == 0;
-}
-
-// 棋子在红色的棋盘那一半
-inline bool redHalf(int sq) {
-  return (sq & 0x80) != 0;
-}
 
 #endif
