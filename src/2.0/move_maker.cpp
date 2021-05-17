@@ -377,7 +377,7 @@ bool Game::detectCheck()
 	}
 	//ËÑË÷Ç°·½
 	{
-		int piece = this->board[src - 16 + tag << 5];	//Ğè²âÊÔ
+		int piece = this->board[src - 16 + ((tag/16-1) << 5)];	//Ğè²âÊÔ
 		if (pieceType[piece] == 6 && (piece & opptag))
 			return true;
 	}
@@ -407,4 +407,5 @@ bool Game::detectCheck()
 				return true;
 		}
 	}
+	return false;
 }
