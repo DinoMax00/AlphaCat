@@ -93,7 +93,7 @@ public:
 	// 着法生成
 	int genAllMoves(Move moves[]);		// 生成所有着法
 	int genCapMoves(Move moves[]);		// 生成吃子着法
-	int genNonCapMoves(Move moves[], int start = 0);	// 生成不吃子着法
+	int genNonCapMoves(Move moves[]);	// 生成不吃子着法
 
 	//将军检测
 	bool detectCheck();

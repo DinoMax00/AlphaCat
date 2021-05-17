@@ -1,6 +1,5 @@
 // 走法生成
 #include <iostream>
-
 #include "game.h"
 #include "pregen.h"
 
@@ -9,7 +8,7 @@
 int Game::genAllMoves(Move moves[])
 {
 	int cnt = this->genCapMoves(moves);
-	cnt += this->genNonCapMoves(moves, cnt - 1);
+	cnt += this->genNonCapMoves(moves + cnt);
 	return cnt;
 }
 
@@ -192,7 +191,7 @@ int Game::genCapMoves(Move moves[])
 }
 
 // 不吃子着法, 返回着法数量
-int Game::genNonCapMoves(Move moves[], int start)
+int Game::genNonCapMoves(Move moves[])
 {
 	SlideMoveStruct* p_bit;					// 指向位行 位列数组的指针
 	int tag = sideTag(this->cur_player);	// 游戏角色tag
@@ -210,7 +209,7 @@ int Game::genNonCapMoves(Move moves[], int start)
 			dst = *p;
 			// 是否吃子
 			if (this->board[dst] == 0)
-				moves[start + cnt++].step = getMoveType(src, dst);
+				moves[cnt++].step = getMoveType(src, dst);
 			p++;
 		}
 	}
@@ -226,7 +225,7 @@ int Game::genNonCapMoves(Move moves[], int start)
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[start + cnt++].step = getMoveType(src, dst);
+					moves[cnt++].step = getMoveType(src, dst);
 				p++;
 			}
 		}
@@ -244,7 +243,7 @@ int Game::genNonCapMoves(Move moves[], int start)
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[start + cnt++].step = getMoveType(src, dst);
+					moves[cnt++].step = getMoveType(src, dst);
 				p++;
 				p_leg++;
 			}
@@ -263,7 +262,7 @@ int Game::genNonCapMoves(Move moves[], int start)
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[start + cnt++].step = getMoveType(src, dst);
+					moves[cnt++].step = getMoveType(src, dst);
 				p++;
 				p_leg++;
 			}
@@ -281,7 +280,7 @@ int Game::genNonCapMoves(Move moves[], int start)
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[start + cnt++].step = getMoveType(src, dst);
+					moves[cnt++].step = getMoveType(src, dst);
 				p++;
 			}
 		}
@@ -302,14 +301,14 @@ int Game::genNonCapMoves(Move moves[], int start)
 			dst = p_bit->NonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			while (dst != src)
 			{
-				moves[start + cnt++].step = getMoveType(src, dst);
+				moves[cnt++].step = getMoveType(src, dst);
 				dst--;
 			}
 			// 向左
 			dst = p_bit->NonCap[1] + (x << 4);
 			while (dst != src)
 			{
-				moves[start + cnt++].step = getMoveType(src, dst);
+				moves[cnt++].step = getMoveType(src, dst);
 				dst++;
 			}
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
@@ -317,14 +316,14 @@ int Game::genNonCapMoves(Move moves[], int start)
 			dst = p_bit->NonCap[0] + y;
 			while (dst != src)
 			{
-				moves[start + cnt++].step = getMoveType(src, dst);
+				moves[cnt++].step = getMoveType(src, dst);
 				dst -= 16;
 			}
 			// 向上
 			dst = p_bit->NonCap[1] + y;
 			while (dst != src)
 			{
-				moves[start + cnt++].step = getMoveType(src, dst);
+				moves[cnt++].step = getMoveType(src, dst);
 				dst += 16;
 			}
 		}
@@ -377,7 +376,7 @@ bool Game::detectCheck()
 	}
 	//搜索前方
 	{
-		int piece = this->board[src - 16 + ((tag/16-1) << 5)];	//需测试
+		int piece = this->board[src - 16 + ((tag / 16 - 1) << 5)];	//需测试
 		if (pieceType[piece] == 6 && (piece & opptag))
 			return true;
 	}
