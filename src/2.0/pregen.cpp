@@ -4,7 +4,7 @@
 // 位置是否在棋盘中
 inline bool inBoard(int pos)
 {
-	if (pos <= 0x33 || pos >= 0xcb)
+	if (pos < 0x33 || pos > 0xcb)
 		return false;
 	pos &= 15;
 	return pos >= 0x03 && pos <= 0x0b;

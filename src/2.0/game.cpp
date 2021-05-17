@@ -147,6 +147,31 @@ void Game::takeOneMove(int32_t move)
 	this->pieces[chessOnSrc] = dst;
 }
 
+void Game::deleteOneMove(int32_t move, int captured)
+{
+	int src = getSrc(move);
+	int dst = getDst(move);
+	int piece = this->board[dst];
+
+	this->board[src] = piece;
+	this->pieces[piece] = src;
+	this->bitRow[src >> 4] ^= preGen.bitRowMask[src];
+	this->bitCol[src & 15] ^= preGen.bitColMask[src];
+
+	if (captured > 0)
+	{
+		this->board[dst] = captured;
+		this->pieces[captured] = dst;
+		this->bitPieces ^= 1 << (captured - 16);
+	}
+	else
+	{
+		this->board[dst] = 0;
+		this->bitRow[getIdxRow(dst)] ^= preGen.bitRowMask[dst];
+		this->bitCol[getIdxCol(dst)] ^= preGen.bitColMask[dst];
+	}
+}
+
 void Game::printForDebug()
 {
 	std::cout << "_______________________________\n";
