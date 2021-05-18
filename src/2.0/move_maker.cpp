@@ -90,7 +90,7 @@ bool Game::isProtected(int tag, int src)
 int Game::moveJudge(int opptag, int src, int dst)
 {
 	int mvv = pieceValue[this->board[dst]];
-	int lva = (isProtected(opptag, this->board[dst]) ? pieceValue[this->board[src]] : 0);
+	int lva = (isProtected(opptag, dst) ? pieceValue[this->board[src]] : 0);
 	if (mvv >= lva)
 		return mvv - lva + 1;
 	else if (mvv >= 3 || ((dst & 0x80) == (opptag - 16) << 4))
@@ -320,7 +320,10 @@ int Game::genNonCapMoves(Move moves[])
 			dst = *p;
 			// 是否吃子
 			if (this->board[dst] == 0)
-				moves[cnt++].step = getMoveType(src, dst);
+			{
+				moves[cnt].step = getMoveType(src, dst);
+				moves[cnt++].value = 0;
+			}
 			p++;
 		}
 	}
@@ -336,7 +339,10 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+				{
+					moves[cnt].step = getMoveType(src, dst);
+					moves[cnt++].value = 0;
+				}
 				p++;
 			}
 		}
@@ -354,7 +360,10 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+				{
+					moves[cnt].step = getMoveType(src, dst);
+					moves[cnt++].value = 0;
+				}
 				p++;
 				p_leg++;
 			}
@@ -373,7 +382,10 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+				{
+					moves[cnt].step = getMoveType(src, dst);
+					moves[cnt++].value = 0;
+				}
 				p++;
 				p_leg++;
 			}
@@ -394,14 +406,16 @@ int Game::genNonCapMoves(Move moves[])
 			dst = p_bit->NonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[cnt].step = getMoveType(src, dst);
+				moves[cnt++].value = 0;
 				dst--;
 			}
 			// 向左
 			dst = p_bit->NonCap[1] + (x << 4);
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[cnt].step = getMoveType(src, dst);
+				moves[cnt++].value = 0;
 				dst++;
 			}
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
@@ -409,14 +423,16 @@ int Game::genNonCapMoves(Move moves[])
 			dst = p_bit->NonCap[0] + y;
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[cnt].step = getMoveType(src, dst);
+				moves[cnt++].value = 0;
 				dst -= 16;
 			}
 			// 向上
 			dst = p_bit->NonCap[1] + y;
 			while (dst != src)
 			{
-				moves[cnt++].step = getMoveType(src, dst);
+				moves[cnt].step = getMoveType(src, dst);
+				moves[cnt++].value = 0;
 				dst += 16;
 			}
 		}
@@ -432,7 +448,10 @@ int Game::genNonCapMoves(Move moves[])
 			{
 				dst = *p;
 				if (this->board[dst] == 0)
-					moves[cnt++].step = getMoveType(src, dst);
+				{
+					moves[cnt].step = getMoveType(src, dst);
+					moves[cnt++].value = 0;
+				}
 				p++;
 			}
 		}
