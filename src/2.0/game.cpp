@@ -155,7 +155,7 @@ int Game::takeOneMove(int32_t move)
 	int dst = getDst(move);
 	int chessOnSrc = this->board[src];
 	int chessOnDst = this->board[dst];
-	
+	std::cout << move << " " << dst << " " << chessOnDst << std::endl;
 	// 更新终止位置
 	if (chessOnDst)
 	{
@@ -186,7 +186,7 @@ int Game::takeOneMove(int32_t move)
 	this->board[src] = 0;
 	this->board[dst] = chessOnSrc;
 	this->pieces[chessOnSrc] = dst;
-	this->bitRow[getIdxRow(src)] ^= preGen.bitColMask[src];
+	this->bitRow[getIdxRow(src)] ^= preGen.bitRowMask[src];
 	this->bitCol[getIdxCol(src)] ^= preGen.bitColMask[src];
 	pt = pieceType[chessOnSrc];
 	if (chessOnSrc < 32)
@@ -195,7 +195,7 @@ int Game::takeOneMove(int32_t move)
 	}
 	else
 	{
-		this->black_val += normalEval.blackPieces[pt][dst] - normalEval.blackPieces[pt][dst];
+		this->black_val += normalEval.blackPieces[pt][dst] - normalEval.blackPieces[pt][src];
 		pt += 7;
 	}
 	// 更新zobr
