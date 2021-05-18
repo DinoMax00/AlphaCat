@@ -58,6 +58,11 @@ const int pieceType[48] = {
   0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6,
   0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6
 };
+const int pieceValue[48] = {
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  5, 1, 1, 1, 1, 3, 3, 4, 4, 3, 3, 2, 2, 2, 2, 2,
+  5, 1, 1, 1, 1, 3, 3, 4, 4, 3, 3, 2, 2, 2, 2, 2
+};
 
 class Game
 {
@@ -87,15 +92,19 @@ public:
 
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
-	int takeOneMove(int32_t move);		// 一步移动
-	void deleteOneMove(int32_t move, int captured);	// 撤回一步移动
+	int takeOneMove(uint16_t move);		// 一步移动
+	void deleteOneMove(uint16_t move, int captured);	// 撤回一步移动
+
+	// 着法评分
+	int moveJudge(int opptag, int src, int dst);
 
 	// 着法生成
 	int genAllMoves(Move moves[]);		// 生成所有着法
 	int genCapMoves(Move moves[]);		// 生成吃子着法
 	int genNonCapMoves(Move moves[]);	// 生成不吃子着法
 
-	//将军检测
+	// 情况检测
+	bool isProtected(int tag, int src);
 	bool detectCheck();
 
 	// 调试
@@ -119,13 +128,13 @@ inline int sideTag(bool side)
 }
 
 // 根据移动信息 获取起点
-inline int getSrc(int32_t move)
+inline int getSrc(uint16_t move)
 {
 	return move & 255;
 }
 
 // 根据移动信息 获取终点
-inline int getDst(int32_t move)
+inline int getDst(uint16_t move)
 {
 	return move >> 8;
 }
@@ -143,13 +152,13 @@ inline int getIdxCol(int idx)
 }
 
 // 起点终点组合成一个move类型
-inline int32_t getMoveType(int src, int dst)
+inline uint16_t getMoveType(int src, int dst)
 {
 	return src + (dst << 8);
 }
 
 // move转字符串
-inline std::string moveToString(int32_t move)
+inline std::string moveToString(uint16_t move)
 {
 	std::string str;
 	str += getIdxCol(getSrc(move)) - BOARD_LEFT + 'a';
@@ -161,7 +170,7 @@ inline std::string moveToString(int32_t move)
 }
 
 // 字符串转move
-inline int32_t stringToMove(std::string str)
+inline uint16_t stringToMove(std::string str)
 {
 	int src = coordToPos('9' - str[1] + BOARD_TOP, str[0] - 'a' + BOARD_LEFT);
 	int dst = coordToPos('9' - str[3] + BOARD_TOP, str[2] - 'a' + BOARD_LEFT);

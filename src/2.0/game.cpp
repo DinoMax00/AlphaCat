@@ -148,7 +148,7 @@ void Game::buildFromFen(std::string fen)
 	}
 }
 
-int Game::takeOneMove(int32_t move)
+int Game::takeOneMove(uint16_t move)
 {
 	int pt;
 	int src = getSrc(move);
@@ -203,7 +203,7 @@ int Game::takeOneMove(int32_t move)
 	return chessOnDst;
 }
 
-void Game::deleteOneMove(int32_t move, int captured)
+void Game::deleteOneMove(uint16_t move, int captured)
 {
 	int src = getSrc(move);
 	int dst = getDst(move);
