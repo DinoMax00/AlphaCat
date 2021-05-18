@@ -2,9 +2,9 @@
 #include "game.h"
 #include "pregen.h"
 #include "evaluate.h"
-
+#include<iostream>
 /* 局面预评价就是初始化局面预评价数据(PreEval)的过程。
- * ElephantEye的局面预评价主要分以下两个方面：
+ * 局面预评价主要分以下两个方面：
  * 1. 判断局势处于开中局还是残局阶段；
  * 2. 判断每一方是否对对方形成威胁。
  */
@@ -31,7 +31,7 @@ void Game::evaBoard() {
   midGameValue = (2 * TOTAL_MIDGAME_VALUE - midGameValue) * midGameValue / TOTAL_MIDGAME_VALUE;
   for (sq = 0; sq < 256; sq ++) {
     // 将马车炮
-    if (this->board[sq]) {
+    if (inBoard(sq)) {
       normalEval.redPieces[0][sq] = normalEval.blackPieces[0][squareFlip(sq)] = (uint8_t)
           ((midGameJiangBingAttack[sq] * midGameValue + endGameJiangBingAttack[sq] * (TOTAL_MIDGAME_VALUE - midGameValue)) / TOTAL_MIDGAME_VALUE);
       normalEval.redPieces[3][sq] = normalEval.blackPieces[3][squareFlip(sq)] = (uint8_t)
@@ -79,7 +79,7 @@ void Game::evaBoard() {
   redAttack = std::min(redAttack, TOTAL_ATTACK_VALUE);
   blackAttack = std::min(blackAttack, TOTAL_ATTACK_VALUE);
   for (sq = 0; sq < 256; sq ++) {
-    if (this->board[sq]) {
+    if (inBoard(sq)) {
       // 士象兵
       normalEval.redPieces[1][sq] = normalEval.redPieces[2][sq] = (uint8_t) ((gameShiXiangTreatened[sq] * blackAttack +
           gameShiXiangTreatless[sq] * (TOTAL_ATTACK_VALUE - blackAttack)) / TOTAL_ATTACK_VALUE);

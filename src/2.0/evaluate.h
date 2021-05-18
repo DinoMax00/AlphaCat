@@ -43,6 +43,14 @@ inline bool redHalf(int sq) {
   return (sq & 0x80) != 0;
 }
 
+// 位置是否在棋盘中
+inline bool inBoard(int pos)
+{
+	if (pos < 0x33 || pos > 0xcb)
+		return false;
+	pos &= 15;
+	return pos >= 0x03 && pos <= 0x0b;
+}
 // 1. 开中局、有进攻机会的帅(将)和兵(卒)，参照“梦入神蛋”
 static const uint8_t midGameJiangBingAttack[256] = {
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
