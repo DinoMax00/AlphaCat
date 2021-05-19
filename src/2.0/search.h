@@ -1,3 +1,4 @@
+/*
 #ifndef SEARCH_H
 #define SEARCH_H
 
@@ -37,3 +38,4 @@ inline int64_t GetTime() {
 extern SearchStruct Search;
 
 #endif
+*/

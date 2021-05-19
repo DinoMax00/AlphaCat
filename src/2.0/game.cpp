@@ -155,7 +155,6 @@ int Game::takeOneMove(uint16_t move)
 	int dst = getDst(move);
 	int chessOnSrc = this->board[src];
 	int chessOnDst = this->board[dst];
-	std::cout << move << " " << dst << " " << chessOnDst << std::endl;
 	// ¸üĞÂÖÕÖ¹Î»ÖÃ
 	if (chessOnDst)
 	{

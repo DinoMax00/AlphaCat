@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include <string>
 
-#include "move.h"
 
  // 游戏角色
 constexpr bool RED = true;
@@ -62,6 +61,17 @@ const int pieceValue[48] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   5, 1, 1, 1, 1, 3, 3, 4, 4, 3, 3, 2, 2, 2, 2, 2,
   5, 1, 1, 1, 1, 3, 3, 4, 4, 3, 3, 2, 2, 2, 2, 2
+};
+
+struct Move
+{
+	uint16_t step;	// move类型
+	uint16_t value;	// 着法估值
+
+	bool operator < (const Move& x) const
+	{
+		return value > x.value;
+	}
 };
 
 class Game
