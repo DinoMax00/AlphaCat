@@ -19,24 +19,13 @@
 
 int main(int argc, char* argv[])
 {
+    Log().clear();
     preGenInit();
-    Game test;
-    MoveSort move_sort;
-    test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
-    test.evaBoard();
-    std::cout << test.red_val << " " << test.black_val << std::endl;
-    test.printForDebug();
-    move_sort.getAllMoves(test);
-    while(true)
-    {   
-        char ch = getchar();
-        if (test.takeOneMove(move_sort.next())) {
-            test.printForDebug();
-            std::cout << test.red_val << " " << test.black_val << std::endl;
-            test.deleteOneMove();
-            std::cout << test.red_val << " " << test.black_val << std::endl;
-        }
-    }
-    char ch = getchar();
+
+    UcciEngine* alpha_cat = new UcciEngine();
+
+    alpha_cat->bootEngine();
+    alpha_cat->run();
+
     return 0;
 }

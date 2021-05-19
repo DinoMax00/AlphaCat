@@ -12,10 +12,14 @@
 #include <string.h>
 #include <vector>
 
+#include "game.h"
+#include "move.h"
 
 class UcciEngine
 {
 private:
+    Game game;
+    MoveSort move_sort;
     /// 读入的命令字符串
     std::string commandStr;
     /// 命令字符串分割后存放的Vec

@@ -11,7 +11,8 @@
 #include "search.h"
 #include "ucci.h"
 #include "log.h"
-
+#include "game.h"
+#include "move.h"
 
 void UcciEngine::clear()
 {
@@ -79,31 +80,31 @@ void UcciEngine::updWhichPlayer()
 		if (commandVec[3] == "b")
 		{
 			if (commandVec.size() <= 9)
-				; // board.player = BLACK_PLAYER;
+				game.cur_player = BLACK;
 			else if ((commandVec.size() - 9) % 2)
-				; // board.player = RED_PLAYER;
+				game.cur_player = RED;
 			else
-				; // board.player = BLACK_PLAYER;
+				game.cur_player = BLACK;
 		}
 		else
 		{
 			if (commandVec.size() <= 9)
-				; // board.player = RED_PLAYER;
+				game.cur_player = BLACK;
 			else if ((commandVec.size() - 9) % 2)
-				; // board.player = BLACK_PLAYER;
+				game.cur_player = RED;
 			else
-				; // board.player = RED_PLAYER;
+				game.cur_player = BLACK;
 		}
 	}
 	else if (commandVec[1] == "startpos")
 	{
 		// 更新游戏角色
 		if (commandVec.size() <= 3)
-			; // board.player = RED_PLAYER;
+			game.cur_player = RED;
 		else if ((commandVec.size() - 3) % 2)
-			; // board.player = BLACK_PLAYER;
+			game.cur_player = BLACK;
 		else
-			; // board.player = RED_PLAYER;
+			game.cur_player = RED;
 	}
 }
 
@@ -126,7 +127,7 @@ void UcciEngine::run()
 		{
 			if (commandVec[1] == "newgame")
 			{
-				// board.buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+				game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 			}
 		}
 		// 移子
@@ -136,24 +137,24 @@ void UcciEngine::run()
 			if (commandVec[1] == "fen")
 			{
 				// 更新最近吃子局面 
-				// board.buildBoardFromFen(commandVec[2]);
+				game.buildFromFen(commandVec[2]);
 				// 更新后续局面
 				if (commandVec.size() > 9)
 				{
 					for (int i = 9; i < (int)commandVec.size(); i++) {
-						// board.genOneMove(commandVec[i]);
+						game.takeOneMove(stringToMove(commandVec[i]));
 					}
 				}
 			}
 			else if (commandVec[1] == "startpos" && commandVec.size() > 3)
 			{
 				// 更新局面
-				// board.buildBoardFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+				game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 				// 更新后续局面
 				if (commandVec.size() > 3)
 				{
-					for (int i = 3; i < commandVec.size(); i++) {
-						// board.genOneMove(commandVec[i]);
+					for (int i = 3; i < (int)commandVec.size(); i++) {
+						game.takeOneMove(stringToMove(commandVec[i]));
 					}
 				}
 			}
@@ -161,7 +162,16 @@ void UcciEngine::run()
 		// 走子
 		else if (commandVec[0] == "go" && commandVec.size() > 2)
 		{
-
+			// game.printForDebug();
+			move_sort.getAllMoves(game);
+			bool flag;
+			int mv;
+			do {
+				mv = move_sort.random();
+				flag = game.takeOneMove(mv);
+			} while (!flag);
+			std::cout << "bestmove " << moveToString(mv) << std::endl;
+			Log().info("引擎响应->bestmove " + moveToString(mv));
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")

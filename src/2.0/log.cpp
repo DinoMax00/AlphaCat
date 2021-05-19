@@ -17,7 +17,7 @@ void Log::clear()
 	if (out.is_open())
 	{
 		out << __DATE__ << "--" << __TIME__ << ":\n";
-		out << "程序启动" << std::endl;
+		out << "程序启动" << std::endl; 
 		out.close();
 	}
 	else out.close();
