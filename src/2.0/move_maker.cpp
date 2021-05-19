@@ -384,6 +384,7 @@ int Game::genNonCapMoves(Move moves[])
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
 				{
 					moves[cnt].step = getMoveType(src, dst);
+					std::cout << (int)src << " " << (int)dst << std::endl;
 					moves[cnt++].value = 0;
 				}
 				p++;

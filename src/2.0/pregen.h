@@ -37,7 +37,7 @@ struct Pregen
 	uint8_t preShiMoves[256][8];	// 士
 	uint8_t preXiangMoves[256][8];	// 相
 	uint8_t preXiangLegs[256][4];	// 象腿 
-	uint8_t preMaMoves[256][8];		// 马
+	uint8_t preMaMoves[256][12];	// 马
 	uint8_t preMaLegs[256][12];		// 马腿
 	uint8_t preBingMoves[2][256][4];	// 兵
 };
