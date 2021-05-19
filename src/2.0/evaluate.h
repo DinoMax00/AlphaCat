@@ -1,11 +1,50 @@
 #ifndef EVALUATE_H
 #define EVALUATE_H
 
+// 偷懒评价的边界
+const int EVAL_MARGIN1 = 160;
+const int EVAL_MARGIN2 = 80;
+const int EVAL_MARGIN3 = 40;
+const int EVAL_MARGIN4 = 20;
+
+/* 仕(士)的形状对于局面评价，特别是判断空头炮、沉底炮等棋型有重大作用，为此ElephantEye给出四种形状：
+ * 1. 帅(将)在原位，双仕(士)都在底线，编为1号，这种情况要判断空头炮和炮镇窝心马；
+ * 2. 帅(将)在原位，双仕(士)从左边包围帅(将)，编为2号，这种情况要判断右边的沉底炮和车封右边的帅(将)门；
+ * 3. 帅(将)在原位，双仕(士)从右边包围帅(将)，编为3号，这种情况要判断左边的沉底炮和车封左边的帅(将)门；
+ * 4. 其他情况，包括帅(将)不在原位或缺仕(士)，都编号0。
+ * 注：以“红下黑上”这个固定的棋盘方位来规定左右。
+ */
+
+const int RANK_TOP = 3;
+const int RANK_BOTTOM = 12;
+const int FILE_LEFT = 3;
+const int FILE_CENTER = 7;
+const int FILE_RIGHT = 11;
+
+const int RED_JIANG_BITFILE = 1 << (RANK_BOTTOM - RANK_TOP);
+const int BLACK_JIANG_BITFILE = 1 << (RANK_TOP - RANK_TOP);
+const int KING_BITRANK = 1 << (FILE_CENTER - FILE_LEFT);
+const int JU_MIDGAME_VALUE = 6;
+
+const int SHAPE_NONE = 0;
+const int SHAPE_CENTER = 1;
+const int SHAPE_LEFT = 2;
+const int SHAPE_RIGHT = 3;
+
 // 局面预评价结构
 struct EVALSTRUCT {
   uint8_t redPieces[7][256];
   uint8_t blackPieces[7][256];
 };
+
+// 扩展的局面预评价结构
+struct EVALSTRUCTEX {
+  int blackShiLeakage, redShiLeakage;
+  int hollowThreatValue[16], centralThreatValue[16];
+  int redBottomThreatValue[16], blackBottomThreatValue[16];
+  char popCnt16[65536]; // 加速PopCnt16的数组，只需要初始化一次
+};
+
 
 extern EVALSTRUCT normalEval;
 
@@ -26,6 +65,11 @@ inline int popCnt32(uint32_t dw) {
   n = ((n >> 4) & 0x0f0f0f0f) + (n & 0x0f0f0f0f);
   n = ((n >> 8) & 0x00ff00ff) + (n & 0x00ff00ff);
   return (n >> 16) + (n & 0x0000ffff);
+}
+
+// 根据某一方返回哪方分数
+inline int sideValue(bool player, int vl) {
+  return (player == RED ? vl : -vl);
 }
 
 // 获得翻转位置
@@ -291,4 +335,18 @@ static const uint8_t endGamePao[256] = {
   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
+// 空头炮的威胁分值，指标是对红方来说的行号(即黑方要用15去减)，大体上空头炮位置越高威胁越大。进入残局时，该值要相应减少。
+static const int hollowThreat[16] = {
+   0,  0,  0,  0,  0,  0, 60, 65, 70, 75, 80, 80, 80,  0,  0,  0
+};
+
+// 炮镇窝心马的威胁分值，指标同上，大体上高度越低威胁越大，没有窝心马时可取四分之一。进入残局时，取值似乎不应变化。
+static const int centralThreat[16] = {
+   0,  0,  0,  0,  0,  0, 50, 45, 40, 35, 30, 30, 30,  0,  0,  0
+};
+
+// 沉底炮的威胁分值，指标是列号，大体上越靠近边线威胁越大。威胁减少时，该值要相应减少。
+static const int bottomThreat[16] = {
+   0,  0,  0, 40, 30,  0,  0,  0,  0,  0, 30, 40,  0,  0,  0,  0
+};
 #endif

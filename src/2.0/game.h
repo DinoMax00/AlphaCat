@@ -12,6 +12,7 @@
 #include <string>
 
 
+const int RANK_TOP = 3;
  // 游戏角色
 constexpr bool RED = true;
 constexpr bool BLACK = false;
@@ -145,7 +146,17 @@ public:
 	// 获得局面估值
 	int getValue(int vlAlpha, int vlBeta);
 	int materialValue();
+	int advisorShapeValue();
+	int stringHoldValue();
 	int getEva();
+
+	SlideMaskStruct *colMaskPtr(int x, int y) const {
+    	return preGen.colMaskTab[y - RANK_TOP] + bitCol[x];
+	}
+  
+	SlideMaskStruct *rowMaskPtr(int x, int y) const {
+		return preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
+	}
 };
 
 
@@ -177,6 +188,11 @@ inline int getDst(uint16_t move)
 inline int getIdxRow(int idx)
 {
 	return idx >> 4;
+}
+
+// 获取翻转位置的行
+inline int idxRowFlip(int y) {
+  return 15 - y;
 }
 
 // 获取位置的列信息 位运算取模
