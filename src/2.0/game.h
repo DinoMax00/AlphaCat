@@ -115,7 +115,7 @@ public:
 
 	// 情况检测
 	bool isProtected(int tag, int src);
-	bool detectCheck();
+	int detectCheck(bool simple = false);
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端

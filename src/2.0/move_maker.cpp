@@ -460,14 +460,14 @@ int Game::genNonCapMoves(Move moves[])
 }
 
 
-bool Game::detectCheck()
-//返回值仅为将军判断，后期视需求改动
+int Game::detectCheck(bool simple)
+//返回值为0/1/将军的棋子值（多子同时将军时返回1）；simple模式下返回值仅为0/1
 {
 	SlideMaskStruct* p_bitrow, * p_bitcol;
 	int tag = sideTag(this->cur_player);
 	int opptag = 48 - tag;
 	int src = 0, dst = 0;
-
+	int record = 0;
 
 	src = this->pieces[tag + JIANG_FROM];
 	if (!src)
@@ -481,7 +481,12 @@ bool Game::detectCheck()
 	dst = this->pieces[opptag + JIANG_FROM];
 	if (dst)
 		if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
-			return true;
+		{
+			if (simple || record)
+				return true;
+			else
+				record = opptag + JIANG_FROM;
+		}
 
 	// 被马将军
 	for (int i = MA_FROM; i <= MA_TO; i++)
@@ -491,7 +496,12 @@ bool Game::detectCheck()
 		{
 			int p_leg = dst + preMaLegTab[src - dst + 256];
 			if (p_leg != dst && this->board[p_leg] == 0)	//同时判断能否吃到子+别腿
-				return true;
+			{
+				if (simple || record)
+					return true;
+				else
+					record = opptag + i;
+			}
 		}
 	}
 	// 被车将军
@@ -501,9 +511,19 @@ bool Game::detectCheck()
 		if (dst)
 		{
 			if (x == getIdxRow(dst) && (p_bitrow->JuCap & preGen.bitRowMask[dst]))
-				return true;
+			{
+				if (simple || record)
+					return true;
+				else
+					record = opptag + i;
+			}
 			else if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
-				return true;
+			{
+				if (simple || record)
+					return true;
+				else
+					record = opptag + i;
+			}
 		}
 	}
 	// 被炮将军
@@ -513,9 +533,19 @@ bool Game::detectCheck()
 		if (dst)
 		{
 			if (x == getIdxRow(dst) && (p_bitrow->PaoCap & preGen.bitRowMask[dst]))
-				return true;
+			{
+				if (simple || record)
+					return true;
+				else
+					record = opptag + i;
+			}
 			else if (y == getIdxCol(dst) && (p_bitcol->PaoCap & preGen.bitColMask[dst]))
-				return true;
+			{
+				if (simple || record)
+					return true;
+				else
+					record = opptag + i;
+			}
 		}
 	}
 	// 被兵将军，左右两格
@@ -523,13 +553,33 @@ bool Game::detectCheck()
 	{
 		int piece = this->board[dst];
 		if (pieceType[piece] == 6 && (piece & opptag))
-			return true;
+		{
+			if (simple || record)
+				return true;
+			else
+				for (int i = BING_FROM; i <= BING_TO; i++)
+					if (pieces[opptag + i] == dst)
+					{
+						record = opptag + i;
+						break;
+					}
+		}
 	}
 	//被兵将军，前方
 	{
 		int piece = this->board[src - 16 + ((tag / 16 - 1) << 5)];	//需测试
 		if (pieceType[piece] == 6 && (piece & opptag))
-			return true;
+		{
+			if (simple || record)
+				return true;
+			else
+				for (int i = BING_FROM; i <= BING_TO; i++)
+					if (pieces[opptag + i] == dst)
+					{
+						record = opptag + i;
+						break;
+					}
+		}
 	}
-	return false;
+	return record;
 }
