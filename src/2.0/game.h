@@ -141,6 +141,7 @@ public:
 
 	// 根据子力局面评估
 	void evaBoard();
+	int getEva();
 };
 
 
