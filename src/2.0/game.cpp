@@ -1,4 +1,4 @@
-#include <string.h>
+ï»¿#include <string.h>
 #include <iostream>
 #include <Windows.h>
 
@@ -7,44 +7,36 @@
 #include "evaluate.h"
 
 
-/* ÐÙÑÀÀû¼ÇºÅÔ¼¶¨£º
+/* åŒˆç‰™åˆ©è®°å·çº¦å®šï¼š
  *
- * sq: ¸ñ×ÓÐòºÅ(ÕûÊý£¬´Ó0µ½255£¬²ÎÔÄ"pregen.cpp")
- * pc: Æå×ÓÐòºÅ(ÕûÊý£¬´Ó0µ½47£¬²ÎÔÄ"position.cpp")
- * pt: Æå×ÓÀàÐÍÐòºÅ(ÕûÊý£¬´Ó0µ½6£¬²ÎÔÄ"position.cpp")
- * mv: ×Å·¨(ÕûÊý£¬´Ó0µ½65535£¬²ÎÔÄ"position.cpp")
- * sd: ×ß×Ó·½(ÕûÊý£¬0´ú±íºì·½£¬1´ú±íºÚ·½)
- * vl: ¾ÖÃæ¼ÛÖµ(ÕûÊý£¬´Ó"-MATE_VALUE"µ½"MATE_VALUE"£¬²ÎÔÄ"position.cpp")
- * (×¢£ºÒÔÉÏÎå¸ö¼ÇºÅ¿ÉÓëuc¡¢dwµÈ´ú±íÕûÊýµÄ¼ÇºÅÅäºÏÊ¹ÓÃ)
- * pos: ¾ÖÃæ(PositionStructÀàÐÍ£¬²ÎÔÄ"position.h")
- * sms: Î»ÐÐºÍÎ»ÁÐµÄ×Å·¨Éú³ÉÔ¤ÖÃ½á¹¹(²ÎÔÄ"pregen.h")
- * smv: Î»ÐÐºÍÎ»ÁÐµÄ×Å·¨ÅÐ¶ÏÔ¤ÖÃ½á¹¹(²ÎÔÄ"pregen.h")
+ * sq: æ ¼å­åºå·(æ•´æ•°ï¼Œä»Ž0åˆ°255ï¼Œå‚é˜…"pregen.cpp")
+ * pc: æ£‹å­åºå·(æ•´æ•°ï¼Œä»Ž0åˆ°47ï¼Œå‚é˜…"position.cpp")
+ * pt: æ£‹å­ç±»åž‹åºå·(æ•´æ•°ï¼Œä»Ž0åˆ°6ï¼Œå‚é˜…"position.cpp")
+ * mv: ç€æ³•(æ•´æ•°ï¼Œä»Ž0åˆ°65535ï¼Œå‚é˜…"position.cpp")
+ * sd: èµ°å­æ–¹(æ•´æ•°ï¼Œ0ä»£è¡¨çº¢æ–¹ï¼Œ1ä»£è¡¨é»‘æ–¹)
+ * vl: å±€é¢ä»·å€¼(æ•´æ•°ï¼Œä»Ž"-MATE_VALUE"åˆ°"MATE_VALUE"ï¼Œå‚é˜…"position.cpp")
+ * (æ³¨ï¼šä»¥ä¸Šäº”ä¸ªè®°å·å¯ä¸Žucã€dwç­‰ä»£è¡¨æ•´æ•°çš„è®°å·é…åˆä½¿ç”¨)
+ * pos: å±€é¢(PositionStructç±»åž‹ï¼Œå‚é˜…"position.h")
+ * sms: ä½è¡Œå’Œä½åˆ—çš„ç€æ³•ç”Ÿæˆé¢„ç½®ç»“æž„(å‚é˜…"pregen.h")
+ * smv: ä½è¡Œå’Œä½åˆ—çš„ç€æ³•åˆ¤æ–­é¢„ç½®ç»“æž„(å‚é˜…"pregen.h")
  */
 
 Game::Game()
 {
-	// Çå¿ÕÆåÅÌ
-	std::memset(this->board, 0, sizeof(this->board));
-	std::memset(this->pieces, 0, sizeof(this->pieces));
-	std::memset(this->bitCol, 0, sizeof(this->bitCol));
-	std::memset(this->bitRow, 0, sizeof(this->bitRow));
-	this->bitPieces = 0;
-	// ³õÊ¼»¯ÓÎÏ·½ÇÉ«
-	this->cur_player = RED;
-	this->red_val = this->black_val = 0;
+	this->initGame();
 }
 
 void Game::initGame()
 {
-	// Çå¿ÕÆåÅÌ
+	// æ¸…ç©ºæ£‹ç›˜
 	std::memset(this->board, 0, sizeof(this->board));
 	std::memset(this->pieces, 0, sizeof(this->pieces));
 	std::memset(this->bitCol, 0, sizeof(this->bitCol));
 	std::memset(this->bitRow, 0, sizeof(this->bitRow));
 	this->bitPieces = 0;
-	// ³õÊ¼»¯ÓÎÏ·½ÇÉ«
 	this->cur_player = RED;
 	this->red_val = this->black_val = 0;
+	this->move_num = 0;
 }
 
 void Game::putChess(int32_t sq, int32_t pc, bool del)
@@ -59,11 +51,11 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 		this->board[sq] = pc;
 		this->pieces[pc] = sq;
 	}
-	// ¸üÐÂÎ»ÐÐ Î»ÁÐ
+	// æ›´æ–°ä½è¡Œ ä½åˆ—
 	this->bitRow[getIdxRow(sq)] ^= preGen.bitRowMask[sq];
 	this->bitCol[getIdxCol(sq)] ^= preGen.bitColMask[sq];
 	this->bitPieces ^= 1 << (pc - 16);
-	// ¸üÐÂ¹ÀÖµ
+	// æ›´æ–°ä¼°å€¼
 	int pt = pieceType[pc];
 	if (pc < 32)
 	{
@@ -87,7 +79,7 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 			this->black_val += normalEval.blackPieces[pt][sq];
 		}
 	}
-	// ¸üÐÂzobr¼üÖµ
+	// æ›´æ–°zobré”®å€¼
 }
 
 void Game::changePlayer()
@@ -98,7 +90,7 @@ void Game::changePlayer()
 void Game::buildFromFen(std::string fen)
 {
 	this->initGame();
-	// Á½¸öÊý×é´æ´¢¸÷ÀàÆå×Ó¶ÔÓ¦µÄ±êºÅ
+	// ä¸¤ä¸ªæ•°ç»„å­˜å‚¨å„ç±»æ£‹å­å¯¹åº”çš„æ ‡å·
 	uint8_t red_idx[7] = {JIANG_FROM, SHI_FROM, XIANG_FROM, 
 							MA_FROM, JU_FROM, PAO_FROM, BING_FROM};
 	uint8_t black_idx[7] = { JIANG_FROM, SHI_FROM, XIANG_FROM,
@@ -117,7 +109,7 @@ void Game::buildFromFen(std::string fen)
 		char ch = fen[pos];
 		if (ch == '/')
 		{
-			// »»ÐÐ
+			// æ¢è¡Œ
 			j = BOARD_LEFT;
 			i++;
 			if (i > BOARD_BOTTOM)
@@ -125,12 +117,12 @@ void Game::buildFromFen(std::string fen)
 		}
 		else if (isdigit(ch))
 		{
-			// ¿Õ¸ñ
+			// ç©ºæ ¼
 			j += (uint8_t)(ch - '0');
 		}
 		else if (ch >= 'A' && ch <= 'Z' && j <= BOARD_RIGHT)
 		{
-			// ºìÆå
+			// çº¢æ£‹
 			uint8_t temp = getChessNumber(ch);
 			putChess(coordToPos(i, j), red_idx[temp]);
 			red_idx[temp]++;
@@ -138,7 +130,7 @@ void Game::buildFromFen(std::string fen)
 		}
 		else if (ch >= 'a' && ch <= 'z' && j <= BOARD_RIGHT)
 		{
-			// ºÚÆå
+			// é»‘æ£‹
 			uint8_t temp = getChessNumber(ch + 'A' - 'a');
 			putChess(coordToPos(i, j), black_idx[temp]);
 			black_idx[temp]++;
@@ -148,17 +140,17 @@ void Game::buildFromFen(std::string fen)
 	}
 }
 
-int Game::takeOneMove(uint16_t move)
+int Game::moveChess(uint16_t mv)
 {
 	int pt;
-	int src = getSrc(move);
-	int dst = getDst(move);
+	int src = getSrc(mv);
+	int dst = getDst(mv);
 	int chessOnSrc = this->board[src];
 	int chessOnDst = this->board[dst];
-	// ¸üÐÂÖÕÖ¹Î»ÖÃ
+	// æ›´æ–°ç»ˆæ­¢ä½ç½®
 	if (chessOnDst)
 	{
-		// Ä¿±êÎ»ÖÃÓÐ×Ó
+		// ç›®æ ‡ä½ç½®æœ‰å­
 		this->pieces[chessOnDst] = 0;
 		this->bitPieces ^= 1 << (chessOnDst - 16);
 		pt = pieceType[chessOnDst];
@@ -171,17 +163,17 @@ int Game::takeOneMove(uint16_t move)
 			this->black_val -= normalEval.blackPieces[pt][dst];
 			pt += 7;
 		}
-		// ¸üÐÂzobr
+		// æ›´æ–°zobr
 		/////////////////////////////////////////////////
 	}
 	else
 	{
-		// Ã»ÓÐ³Ô×Ó ¸üÐÂÄ¿±êÎ»ÖÃµÄÎ»ÐÐÎ»ÁÐ
+		// æ²¡æœ‰åƒå­ æ›´æ–°ç›®æ ‡ä½ç½®çš„ä½è¡Œä½åˆ—
 		this->bitRow[getIdxRow(dst)] ^= preGen.bitRowMask[dst];
 		this->bitCol[getIdxCol(dst)] ^= preGen.bitColMask[dst];
 	}
 
-	// ¸üÐÂÆðÊ¼Î»ÖÃ
+	// æ›´æ–°èµ·å§‹ä½ç½®
 	this->board[src] = 0;
 	this->board[dst] = chessOnSrc;
 	this->pieces[chessOnSrc] = dst;
@@ -197,15 +189,15 @@ int Game::takeOneMove(uint16_t move)
 		this->black_val += normalEval.blackPieces[pt][dst] - normalEval.blackPieces[pt][src];
 		pt += 7;
 	}
-	// ¸üÐÂzobr
+	// æ›´æ–°zobr
 	/////////////////////////////////////////////////
 	return chessOnDst;
 }
 
-void Game::deleteOneMove(uint16_t move, int captured)
+void Game::deleteMoveChess(uint16_t mv, int captured)
 {
-	int src = getSrc(move);
-	int dst = getDst(move);
+	int src = getSrc(mv);
+	int dst = getDst(mv);
 	int piece = this->board[dst];
 
 	this->board[src] = piece;
@@ -227,10 +219,78 @@ void Game::deleteOneMove(uint16_t move, int captured)
 	}
 }
 
+void Game::pushMove()
+{
+	MoveStack* p = this->moveStack + this->move_num;
+	p->red_val = this->red_val;
+	p->black_val = this->black_val;
+}
+
+void Game::popBack()
+{
+	MoveStack* p = this->moveStack + this->move_num;
+	this->red_val = p->red_val;
+	this->black_val = p->black_val;
+}
+
+bool Game::takeOneMove(uint16_t mv)
+{
+	if (this->move_num >= STACK_SIZE)
+		return false;
+
+	// zobr
+	this->pushMove();
+
+	int sq = getSrc(mv);
+	int captured = moveChess(mv);
+	// çœ‹çœ‹æ˜¯ä¸æ˜¯å°†å†›
+	if (detectCheck(true) > 0)
+	{
+		deleteMoveChess(mv, captured);
+		popBack();
+		return false;
+	}
+
+	// æ¢è¾¹
+	changePlayer();
+
+	// zobr
+
+	// è®°å½•åŽ†å²ç€æ³•
+	MoveStack* p = this->moveStack + this->move_num;
+	p->move.step = mv;
+	p->move.check = detectCheck();
+
+	// å’Œæ£‹ç€æ³•
+	if (captured)
+	{
+		p->move.captured = captured;
+	}
+	else
+	{
+		p->move.captured = 0;
+	}
+
+	this->move_num++;
+	return true;
+}
+
+void Game::deleteOneMove()
+{
+	this->move_num--;
+	MoveStack* p = this->moveStack + this->move_num;
+	int sq = getSrc(p->move.step);
+	// æ’¤å›ž
+	deleteMoveChess(p->move.step, p->move.captured);
+	changePlayer();
+	popBack();
+	// zobr
+}
+
 void Game::printForDebug()
 {
 	std::cout << "_______________________________\n";
-	// ´òÓ¡ÆåÅÌ
+	// æ‰“å°æ£‹ç›˜
 	int row = 9;
 	for (int i = 0x33; i <= 0xcb; i += 16)
 	{
@@ -242,50 +302,50 @@ void Game::printForDebug()
 			else if (temp >= 32) {
 				temp -= 32;
 				if (temp >= 11) {
-					std::cout << "±ø";
+					std::cout << "å…µ";
 				}
 				else if (temp >= 9) {
-					std::cout << "ÅÚ";
+					std::cout << "ç‚®";
 				}
 				else if (temp >= 7) {
-					std::cout << "³µ";
+					std::cout << "è½¦";
 				}
 				else if (temp >= 5) {
-					std::cout << "Âí";
+					std::cout << "é©¬";
 				}
 				else if (temp >= 3) {
-					std::cout << "Ïó";
+					std::cout << "è±¡";
 				}
 				else if (temp >= 1) {
-					std::cout << "ÊË";
+					std::cout << "ä»•";
 				}
 				else if (temp >= 0) {
-					std::cout << "½«";
+					std::cout << "å°†";
 				}
 			}
 			else if (temp >= 16) {
 				temp -= 16;
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 				if (temp >= 11) {
-					std::cout << "±ø";
+					std::cout << "å…µ";
 				}
 				else if (temp >= 9) {
-					std::cout << "ÅÚ";
+					std::cout << "ç‚®";
 				}
 				else if (temp >= 7) {
-					std::cout << "³µ";
+					std::cout << "è½¦";
 				}
 				else if (temp >= 5) {
-					std::cout << "Âí";
+					std::cout << "é©¬";
 				}
 				else if (temp >= 3) {
-					std::cout << "Ïà";
+					std::cout << "ç›¸";
 				}
 				else if (temp >= 1) {
-					std::cout << "Ê¿";
+					std::cout << "å£«";
 				}
 				else if (temp >= 0) {
-					std::cout << "Ë§";
+					std::cout << "å¸…";
 				}
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
 			}
@@ -295,5 +355,5 @@ void Game::printForDebug()
 	}
 	// 
 	std::cout << "-------------------------------\n";
-	std::cout << "   a  b  c  d  e  f  g  h  i\n";
+	std::cout << "   a  b  c  d  e  f  g  h  i   \n";
 }

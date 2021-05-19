@@ -2,6 +2,7 @@
 #define MOVE_H
 
 #include <stdint.h>
+#include <iostream>
 #include <algorithm>
 
 #include "game.h"

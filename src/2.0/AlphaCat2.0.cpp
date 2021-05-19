@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     preGenInit();
     Game test;
     MoveSort move_sort;
-    test.buildFromFen("rnbakabnr/9/1c5c1/9/9/9/9/1C5C1/9/RNBAKABNR");
+    test.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
     test.evaBoard();
     std::cout << test.red_val << " " << test.black_val << std::endl;
     test.printForDebug();
@@ -30,14 +30,12 @@ int main(int argc, char* argv[])
     while(true)
     {   
         char ch = getchar();
-        move_sort.getAllMoves(test);
-        test.takeOneMove(move_sort.next());
-        test.printForDebug();
-
-        std::cout << test.red_val << " " << test.black_val << std::endl;
-        test.changePlayer();
-        //test.buildFromFen("rnbakabnr/9/1c5c1/9/9/9/9/1C5C1/9/RNBAKABNR");
-        //test.evaBoard();
+        if (test.takeOneMove(move_sort.next())) {
+            test.printForDebug();
+            std::cout << test.red_val << " " << test.black_val << std::endl;
+            test.deleteOneMove();
+            std::cout << test.red_val << " " << test.black_val << std::endl;
+        }
     }
     char ch = getchar();
     return 0;

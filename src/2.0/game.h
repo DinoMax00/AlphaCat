@@ -15,6 +15,8 @@
  // 游戏角色
 constexpr bool RED = true;
 constexpr bool BLACK = false;
+// 最大着法数
+constexpr int32_t STACK_SIZE = 1024;
 // 棋盘定位 0x33-0xcb
 constexpr uint8_t BOARD_LEFT = 3;
 constexpr uint8_t BOARD_TOP = 3;
@@ -63,20 +65,34 @@ const int pieceValue[48] = {
   5, 1, 1, 1, 1, 3, 3, 4, 4, 3, 3, 2, 2, 2, 2, 2
 };
 
+// 着法类型结构体
 struct Move
 {
 	uint16_t step;	// move类型
 	uint16_t value;	// 着法估值
-
+	uint16_t check; // 将军
+	uint16_t captured; // 吃子
 	bool operator < (const Move& x) const
 	{
 		return value > x.value;
 	}
 };
 
+// 保存历史着法
+struct MoveStack
+{
+	int red_val, black_val;
+	Move move;
+};
+
 class Game
 {
 private:
+	MoveStack moveStack[STACK_SIZE];		// 着法堆栈
+	int32_t move_num;		// 栈顶指针
+	void pushMove();		// 入栈
+	void popBack();			// 回退状态
+
 	void initGame();		// 初始化
 	void putChess(int32_t sq, int32_t pc, bool del = false);		// 把一个棋子放在棋盘上，del为true则是移除棋子
 public:
@@ -102,8 +118,11 @@ public:
 
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
-	int takeOneMove(uint16_t move);		// 一步移动
-	void deleteOneMove(uint16_t move, int captured);	// 撤回一步移动
+	// 走子
+	int moveChess(uint16_t mv);		// 一步移动
+	void deleteMoveChess(uint16_t mv, int captured);	// 撤回一步移动
+	bool takeOneMove(uint16_t mv);	// 执行一个着法，其实就是带合法性检测的一步移动
+	void deleteOneMove();				// 撤销一个着法
 
 	// 着法评分
 	int moveJudge(int opptag, int src, int dst);
