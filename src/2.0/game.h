@@ -132,7 +132,7 @@ public:
 	int genNonCapMoves(Move moves[]);	// 生成不吃子着法
 
 	// 情况检测
-	bool isProtected(int tag, int src);
+	bool isProtected(int tag, int src, int except = 0);
 	int detectCheck(bool simple = false);
 
 	// 调试
@@ -183,7 +183,7 @@ inline int getIdxRow(int idx)
 
 // 获取翻转位置的行
 inline int idxRowFlip(int y) {
-  return 15 - y;
+	return 15 - y;
 }
 
 // 获取位置的列信息 位运算取模
