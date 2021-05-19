@@ -4,7 +4,7 @@
 #include "pregen.h"
 
 
-bool Game::isProtected(int tag, int src)
+bool Game::isProtected(int tag, int src, int except)
 {
 	int dst = 0;
 	int x = getIdxRow(src);
@@ -17,20 +17,20 @@ bool Game::isProtected(int tag, int src)
 	{
 		//帅的保护
 		dst = this->pieces[tag + JIANG_FROM];
-		if (dst && LegalMoveTab[dst - src + 256] == 1)
+		if (dst && dst != except && LegalMoveTab[dst - src + 256] == 1)
 			return true;
 		//士的保护
 		for (int i = SHI_FROM; i <= SHI_TO; i++)
 		{
 			dst = this->pieces[tag + i];
-			if (dst && LegalMoveTab[dst - src + 256] == 2)
+			if (dst && dst != except && LegalMoveTab[dst - src + 256] == 2)
 				return true;
 		}
 		//相的保护
 		for (int i = XIANG_FROM; i <= XIANG_TO; i++)
 		{
 			dst = this->pieces[tag + i];
-			if (dst && LegalMoveTab[dst - src + 256] == 3 && !this->board[(src + dst) / 2])
+			if (dst && dst != except && LegalMoveTab[dst - src + 256] == 3 && !this->board[(src + dst) / 2])
 				return true;
 		}
 	}
@@ -40,7 +40,7 @@ bool Game::isProtected(int tag, int src)
 		for (dst = src - 1; dst <= src + 1; dst += 2)
 		{
 			int piece = this->board[dst];
-			if (pieceType[piece] == 6 && (piece & tag))
+			if (dst != except && pieceType[piece] == 6 && (piece & tag))
 				return true;
 		}
 	}
@@ -48,7 +48,7 @@ bool Game::isProtected(int tag, int src)
 	for (int i = MA_FROM; i <= MA_TO; i++)
 	{
 		dst = this->pieces[tag + i];
-		if (dst)
+		if (dst && dst != except)
 		{
 			int p_leg = dst + preMaLegTab[src - dst + 256];
 			if (p_leg != dst && !this->board[p_leg])
@@ -59,7 +59,7 @@ bool Game::isProtected(int tag, int src)
 	for (int i = JU_FROM; i <= JU_TO; i++)
 	{
 		dst = this->pieces[tag + i];
-		if (dst)
+		if (dst && dst != except)
 		{
 			if (x == getIdxRow(dst) && (p_bitrow->JuCap & preGen.bitRowMask[dst]))
 				return true;
@@ -71,7 +71,7 @@ bool Game::isProtected(int tag, int src)
 	for (int i = PAO_FROM; i <= PAO_TO; i++)
 	{
 		dst = this->pieces[tag + i];
-		if (dst)
+		if (dst && dst != except)
 		{
 			if (x == getIdxRow(dst) && (p_bitrow->PaoCap & preGen.bitRowMask[dst]))
 				return true;
@@ -81,8 +81,9 @@ bool Game::isProtected(int tag, int src)
 	}
 	//兵的保护--前方
 	{
-		int piece = this->board[src - 16 + ((tag / 16 - 1) << 5)];
-		if (pieceType[piece] == 6 && (piece & tag))
+		dst = src - 16 + ((tag / 16 - 1) << 5);
+		int piece = this->board[dst];
+		if (dst != except && pieceType[piece] == 6 && (piece & tag))
 			return true;
 	}
 	return false;
@@ -384,7 +385,6 @@ int Game::genNonCapMoves(Move moves[])
 				if (this->board[dst] == 0 && this->board[*p_leg] == 0)
 				{
 					moves[cnt].step = getMoveType(src, dst);
-					std::cout << (int)src << " " << (int)dst << std::endl;
 					moves[cnt++].value = 0;
 				}
 				p++;
