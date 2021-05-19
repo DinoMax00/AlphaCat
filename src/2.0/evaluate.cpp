@@ -1,7 +1,9 @@
+#include <algorithm>
+
 #include "evaluate.h"
 #include "game.h"
 #include "pregen.h"
-#include <algorithm>
+
 /* 局面预评价就是初始化局面预评价数据(PreEval)的过程。
  * 局面预评价主要分以下两个方面：
  * 1. 判断局势处于开中局还是残局阶段；
