@@ -69,7 +69,7 @@ inline int popCnt32(uint32_t dw) {
 
 // 根据某一方返回哪方分数
 inline int sideValue(bool player, int vl) {
-  return (player == RED ? vl : -vl);
+  return (player == 1 ? vl : -vl);
 }
 
 // 获得翻转位置

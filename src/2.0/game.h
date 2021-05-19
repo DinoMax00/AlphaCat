@@ -11,8 +11,6 @@
 #include <stdint.h>
 #include <string>
 
-
-const int RANK_TOP = 3;
  // сно╥╫ги╚
 constexpr bool RED = true;
 constexpr bool BLACK = false;
@@ -150,13 +148,6 @@ public:
 	int stringHoldValue();
 	int getEva();
 
-	SlideMaskStruct *colMaskPtr(int x, int y) const {
-    	return preGen.colMaskTab[y - RANK_TOP] + bitCol[x];
-	}
-  
-	SlideMaskStruct *rowMaskPtr(int x, int y) const {
-		return preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
-	}
 };
 
 

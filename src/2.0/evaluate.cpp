@@ -1,7 +1,8 @@
+
+#include <algorithm>
 #include "evaluate.h"
 #include "game.h"
 #include "pregen.h"
-#include <algorithm>
 /* 局面预评价就是初始化局面预评价数据(PreEval)的过程。
  * 局面预评价主要分以下两个方面：
  * 1. 判断局势处于开中局还是残局阶段；
@@ -130,6 +131,13 @@ void Game::evaBoard() {
 
 // 特殊棋型的评价
 int Game::advisorShapeValue() {
+    // SlideMaskStruct *colMaskPtr(int x, int y) const {
+    //     return preGen.colMaskTab[y - RANK_TOP] + bitCol[x];
+    // }
+
+    // SlideMaskStruct *rowMaskPtr(int x, int y) const {
+    //   return preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
+    // }
     int paoPos, juPos, sq, shiPos1, shiPos2, x, y, shiShape;
     int redPenal, blackPenal;
     SlideMaskStruct *slideMask;
@@ -160,7 +168,7 @@ int Game::advisorShapeValue() {
                         x = getIdxCol(sq);
                         if (x == FILE_CENTER) {
                             y = getIdxRow(sq);
-                            slideMask = this->rowMaskPtr(x, y);
+                            slideMask = preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
                             if ((slideMask->JuCap & RED_JIANG_BITFILE) != 0) {
                                 // 计算空头炮的威胁
                                 redPenal += exEval.hollowThreatValue[idxRowFlip(y)];
@@ -203,7 +211,7 @@ int Game::advisorShapeValue() {
                             //   }
                             // }
                         } else if (y == RANK_BOTTOM) {
-                            if ((this->colMaskPtr(x, y)->JuCap & KING_BITRANK) != 0) {
+                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->JuCap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
                                 redPenal += exEval.redBottomThreatValue[x];
                             }
@@ -251,7 +259,7 @@ int Game::advisorShapeValue() {
                         x = getIdxCol(sq);
                         if (x == FILE_CENTER) {
                             y = getIdxRow(sq);
-                            slideMask = this->rowMaskPtr(x, y);
+                            slideMask = preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
                             if ((slideMask->JuCap & BLACK_JIANG_BITFILE) != 0) {
                                 // 计算空头炮的威胁
                                 blackPenal += exEval.hollowThreatValue[y];
@@ -295,7 +303,7 @@ int Game::advisorShapeValue() {
                             //   }
                             // }
                         } else if (y == RANK_TOP) {
-                            if ((this->colMaskPtr(x, y)->JuCap & KING_BITRANK) != 0) {
+                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->JuCap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
                                 blackPenal += exEval.blackBottomThreatValue[x];
                             }
