@@ -1,4 +1,3 @@
-
 #include "ucci.h"
 #include "move.h"
 #include "search.h"
@@ -16,15 +15,11 @@ int searchAlphabeta(Game& now, int depth, int alpha, int beta, int max_deep)
 	MoveSort mov;
 	mov.getAllMoves(now);
 	bool isEmpty = 1;
-	int val;
-	while (1)
+	int val, mv;
+	while (mv = mov.next())
 	{
-		int mv = mov.next();
-		if (!mv) break;
-
-		bool flag = now.takeOneMove(mv);
-		if (!flag) continue;
-
+		if(!now.takeOneMove(mv))
+			continue;
 		isEmpty = 0;
 		val = -searchAlphabeta(now, depth - 1, -beta, -alpha, max_deep);
 		now.deleteOneMove();
@@ -34,8 +29,9 @@ int searchAlphabeta(Game& now, int depth, int alpha, int beta, int max_deep)
 		if (val > alpha)
 		{
 			alpha = val;
-			if (depth == max_deep)
+			if (depth == max_deep) {
 				Search.result = mv;
+			}
 		}
 	}
 
@@ -47,6 +43,6 @@ void SearchMain(int nDepth)
 {
 	int dep = nDepth;
 	const int inf = 1e9;
-	Search.result = searchAlphabeta(Search.pos, dep, -inf, inf, dep);
+	searchAlphabeta(Search.pos, dep, -inf, inf, dep);
 	return;
 }

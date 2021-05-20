@@ -7,6 +7,7 @@
  *********************************************************************/
 #include <iostream>
 #include <string>
+#include <Windows.h>
 
 #include "search.h"
 #include "ucci.h"
@@ -163,6 +164,7 @@ void UcciEngine::run()
 		else if (commandVec[0] == "go" && commandVec.size() > 2)
 		{
 			// game.printForDebug();
+			/*
 			move_sort.getAllMoves(game);
 			bool flag;
 			int mv;
@@ -170,8 +172,17 @@ void UcciEngine::run()
 				mv = move_sort.random();
 				flag = game.takeOneMove(mv);
 			} while (!flag);
-			std::cout << "bestmove " << moveToString(mv) << std::endl;
-			Log().info("引擎响应->bestmove " + moveToString(mv));
+			*/
+			Search.pos = this->game;
+			Search.pos.evaBoard();
+			// Search.pos.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+			// std::cout << GetTickCount() << std::endl;
+			SearchMain(6);
+			// std::cout << GetTickCount() << std::endl;
+			// this->game.printForDebug();
+			// std::cout << Search.result << std::endl;
+			std::cout << "bestmove " << moveToString(Search.result) << std::endl;
+			Log().info("引擎响应->bestmove " + moveToString(Search.result));
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")
