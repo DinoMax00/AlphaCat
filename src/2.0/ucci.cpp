@@ -134,6 +134,7 @@ void UcciEngine::run()
 		// ÒÆ×Ó
 		else if (commandVec[0] == "position")
 		{
+			game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 			updWhichPlayer();
 			if (commandVec[1] == "fen")
 			{
@@ -177,7 +178,7 @@ void UcciEngine::run()
 			Search.pos.evaBoard();
 			// Search.pos.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 			// std::cout << GetTickCount() << std::endl;
-			SearchMain(6);
+			SearchMain(4);
 			// std::cout << GetTickCount() << std::endl;
 			// this->game.printForDebug();
 			// std::cout << Search.result << std::endl;
