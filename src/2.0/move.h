@@ -30,7 +30,7 @@ public:
 	}
 
 	int32_t random() {
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 		std::mt19937 generator(seed);
 		return this->moves[generator() % num].step;
 	}

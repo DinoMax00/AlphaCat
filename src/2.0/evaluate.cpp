@@ -169,7 +169,7 @@ int Game::advisorShapeValue() {
                         if (x == FILE_CENTER) {
                             y = getIdxRow(sq);
                             slideMask = preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
-                            if ((slideMask->JuCap & RED_JIANG_BITFILE) != 0) {
+                            if ((slideMask->ju_cap & RED_JIANG_BITFILE) != 0) {
                                 // 计算空头炮的威胁
                                 redPenal += exEval.hollowThreatValue[idxRowFlip(y)];
                             }
@@ -211,7 +211,7 @@ int Game::advisorShapeValue() {
                             //   }
                             // }
                         } else if (y == RANK_BOTTOM) {
-                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->JuCap & KING_BITRANK) != 0) {
+                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
                                 redPenal += exEval.redBottomThreatValue[x];
                             }
@@ -260,7 +260,7 @@ int Game::advisorShapeValue() {
                         if (x == FILE_CENTER) {
                             y = getIdxRow(sq);
                             slideMask = preGen.rowMaskTab[y - RANK_TOP] + bitRow[x];
-                            if ((slideMask->JuCap & BLACK_JIANG_BITFILE) != 0) {
+                            if ((slideMask->ju_cap & BLACK_JIANG_BITFILE) != 0) {
                                 // 计算空头炮的威胁
                                 blackPenal += exEval.hollowThreatValue[y];
                             }
@@ -303,7 +303,7 @@ int Game::advisorShapeValue() {
                             //   }
                             // }
                         } else if (y == RANK_TOP) {
-                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->JuCap & KING_BITRANK) != 0) {
+                            if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
                                 blackPenal += exEval.blackBottomThreatValue[x];
                             }

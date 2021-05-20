@@ -61,9 +61,9 @@ bool Game::isProtected(int tag, int src, int except)
 		dst = this->pieces[tag + i];
 		if (dst && dst != except)
 		{
-			if (x == getIdxRow(dst) && (p_bitrow->JuCap & preGen.bitRowMask[dst]))
+			if (x == getIdxRow(dst) && (p_bitrow->ju_cap & preGen.bitRowMask[dst]))
 				return true;
-			else if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
+			else if (y == getIdxCol(dst) && (p_bitcol->ju_cap & preGen.bitColMask[dst]))
 				return true;
 		}
 	}
@@ -73,9 +73,9 @@ bool Game::isProtected(int tag, int src, int except)
 		dst = this->pieces[tag + i];
 		if (dst && dst != except)
 		{
-			if (x == getIdxRow(dst) && (p_bitrow->PaoCap & preGen.bitRowMask[dst]))
+			if (x == getIdxRow(dst) && (p_bitrow->pao_cap & preGen.bitRowMask[dst]))
 				return true;
-			else if (y == getIdxCol(dst) && (p_bitcol->PaoCap & preGen.bitColMask[dst]))
+			else if (y == getIdxCol(dst) && (p_bitcol->pao_cap & preGen.bitColMask[dst]))
 				return true;
 		}
 	}
@@ -210,14 +210,14 @@ int Game::genCapMoves(Move moves[])
 
 			p_bit = preGen.rowMoveTab[y - BOARD_LEFT] + this->bitRow[x];
 			// 向右
-			dst = p_bit->JuCap[0] + (x << 4); // x << 4 获取当前行首元素下标
+			dst = p_bit->juCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
 				moves[cnt++].value = moveJudge(opptag, src, dst);
 			}
 			// 向左
-			dst = p_bit->JuCap[1] + (x << 4);
+			dst = p_bit->juCap[1] + (x << 4);
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -225,14 +225,14 @@ int Game::genCapMoves(Move moves[])
 			}
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
 			// 向下
-			dst = p_bit->JuCap[0] + y;
+			dst = p_bit->juCap[0] + y;
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
 				moves[cnt++].value = moveJudge(opptag, src, dst);
 			}
 			// 向上
-			dst = p_bit->JuCap[1] + y;
+			dst = p_bit->juCap[1] + y;
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -252,14 +252,14 @@ int Game::genCapMoves(Move moves[])
 
 			p_bit = preGen.rowMoveTab[y - BOARD_LEFT] + this->bitRow[x];
 			// 向右
-			dst = p_bit->PaoCap[0] + (x << 4); // x << 4 获取当前行首元素下标
+			dst = p_bit->paoCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
 				moves[cnt++].value = moveJudge(opptag, src, dst);
 			}
 			// 向左
-			dst = p_bit->PaoCap[1] + (x << 4);
+			dst = p_bit->paoCap[1] + (x << 4);
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -268,14 +268,14 @@ int Game::genCapMoves(Move moves[])
 
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
 			// 向下
-			dst = p_bit->PaoCap[0] + y;
+			dst = p_bit->paoCap[0] + y;
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
 				moves[cnt++].value = moveJudge(opptag, src, dst);
 			}
 			// 向上
-			dst = p_bit->PaoCap[1] + y;
+			dst = p_bit->paoCap[1] + y;
 			if (this->board[dst] & opptag)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -404,7 +404,7 @@ int Game::genNonCapMoves(Move moves[])
 
 			p_bit = preGen.rowMoveTab[y - BOARD_LEFT] + this->bitRow[x];
 			// 向右
-			dst = p_bit->NonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
+			dst = p_bit->nonCap[0] + (x << 4); // x << 4 获取当前行首元素下标
 			while (dst != src)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -412,7 +412,7 @@ int Game::genNonCapMoves(Move moves[])
 				dst--;
 			}
 			// 向左
-			dst = p_bit->NonCap[1] + (x << 4);
+			dst = p_bit->nonCap[1] + (x << 4);
 			while (dst != src)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -421,7 +421,7 @@ int Game::genNonCapMoves(Move moves[])
 			}
 			p_bit = preGen.colMoveTab[x - BOARD_TOP] + this->bitCol[y];
 			// 向下
-			dst = p_bit->NonCap[0] + y;
+			dst = p_bit->nonCap[0] + y;
 			while (dst != src)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -429,7 +429,7 @@ int Game::genNonCapMoves(Move moves[])
 				dst -= 16;
 			}
 			// 向上
-			dst = p_bit->NonCap[1] + y;
+			dst = p_bit->nonCap[1] + y;
 			while (dst != src)
 			{
 				moves[cnt].step = getMoveType(src, dst);
@@ -481,7 +481,7 @@ int Game::detectCheck(bool simple)
 	// 将帅照面
 	dst = this->pieces[opptag + JIANG_FROM];
 	if (dst)
-		if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
+		if (y == getIdxCol(dst) && (p_bitcol->ju_cap & preGen.bitColMask[dst]))
 		{
 			if (simple || record)
 				return true;
@@ -511,14 +511,14 @@ int Game::detectCheck(bool simple)
 		dst = this->pieces[opptag + i];
 		if (dst)
 		{
-			if (x == getIdxRow(dst) && (p_bitrow->JuCap & preGen.bitRowMask[dst]))
+			if (x == getIdxRow(dst) && (p_bitrow->ju_cap & preGen.bitRowMask[dst]))
 			{
 				if (simple || record)
 					return true;
 				else
 					record = opptag + i;
 			}
-			else if (y == getIdxCol(dst) && (p_bitcol->JuCap & preGen.bitColMask[dst]))
+			else if (y == getIdxCol(dst) && (p_bitcol->ju_cap & preGen.bitColMask[dst]))
 			{
 				if (simple || record)
 					return true;
@@ -533,14 +533,14 @@ int Game::detectCheck(bool simple)
 		dst = this->pieces[opptag + i];
 		if (dst)
 		{
-			if (x == getIdxRow(dst) && (p_bitrow->PaoCap & preGen.bitRowMask[dst]))
+			if (x == getIdxRow(dst) && (p_bitrow->pao_cap & preGen.bitRowMask[dst]))
 			{
 				if (simple || record)
 					return true;
 				else
 					record = opptag + i;
 			}
-			else if (y == getIdxCol(dst) && (p_bitcol->PaoCap & preGen.bitColMask[dst]))
+			else if (y == getIdxCol(dst) && (p_bitcol->pao_cap & preGen.bitColMask[dst]))
 			{
 				if (simple || record)
 					return true;

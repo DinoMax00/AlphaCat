@@ -76,30 +76,40 @@ void preGenInit()
 		// 枚举2^9种棋子信息
 		for (int j = 0; j < 512; j++)
 		{
-			move_temp.NonCap[0] = move_temp.NonCap[1] =
-				move_temp.JuCap[0] = move_temp.JuCap[1] =
-				move_temp.PaoCap[0] = move_temp.PaoCap[1] =
+			move_temp.nonCap[0] = move_temp.nonCap[1] =
+				move_temp.juCap[0] = move_temp.juCap[1] =
+				move_temp.paoCap[0] = move_temp.paoCap[1] =
+				move_temp.cannonCap[0] = move_temp.cannonCap[1] =
 				i + BOARD_LEFT;
-			mask_temp = {0, 0, 0};
+			mask_temp = {0, 0, 0, 0};
 
 			// 向右
 			for (k = i + 1; k <= 8; k++)
 			{	
 				if (j & (1 << k))
 				{
-					move_temp.JuCap[0] = k + BOARD_LEFT;
-					mask_temp.JuCap |= 1 << k;
+					move_temp.juCap[0] = k + BOARD_LEFT;
+					mask_temp.ju_cap |= 1 << k;
 					break;
 				}
-				move_temp.NonCap[0] = k + BOARD_LEFT;
-				mask_temp.NonCap |= 1 << k;
+				move_temp.nonCap[0] = k + BOARD_LEFT;
+				mask_temp.non_cap |= 1 << k;
 			}
 			for (k++; k <= 8; k++)
 			{
 				if (j & (1 << k))
 				{
-					move_temp.PaoCap[0] = k + BOARD_LEFT;
-					mask_temp.PaoCap |= 1 << k;
+					move_temp.paoCap[0] = k + BOARD_LEFT;
+					mask_temp.pao_cap |= 1 << k;
+					break;
+				}
+			}
+			for (k++; k <= 8; k++)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.cannonCap[0] = k + BOARD_LEFT;
+					mask_temp.cannon_cap |= 1 << k;
 					break;
 				}
 			}
@@ -108,19 +118,28 @@ void preGenInit()
 			{
 				if (j & (1 << k))
 				{
-					move_temp.JuCap[1] = k + BOARD_LEFT;
-					mask_temp.JuCap |= 1 << k;
+					move_temp.juCap[1] = k + BOARD_LEFT;
+					mask_temp.ju_cap |= 1 << k;
 					break;
 				}
-				move_temp.NonCap[1] = k + BOARD_LEFT;
-				mask_temp.NonCap |= 1 << k;
+				move_temp.nonCap[1] = k + BOARD_LEFT;
+				mask_temp.non_cap |= 1 << k;
 			}
 			for (k--; k >= 0; k--)
 			{
 				if (j & (1 << k))
 				{
-					move_temp.PaoCap[1] = k + BOARD_LEFT;
-					mask_temp.PaoCap |= 1 << k;
+					move_temp.paoCap[1] = k + BOARD_LEFT;
+					mask_temp.pao_cap |= 1 << k;
+					break;
+				}
+			}
+			for (k--; k >= 0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.cannonCap[1] = k + BOARD_LEFT;
+					mask_temp.cannon_cap |= 1 << k;
 					break;
 				}
 			}
@@ -136,30 +155,40 @@ void preGenInit()
 		// 每列10行 2^10
 		for (int j = 0; j < 1024; j++)
 		{
-			move_temp.NonCap[0] = move_temp.NonCap[1] =
-				move_temp.JuCap[0] = move_temp.JuCap[1] =
-				move_temp.PaoCap[0] = move_temp.PaoCap[1] =
+			move_temp.nonCap[0] = move_temp.nonCap[1] =
+				move_temp.juCap[0] = move_temp.juCap[1] =
+				move_temp.paoCap[0] = move_temp.paoCap[1] =
+				move_temp.cannonCap[0] = move_temp.cannonCap[1] = 
 				(i + BOARD_TOP) << 4;
-			mask_temp = { 0, 0, 0 };
+			mask_temp = { 0, 0, 0, 0};
 
 			// 向下
 			for (k = i + 1; k <= 9; k++)
 			{
 				if (j & (1 << k))
 				{
-					move_temp.JuCap[0] = (k + BOARD_TOP) << 4;
-					mask_temp.JuCap |= 1 << k;
+					move_temp.juCap[0] = (k + BOARD_TOP) << 4;
+					mask_temp.ju_cap |= 1 << k;
 					break;
 				}
-				move_temp.NonCap[0] = (k + BOARD_TOP) << 4;
-				mask_temp.NonCap |= 1 << k;
+				move_temp.nonCap[0] = (k + BOARD_TOP) << 4;
+				mask_temp.non_cap |= 1 << k;
 			}
 			for (k++; k <= 9; k++)
 			{
 				if (j & (1 << k))
 				{
-					move_temp.PaoCap[0] = (k + BOARD_TOP) << 4;
-					mask_temp.PaoCap |= 1 << k;
+					move_temp.paoCap[0] = (k + BOARD_TOP) << 4;
+					mask_temp.pao_cap |= 1 << k;
+					break;
+				}
+			}
+			for (k++; k <= 9; k++)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.cannonCap[0] = (k + BOARD_TOP) << 4;
+					mask_temp.cannon_cap |= 1 << k;
 					break;
 				}
 			}
@@ -168,19 +197,28 @@ void preGenInit()
 			{
 				if (j & (1 << k))
 				{
-					move_temp.JuCap[1] = (k + BOARD_TOP) << 4;
-					mask_temp.JuCap |= 1 << k;
+					move_temp.juCap[1] = (k + BOARD_TOP) << 4;
+					mask_temp.ju_cap |= 1 << k;
 					break;
 				}
-				move_temp.NonCap[1] = (k + BOARD_TOP) << 4;
-				mask_temp.NonCap |= 1 << k;
+				move_temp.nonCap[1] = (k + BOARD_TOP) << 4;
+				mask_temp.non_cap |= 1 << k;
 			}
 			for (k--; k >=0; k--)
 			{
 				if (j & (1 << k))
 				{
-					move_temp.PaoCap[1] = (k + BOARD_TOP) << 4;
-					mask_temp.PaoCap |= 1 << k;
+					move_temp.paoCap[1] = (k + BOARD_TOP) << 4;
+					mask_temp.pao_cap |= 1 << k;
+					break;
+				}
+			}
+			for (k--; k >= 0; k--)
+			{
+				if (j & (1 << k))
+				{
+					move_temp.cannonCap[1] = (k + BOARD_TOP) << 4;
+					mask_temp.cannon_cap |= 1 << k;
 					break;
 				}
 			}

@@ -7,16 +7,18 @@
 // [0]表示最大位置 右、下
 struct SlideMoveStruct
 {
-	uint8_t NonCap[2];	// 车 炮不吃子
-	uint8_t JuCap[2];		// 车吃子
-	uint8_t PaoCap[2];	// 炮吃子
+	uint8_t nonCap[2];	// 车 炮不吃子
+	uint8_t juCap[2];	// 车吃子
+	uint8_t paoCap[2];	// 炮吃子
+	uint8_t cannonCap[2]; // 加农炮！！
 };
 
 // 借助“位行”和“位列”判断车炮着法合理性的预置结构
 struct SlideMaskStruct {
-	uint16_t NonCap;
-	uint16_t JuCap;
-	uint16_t PaoCap;
+	uint16_t non_cap;
+	uint16_t ju_cap;
+	uint16_t pao_cap;
+	uint16_t cannon_cap;
 }; 
 
 // 生成预置走法

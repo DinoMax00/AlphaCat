@@ -35,14 +35,14 @@ int searchAlphabeta(Game& now, int depth, int alpha, int beta, int max_deep)
 		}
 	}
 
-	if (isEmpty) return -1e7;
+	if (isEmpty) return -10000000;
 	return alpha;
 }
 
 void SearchMain(int nDepth)
 {
 	int dep = nDepth;
-	const int inf = 1e9;
+	const int inf = 1000000000;
 	searchAlphabeta(Search.pos, dep, -inf, inf, dep);
 	return;
 }
