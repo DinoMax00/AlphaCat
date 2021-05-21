@@ -91,8 +91,8 @@ void Game::buildFromFen(std::string fen)
 {
 	this->initGame();
 	// 两个数组存储各类棋子对应的标号
-	uint8_t red_idx[7] = {JIANG_FROM, SHI_FROM, XIANG_FROM, 
-							MA_FROM, JU_FROM, PAO_FROM, BING_FROM};
+	uint8_t red_idx[7] = { JIANG_FROM, SHI_FROM, XIANG_FROM,
+							MA_FROM, JU_FROM, PAO_FROM, BING_FROM };
 	uint8_t black_idx[7] = { JIANG_FROM, SHI_FROM, XIANG_FROM,
 							MA_FROM, JU_FROM, PAO_FROM, BING_FROM };
 	for (int i = 0; i < 7; i++)
@@ -259,16 +259,16 @@ bool Game::takeOneMove(uint16_t mv)
 	// 记录历史着法
 	MoveStack* p = this->moveStack + this->move_num;
 	p->move.step = mv;
-	p->move.check = detectCheck();
+	p->move.ChkChs = detectCheck();
 
 	// 和棋着法
 	if (captured)
 	{
-		p->move.captured = captured;
+		p->move.CptDrw = captured;
 	}
 	else
 	{
-		p->move.captured = 0;
+		p->move.CptDrw = 0;
 	}
 
 	this->move_num++;
@@ -283,7 +283,7 @@ void Game::deleteOneMove()
 	MoveStack* p = this->moveStack + this->move_num;
 	int sq = getSrc(p->move.step);
 	// 撤回
-	deleteMoveChess(p->move.step, p->move.captured);
+	deleteMoveChess(p->move.step, p->move.CptDrw);
 	changePlayer();
 	popBack();
 	// zobr
@@ -362,7 +362,7 @@ void Game::printForDebug()
 
 int Game::getEva()
 {
-	return cur_player == RED? red_val - black_val : black_val - red_val;
+	return cur_player == RED ? red_val - black_val : black_val - red_val;
 }
 
 Move Game::lastMove()
