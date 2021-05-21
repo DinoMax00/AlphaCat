@@ -21,15 +21,24 @@ private:
 	void sort();	// 排序
 public:
 	void getAllMoves(Game& game);	// 产生所有着法
-	void getCapMoves(Game& game);
+	void getCapMoves(Game& game);	// 产生所有吃子着法
 	
-	int32_t next() {
+	int16_t next() {
 		if (idx >= num)
 			return 0;
 		return this->moves[idx++].step;
 	}
 
-	int32_t random() {
+	// 为静态搜索生成下一个着法 略有不同
+	int16_t nextQuiesc(bool all = false) {
+		if (idx >= num)
+			return 0;
+		if (!all && moves[idx].value <= 0)
+			return 0;
+		return moves[idx++].step;
+	}
+
+	int16_t random() {
 		unsigned seed = (unsigned)std::chrono::system_clock::now().time_since_epoch().count();
 		std::mt19937 generator(seed);
 		return this->moves[generator() % num].step;

@@ -34,9 +34,9 @@ void Game::initGame()
 	std::memset(this->bitCol, 0, sizeof(this->bitCol));
 	std::memset(this->bitRow, 0, sizeof(this->bitRow));
 	this->bitPieces = 0;
-	this->cur_player = RED;
 	this->red_val = this->black_val = 0;
 	this->move_num = 0;
+	this->depth = 0;
 }
 
 void Game::putChess(int32_t sq, int32_t pc, bool del)
@@ -272,12 +272,14 @@ bool Game::takeOneMove(uint16_t mv)
 	}
 
 	this->move_num++;
+	this->depth++;
 	return true;
 }
 
 void Game::deleteOneMove()
 {
 	this->move_num--;
+	this->depth--;
 	MoveStack* p = this->moveStack + this->move_num;
 	int sq = getSrc(p->move.step);
 	// 撤回
@@ -361,4 +363,9 @@ void Game::printForDebug()
 int Game::getEva()
 {
 	return cur_player == RED? red_val - black_val : black_val - red_val;
+}
+
+Move Game::lastMove()
+{
+	return this->moveStack[move_num - 1].move;
 }

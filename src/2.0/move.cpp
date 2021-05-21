@@ -13,3 +13,10 @@ void MoveSort::getAllMoves(Game& game)
 	this->num = game.genAllMoves(this->moves);
 	this->sort();
 }
+
+void MoveSort::getCapMoves(Game& game)
+{
+	this->idx = 0;
+	this->num = game.genCapMoves(this->moves);
+	this->sort();
+}

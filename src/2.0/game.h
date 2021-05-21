@@ -98,6 +98,7 @@ public:
 	bool cur_player = RED;	// 当前游戏角色
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值
+	int16_t depth;			// 搜索深度
 	union {
 		uint32_t bitPieces;		// 16-32号棋子是否在棋盘上 ????16-47吧
 		uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
@@ -148,6 +149,8 @@ public:
 	int stringHoldValue();
 	int getEva();
 
+	// 历史着法
+	Move lastMove();
 };
 
 

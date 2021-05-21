@@ -80,32 +80,16 @@ void UcciEngine::updWhichPlayer()
 		// 更新游戏角色
 		if (commandVec[3] == "b")
 		{
-			if (commandVec.size() <= 9)
-				game.cur_player = BLACK;
-			else if ((commandVec.size() - 9) % 2)
-				game.cur_player = RED;
-			else
-				game.cur_player = BLACK;
+			game.cur_player = BLACK;
 		}
 		else
 		{
-			if (commandVec.size() <= 9)
-				game.cur_player = BLACK;
-			else if ((commandVec.size() - 9) % 2)
-				game.cur_player = RED;
-			else
-				game.cur_player = BLACK;
+			game.cur_player = RED;
 		}
 	}
 	else if (commandVec[1] == "startpos")
 	{
-		// 更新游戏角色
-		if (commandVec.size() <= 3)
-			game.cur_player = RED;
-		else if ((commandVec.size() - 3) % 2)
-			game.cur_player = BLACK;
-		else
-			game.cur_player = RED;
+		game.cur_player = RED;
 	}
 }
 
@@ -134,7 +118,7 @@ void UcciEngine::run()
 		// 移子
 		else if (commandVec[0] == "position")
 		{
-			game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+			// 更新起始局面游戏角色
 			updWhichPlayer();
 			if (commandVec[1] == "fen")
 			{
