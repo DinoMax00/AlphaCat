@@ -69,8 +69,8 @@ struct Move
 {
 	uint16_t step;	// move类型
 	uint16_t value;	// 着法估值
-	uint16_t check; // 将军
-	uint16_t captured; // 吃子
+	uint16_t ChkChs; // 将军
+	uint16_t CptDrw; // 吃子
 	bool operator < (const Move& x) const
 	{
 		return value > x.value;
