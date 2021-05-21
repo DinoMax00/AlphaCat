@@ -118,6 +118,7 @@ void UcciEngine::run()
 		// 移子
 		else if (commandVec[0] == "position")
 		{
+			game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 			// 更新起始局面游戏角色
 			updWhichPlayer();
 			if (commandVec[1] == "fen")
@@ -134,6 +135,7 @@ void UcciEngine::run()
 			}
 			else if (commandVec[1] == "startpos" && commandVec.size() > 3)
 			{
+				std::cout << "???";
 				// 更新局面
 				game.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
 				// 更新后续局面
@@ -160,14 +162,20 @@ void UcciEngine::run()
 			*/
 			Search.pos = this->game;
 			Search.pos.evaBoard();
-			Search.pos.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
-			// std::cout << GetTickCount() << std::endl;
-			SearchMain(6);
-			// std::cout << GetTickCount() << std::endl;
+			// Search.pos.buildFromFen("rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR");
+			std::cout << GetTickCount() << std::endl;
+			searchMain(5);
+			std::cout << GetTickCount() << std::endl;
 			// this->game.printForDebug();
 			// std::cout << Search.result << std::endl;
-			std::cout << "bestmove " << moveToString(Search.result) << std::endl;
-			Log().info("引擎响应->bestmove " + moveToString(Search.result));
+			if (Search.result == -1) {
+				std::cout << "nobestmove " << std::endl;
+				Log().info("引擎响应->nobestmove");
+			}
+			else {
+				std::cout << "bestmove " << moveToString(Search.result) << std::endl;
+				Log().info("引擎响应->bestmove " + moveToString(Search.result));
+			}
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")

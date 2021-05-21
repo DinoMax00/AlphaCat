@@ -15,7 +15,7 @@ struct SearchStruct {
 };
 
 // 搜索的启动过程
-void SearchMain(int nDepth);
+void searchMain(int depth);
 
 extern SearchStruct Search;
 

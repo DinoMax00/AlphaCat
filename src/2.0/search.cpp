@@ -66,56 +66,120 @@ int quieseSearch(Game& game, int alpha, int beta)
 	return best;
 }
 
-
-int searchAlphabeta(Game& now, int depth, int alpha, int beta, int max_deep)
+// 主要变例搜索
+int pvSearch(int depth, int alpha, int beta)
 {
 	bool flagPV = false;//主要变例搜索
 	if (depth == 0)
 	{
 		//对于叶子节点，进行静态搜索
-		return quieseSearch(now, alpha, beta);
+		return quieseSearch(Search.pos, alpha, beta);
 	}
 
+	// 无害剪裁
+
+	// 置换表
+
+	// 极限深度 返回估值
+	if (Search.pos.depth >= LIMIT_DEPTH)
+		return Search.pos.getValue(alpha, beta);
+	
+	int best = -MATE_VALUE;
+
+	//// 内部迭代加深启发
+	//if (depth > 2)
+	//{
+	//	int val = pvSearch(Search.pos, depth / 2, alpha, beta, max_deep);
+	//	if (val <= alpha)
+	//		val = pvSearch(Search.pos, depth / 2, -MATE_VALUE, beta, max_deep);
+	//}
+
 	MoveSort mov;
-	mov.getAllMoves(now);
-	bool isEmpty = 1;
-	int val, mv;
+	mov.getAllMoves(Search.pos);
+	int val, mv, new_depth;
 	while (mv = mov.next())
 	{
-		if(!now.takeOneMove(mv))
+		if(!Search.pos.takeOneMove(mv))
 			continue;
-		isEmpty = 0;
-
-		if (flagPV)
+		// 尝试选择延伸
+		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		
+		if (best == -MATE_VALUE)
+			val = -pvSearch(new_depth, -beta, -alpha);
+		else 
 		{
-			val = -searchAlphabeta(now, depth - 1, -alpha - 1, -alpha, max_deep);
-			if (val > alpha && val < beta)
-				val = -searchAlphabeta(now, depth - 1, -beta, -alpha, max_deep);
+			val = -pvSearch(new_depth, -alpha - 1, -alpha);
+			if (val > alpha && val < beta) 
+				val = -pvSearch(new_depth, -beta, -alpha);
 		}
-		else
-			val = -searchAlphabeta(now, depth - 1, -beta, -alpha, max_deep);
-		now.deleteOneMove();
 
-		if (val >= beta)
-			return beta;
-		if (val > alpha)
+		Search.pos.deleteOneMove();
+
+		// alpha_beta边界判定
+		if (val > best)
 		{
-			alpha = val;
-			flagPV = true;
-			if (depth == max_deep) {
-				Search.result = mv;
+			best = val;
+			if (val >= beta)
+			{
+				break;
+			}
+			if (val > alpha)
+			{
+				alpha = val;
 			}
 		}
 	}
 
-	if (isEmpty) return -1e7;
-	return alpha;
+	if (best == -MATE_VALUE)
+		return Search.pos.depth - MATE_VALUE;
+	else
+	{
+		// 更新置换表
+		return best;
+	}
 }
 
-void SearchMain(int nDepth)
+// 根节点搜索
+void searchRoot(int depth)
 {
-	int dep = nDepth;
-	
-	searchAlphabeta(Search.pos, dep, -MATE_VALUE, MATE_VALUE, dep);
+	MoveSort move_sort;
+	move_sort.getAllMoves(Search.pos);
+	int16_t mv;
+	int new_depth, val;
+	int best = -MATE_VALUE;
+
+	while (mv = move_sort.next())
+	{
+		if (!Search.pos.takeOneMove(mv))
+			continue;
+		// 尝试性延伸
+		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		// 主要变例搜索
+		if (best == -MATE_VALUE)
+			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
+		else
+		{
+			val = -pvSearch(new_depth, -best - 1, -best);
+			if (val > best)
+				val = -pvSearch(new_depth, -MATE_VALUE, -best);
+		}
+
+		Search.pos.deleteOneMove();
+
+		// 更新最优着法
+		if (val > best)
+		{
+			best = val;
+			Search.result = mv;
+		}
+	}
+}
+
+void searchMain(int depth)
+{
+	Search.pos.printForDebug();
+	Search.result = -1;
+	// 迭代加深
+	searchRoot(depth);
 	return;
 }
