@@ -31,262 +31,352 @@ INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove c6c5
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove h9g7
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a9a8
+INFO: 引擎响应->bestmove b7b5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a8f8
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove f8f1
+INFO: 引擎响应->bestmove b5i5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove g6g5
+INFO: 引擎响应->bestmove a9b9
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove b9b3
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove i9i8
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove g5g4
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove c7d5
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove h7h2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove i8d8
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d5c3
+INFO: 引擎响应->bestmove g6g5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove c3e2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove b7e7
+INFO: 引擎响应->bestmove i5i2
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d8d2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d2a2
+INFO: 引擎响应->bestmove b3b5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove e7e3
+INFO: 引擎响应->bestmove g5g4
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove c6c5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove b5c5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove e6e5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a2a3
+INFO: 引擎响应->bestmove c7e6
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d9e8
+INFO: 引擎响应->bestmove g4g3
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove g7f5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d8d3
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove f5h6
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e6c7
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove h6f5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove c7b9
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e9e8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 e9e8 f7d6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e8e9
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 e9e8 f7d6 e8e9 d6f7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e9e8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 e9e8 f7d6 e8e9 d6f7 e9e8 f7d6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e8e9
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 e9e8 f7d6 e8e9 d6f7 e9e8 f7d6 e8e9 d6f7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e9e8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 h9g7 a0a1 b7b5 d0e1 b5i5 g0i2 a9b9 a1b1 b9b3 c3c4 i9i8 g3g4 i8d8 g4g5 g6g5 i3i4 i5i2 h2h3 b3b5 i0i2 g5g4 b2b3 c6c5 c4c5 b5c5 g2i3 e6e5 i2e2 c7e6 b3b9 g4g3 h3h6 g7f5 i3g4 d8d3 g4f6 f5h6 f6h7 e6c7 b1b6 h6f5 h7g9 c7b9 g9f7 e9e8 f7d6 e8e9 d6f7 e9e8 f7d6 e8e9 d6f7 e9e8 f7d6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e8e9
+May 19 2021--19:13:39:
+INFO: 获得命令->setoption newgame 
+May 19 2021--19:13:39:
+INFO: 获得命令->setoption ponder false 
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove b9c7
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove h9g7
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove a9a8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove c7e8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove a8d8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove b7a7
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e8f6
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove f6g8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d8d2
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d2d4
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d4d8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove a7c7
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove g7e6
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove h7h5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove h5e5
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove e5e2
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove g9e7
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove e3h3
+INFO: 引擎响应->bestmove i9i7
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a6a5
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove h3h0
+INFO: 引擎响应->bestmove g8i7
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a3i3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove i3i4
+INFO: 引擎响应->bestmove d9e8
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove h0h3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove h3a3
+INFO: 引擎响应->bestmove d8d2
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove i4h4
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a5a4
+INFO: 引擎响应->bestmove e9d9
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove h4d4
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove c9e7
+INFO: 引擎响应->bestmove g6g5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a4a3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d4e4
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove e4e2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove e2g2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove g2e2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove a3b3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove b3c3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 b3c3 e0f0 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove c3d3
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 b3c3 e0f0 c3d3 f0e0 
-May 19 2021--19:13:39:
-INFO: 获得命令->go nodes 10077696 
-May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d3d2
-May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 b3c3 e0f0 c3d3 f0e0 d3d2 e0f0 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
 INFO: 引擎响应->bestmove d2d1
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 b3c3 e0f0 c3d3 f0e0 d3d2 e0f0 d2d1 f0e0 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 d2d1 c4c5 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove d1d0
+INFO: 引擎响应->bestmove a6a5
 May 19 2021--19:13:39:
-INFO: 获得命令->position startpos moves b0c2 b9c7 h0g2 c6c5 a0a1 h9g7 a1d1 a9a8 i0i1 a8f8 i1f1 f8f1 d1f1 g6g5 c0e2 i9i8 g3g4 g5g4 e2g4 c7d5 g2h4 h7h2 b2h2 i8d8 h2e2 d5c3 f1f7 c3e2 g4e2 b7e7 f7g7 d8d2 c2a1 d2a2 a1c0 e7e3 f0e1 e6e5 g7g5 a2a3 g5e5 d9e8 e5c5 g9e7 c5e5 e3h3 g0i2 a6a5 h4i6 h3h0 i3i4 a3i3 i6h4 i3i4 e5e4 h0h3 i2g0 h3a3 e4e3 i4h4 e3a3 a5a4 a3e3 h4d4 e3e7 c9e7 c0d2 a4a3 d2e4 d4e4 g0i2 e4e2 i2g4 e2g2 g4e2 g2e2 e0f0 a3b3 f0e0 b3c3 e0f0 c3d3 f0e0 d3d2 e0f0 d2d1 f0e0 d1d0 e0d0 
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 d2d1 c4c5 a6a5 c5c6 
 May 19 2021--19:13:39:
 INFO: 获得命令->go nodes 10077696 
 May 19 2021--19:13:39:
-INFO: 引擎响应->bestmove e2e1
+INFO: 引擎响应->bestmove a5a4
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 d2d1 c4c5 a6a5 c5c6 a5a4 b2b9 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d9d8
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 d2d1 c4c5 a6a5 c5c6 a5a4 b2b9 d9d8 c6c7 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove a4a3
+May 19 2021--19:13:39:
+INFO: 获得命令->position startpos moves b2e2 b9c7 b0c2 h9g7 h0g2 a9a8 a0b0 c7e8 b0b6 a8d8 i0i1 b7a7 b6c6 e8f6 i1f1 f6g8 g3g4 d8d2 g2f4 d2d4 c3c4 d4d8 c6c9 a7c7 f4e6 g7e6 c9c7 h7h5 e2e6 h5e5 h2e2 e5e2 e6e2 g9e7 f1f7 i9i7 f7i7 g8i7 c7e7 d9e8 e7i7 d8d2 i7b7 e9d9 b7b2 g6g5 g4g5 d2d1 c4c5 a6a5 c5c6 a5a4 b2b9 d9d8 c6c7 a4a3 c7c8 
+May 19 2021--19:13:39:
+INFO: 获得命令->go nodes 10077696 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bestmove d8d7
+May 19 2021--19:13:39:
+INFO: 获得命令->setoption newgame 
+May 19 2021--19:13:39:
+INFO: 获得命令->setoption ponder false 
+May 19 2021--19:13:39:
+INFO: 获得命令->quit 
+May 19 2021--19:13:39:
+INFO: 引擎响应->bye

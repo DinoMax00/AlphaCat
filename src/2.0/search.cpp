@@ -57,7 +57,6 @@ int quieseSearch(Game& game, int alpha, int beta)
 			}
 		}
 	}
-
 	// 返回分值
 	if (best == -MATE_VALUE)
 	{
@@ -79,13 +78,11 @@ int pvSearch(int depth, int alpha, int beta)
 	// 无害剪裁
 
 	// 置换表
-
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
 		return Search.pos.getValue(alpha, beta);
 	
 	int best = -MATE_VALUE;
-
 	//// 内部迭代加深启发
 	//if (depth > 2)
 	//{
@@ -103,7 +100,6 @@ int pvSearch(int depth, int alpha, int beta)
 			continue;
 		// 尝试选择延伸
 		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
-		
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -beta, -alpha);
 		else 
@@ -129,7 +125,6 @@ int pvSearch(int depth, int alpha, int beta)
 			}
 		}
 	}
-
 	if (best == -MATE_VALUE)
 		return Search.pos.depth - MATE_VALUE;
 	else
@@ -153,7 +148,7 @@ void searchRoot(int depth)
 		if (!Search.pos.takeOneMove(mv))
 			continue;
 		// 尝试性延伸
-		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		new_depth = Search.pos.detectCheck()? depth: depth - 1;
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
@@ -163,7 +158,6 @@ void searchRoot(int depth)
 			if (val > best)
 				val = -pvSearch(new_depth, -MATE_VALUE, -best);
 		}
-
 		Search.pos.deleteOneMove();
 
 		// 更新最优着法
@@ -177,6 +171,7 @@ void searchRoot(int depth)
 
 void searchMain(int depth)
 {
+	Search.pos.depth = 0;
 	Search.pos.printForDebug();
 	Search.result = -1;
 	// 迭代加深
