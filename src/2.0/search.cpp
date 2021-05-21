@@ -3,12 +3,11 @@
 #include "search.h"
 
 SearchStruct Search;
-
 int searchAlphabeta(Game& now, int depth, int alpha, int beta, int max_deep)
 {
 	if (depth == 0)
 	{
-		int val = now.getEva();
+		int val = now.materialValue();
 		return val;
 	}
 

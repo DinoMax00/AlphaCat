@@ -174,11 +174,11 @@ int Game::advisorShapeValue() {
                                 redPenal += exEval.hollowThreatValue[idxRowFlip(y)];
                             }
                             // 等dino加
-                            // else if ((slideMask->wSuperCap & RED_JIANG_BITFILE) != 0 &&
-                            //     (this->board[0xb7] == 21 || this->board[0xb7] == 22)) {
-                            //   // 计算炮镇窝心马的威胁
-                            //   redPenal += exEval.centralThreatValue[idxRowFlip(y)];
-                            // }
+                            else if ((slideMask->cannon_cap & RED_JIANG_BITFILE) != 0 &&
+                                (this->board[0xb7] == 21 || this->board[0xb7] == 22)) {
+                              // 计算炮镇窝心马的威胁
+                              redPenal += exEval.centralThreatValue[idxRowFlip(y)];
+                            }
                         }
                     }
                 }
@@ -192,24 +192,24 @@ int Game::advisorShapeValue() {
                         y = getIdxRow(sq);
                         if (x == FILE_CENTER) {
                             // 等dino加
-                            // if ((this->rowMaskPtr(x, y)->wSuperCap & RED_JIANG_BITFILE) != 0) {
-                            //   // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
-                            //   redPenal += (exEval.centralThreatValue[idxRowFlip(y)] >> 2) +
-                            //       (this->isProtected(1, shiShape == SHAPE_LEFT ? 0xc8 : 0xc6) ? 20 : 0);
-                            //   // 如果车在底线保护帅(将)，则给予更大的罚分！
-                            //   for (juPos = sideTag(RED) + JU_FROM; juPos <= sideTag(RED) + JU_TO; juPos ++) {
-                            //     sq = this->pieces[juPos];
-                            //     if (sq != 0) {
-                            //       y = getIdxRow(sq);
-                            //       if (y == RANK_BOTTOM) {
-                            //         x = getIdxCol(sq);
-                            //         if ((this->colMaskPtr(x, y)->JuCap & KING_BITRANK) != 0) {
-                            //           redPenal += 80;
-                            //         }
-                            //       }
-                            //     }
-                            //   }
-                            // }
+                            if (((preGen.rowMaskTab[y - RANK_TOP] + bitRow[x])->cannon_cap & RED_JIANG_BITFILE) != 0) {
+                              // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
+                              redPenal += (exEval.centralThreatValue[idxRowFlip(y)] >> 2) +
+                                  (this->isProtected(1, shiShape == SHAPE_LEFT ? 0xc8 : 0xc6) ? 20 : 0);
+                              // 如果车在底线保护帅(将)，则给予更大的罚分！
+                              for (juPos = sideTag(RED) + JU_FROM; juPos <= sideTag(RED) + JU_TO; juPos ++) {
+                                sq = this->pieces[juPos];
+                                if (sq != 0) {
+                                  y = getIdxRow(sq);
+                                  if (y == RANK_BOTTOM) {
+                                    x = getIdxCol(sq);
+                                    if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
+                                      redPenal += 80;
+                                    }
+                                  }
+                                }
+                              }
+                            }
                         } else if (y == RANK_BOTTOM) {
                             if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
@@ -266,11 +266,11 @@ int Game::advisorShapeValue() {
                             }
 
                             // 等dino加
-                            // else if ((slideMask->wSuperCap & BLACK_JIANG_BITFILE) != 0 &&
-                            //     (this->board[0x47] == 37 || this->board[0x47] == 38)) {
-                            //   // 计算炮镇窝心马的威胁
-                            //   blackPenal += exEval.centralThreatValue[y];
-                            // }
+                            else if ((slideMask->cannon_cap & BLACK_JIANG_BITFILE) != 0 &&
+                                (this->board[0x47] == 37 || this->board[0x47] == 38)) {
+                              // 计算炮镇窝心马的威胁
+                              blackPenal += exEval.centralThreatValue[y];
+                            }
                         }
                     }
                 }
@@ -284,24 +284,24 @@ int Game::advisorShapeValue() {
                         y = getIdxRow(sq);
                         if (x == FILE_CENTER) {
                             // 等dino加
-                            // if ((this->rowMaskPtr(x, y)->wSuperCap & BLACK_JIANG_BITFILE) != 0) {
-                            //   // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
-                            //   blackPenal += (exEval.centralThreatValue[y] >> 2) +
-                            //       (this->isProtected(0, shiShape == SHAPE_LEFT ? 0x38 : 0x36) ? 20 : 0);
-                            //   // 如果车在底线保护帅(将)，则给予更大的罚分！
-                            //   for (juPos = sideTag(BLACK) + JU_FROM; juPos <= sideTag(BLACK) + JU_TO; juPos ++) {
-                            //     sq = this->pieces[juPos];
-                            //     if (sq != 0) {
-                            //       y = getIdxRow(sq);
-                            //       if (y == RANK_TOP) {
-                            //         x = getIdxCol(sq);
-                            //         if ((this->colMaskPtr(x, y)->JuCap & KING_BITRANK) != 0) {
-                            //           blackPenal += 80;
-                            //         }
-                            //       }
-                            //     }
-                            //   }
-                            // }
+                            if (((preGen.rowMaskTab[y - RANK_TOP] + bitRow[x])->cannon_cap & BLACK_JIANG_BITFILE) != 0) {
+                              // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
+                              blackPenal += (exEval.centralThreatValue[y] >> 2) +
+                                  (this->isProtected(0, shiShape == SHAPE_LEFT ? 0x38 : 0x36) ? 20 : 0);
+                              // 如果车在底线保护帅(将)，则给予更大的罚分！
+                              for (juPos = sideTag(BLACK) + JU_FROM; juPos <= sideTag(BLACK) + JU_TO; juPos ++) {
+                                sq = this->pieces[juPos];
+                                if (sq != 0) {
+                                  y = getIdxRow(sq);
+                                  if (y == RANK_TOP) {
+                                    x = getIdxCol(sq);
+                                    if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
+                                      blackPenal += 80;
+                                    }
+                                  }
+                                }
+                              }
+                            }
                         } else if (y == RANK_TOP) {
                             if (((preGen.colMaskTab[y - RANK_TOP] + bitCol[x])->ju_cap & KING_BITRANK) != 0) {
                                 // 计算沉底炮的威胁
