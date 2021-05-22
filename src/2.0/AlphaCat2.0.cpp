@@ -16,16 +16,19 @@
 #include "game.h"
 #include "pregen.h"
 #include "move.h"
+#include "hash.h"
 
 int main(int argc, char* argv[])
 {
-    Log().clear();
-    preGenInit();
+	Log().clear();
+	preGenInit();
+	newTable();
 
-    UcciEngine* alpha_cat = new UcciEngine();
+	UcciEngine* alpha_cat = new UcciEngine();
 
-    alpha_cat->bootEngine();
-    alpha_cat->run();
+	alpha_cat->bootEngine();
+	alpha_cat->run();
 
-    return 0;
+	delTable();
+	return 0;
 }

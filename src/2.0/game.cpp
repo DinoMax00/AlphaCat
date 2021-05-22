@@ -80,11 +80,13 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 		}
 	}
 	// 更新zobr键值
+	zobrist ^= ZobrTable[pt + (pc < 32 ? 0 : 7)][sq];
 }
 
 void Game::changePlayer()
 {
 	this->cur_player = !this->cur_player;
+	zobrist ^= ZobrPlayer;
 }
 
 void Game::buildFromFen(std::string fen)
@@ -164,7 +166,7 @@ int Game::moveChess(uint16_t mv)
 			pt += 7;
 		}
 		// 更新zobr
-		/////////////////////////////////////////////////
+		zobrist ^= ZobrTable[pt + (chessOnDst < 32 ? 0 : 7)][dst];
 	}
 	else
 	{
@@ -190,7 +192,8 @@ int Game::moveChess(uint16_t mv)
 		pt += 7;
 	}
 	// 更新zobr
-	/////////////////////////////////////////////////
+	zobrist ^= ZobrTable[pt + (chessOnSrc < 32 ? 0 : 7)][src];
+	zobrist ^= ZobrTable[pt + (chessOnSrc < 32 ? 0 : 7)][dst];
 	return chessOnDst;
 }
 
@@ -199,17 +202,23 @@ void Game::deleteMoveChess(uint16_t mv, int captured)
 	int src = getSrc(mv);
 	int dst = getDst(mv);
 	int piece = this->board[dst];
+	int pt = pieceType[piece];
 
 	this->board[src] = piece;
 	this->pieces[piece] = src;
 	this->bitRow[src >> 4] ^= preGen.bitRowMask[src];
 	this->bitCol[src & 15] ^= preGen.bitColMask[src];
+	// 更新zobr
+	zobrist ^= ZobrTable[pt + (piece < 32 ? 0 : 7)][src];
+	zobrist ^= ZobrTable[pt + (piece < 32 ? 0 : 7)][dst];
 
 	if (captured > 0)
 	{
+		pt = pieceType[captured];
 		this->board[dst] = captured;
 		this->pieces[captured] = dst;
 		this->bitPieces ^= 1 << (captured - 16);
+		zobrist ^= ZobrTable[pt + (captured < 32 ? 0 : 7)][dst];
 	}
 	else
 	{
@@ -222,6 +231,7 @@ void Game::deleteMoveChess(uint16_t mv, int captured)
 void Game::pushMove()
 {
 	MoveStack* p = this->moveStack + this->move_num;
+	p->zobrist = zobrist;
 	p->red_val = this->red_val;
 	p->black_val = this->black_val;
 }
@@ -229,6 +239,7 @@ void Game::pushMove()
 void Game::popBack()
 {
 	MoveStack* p = this->moveStack + this->move_num;
+	this->zobrist = zobrist;
 	this->red_val = p->red_val;
 	this->black_val = p->black_val;
 }
@@ -239,6 +250,7 @@ bool Game::takeOneMove(uint16_t mv)
 		return false;
 
 	// zobr
+	uint64_t oldzobr = this->zobrist;
 	this->pushMove();
 
 	int sq = getSrc(mv);
@@ -253,9 +265,9 @@ bool Game::takeOneMove(uint16_t mv)
 
 	// 换边
 	changePlayer();
-
 	// zobr
-
+	if (this->circleTable[oldzobr & CIRCTAB_SIZE] == 0)
+		this->circleTable[oldzobr & CIRCTAB_SIZE] = this->move_num;
 	// 记录历史着法
 	MoveStack* p = this->moveStack + this->move_num;
 	p->move.step = mv;
@@ -285,6 +297,8 @@ void Game::deleteOneMove()
 	// 撤回
 	deleteMoveChess(p->move.step, p->move.CptDrw);
 	changePlayer();
+	if (this->circleTable[this->zobrist & CIRCTAB_SIZE] == this->move_num)
+		this->circleTable[this->zobrist & CIRCTAB_SIZE] = 0;
 	popBack();
 	// zobr
 }
@@ -368,4 +382,49 @@ int Game::getEva()
 Move Game::lastMove()
 {
 	return this->moveStack[move_num - 1].move;
+}
+
+int Game::detectCircle(int recur)
+{
+	int side = !this->cur_player;
+	int check, oppcheck;
+	check = oppcheck = 0x1ffff;
+	if (circleTable[this->zobrist & CIRCTAB_SIZE] == 0)
+		return 0;
+	MoveStack* stackpos = moveStack + move_num - 1;
+	while (stackpos->move.CptDrw == 0 && (stackpos - moveStack) >= 0)
+	{
+		if (side == this->cur_player)
+		{
+			if (stackpos->move.ChkChs > 0)
+				check &= 0x10000;
+			else
+				check = 0;
+			if (stackpos->zobrist == this->zobrist)
+			{
+				recur--;
+				if (recur == 0)
+				{
+					check = ((check & 0xffff) == 0 ? check : 0xffff);
+					oppcheck = ((oppcheck & 0xffff) == 0 ? oppcheck : 0xffff);
+					if (check > oppcheck)
+						return CIR_LOSS;
+					else if (check < oppcheck)
+						return CIR_WIN;
+					else
+						return CIR_DRAW;
+				}
+			}
+		}
+		else
+		{
+			if (stackpos->move.ChkChs > 0)
+				oppcheck &= 0x10000;
+			else
+				oppcheck = 0;
+		}
+		side = !side;
+		stackpos--;
+	}
+	return 0;
 }

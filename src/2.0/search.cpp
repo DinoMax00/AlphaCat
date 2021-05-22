@@ -2,6 +2,7 @@
 
 #include "ucci.h"
 #include "move.h"
+#include "hash.h"
 #include "search.h"
 
 SearchStruct Search;
@@ -57,6 +58,7 @@ int quieseSearch(Game& game, int alpha, int beta)
 			}
 		}
 	}
+
 	// 返回分值
 	if (best == -MATE_VALUE)
 	{
@@ -76,13 +78,28 @@ int pvSearch(int depth, int alpha, int beta)
 	}
 
 	// 无害剪裁
+		//循环裁剪，临时这样写
+	int vlrep = Search.pos.detectCircle();
+	if (vlrep == CIR_LOSS)
+		return -BAN_VALUE;
+	else if (vlrep == CIR_WIN)
+		return BAN_VALUE;
+	else if (vlrep == CIR_DRAW)
+		return 0;
 
 	// 置换表
+	int hashflag = FLAG_ALPHA;
+	int vlhash, mvhash;
+	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, mvhash);
+	if (vlhash > -MATE_VALUE)
+		return vlhash;
+
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
 		return Search.pos.getValue(alpha, beta);
-	
+
 	int best = -MATE_VALUE;
+
 	//// 内部迭代加深启发
 	//if (depth > 2)
 	//{
@@ -96,16 +113,17 @@ int pvSearch(int depth, int alpha, int beta)
 	int val, mv, new_depth;
 	while (mv = mov.next())
 	{
-		if(!Search.pos.takeOneMove(mv))
+		if (!Search.pos.takeOneMove(mv))
 			continue;
 		// 尝试选择延伸
 		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -beta, -alpha);
-		else 
+		else
 		{
 			val = -pvSearch(new_depth, -alpha - 1, -alpha);
-			if (val > alpha && val < beta) 
+			if (val > alpha && val < beta)
 				val = -pvSearch(new_depth, -beta, -alpha);
 		}
 
@@ -117,19 +135,24 @@ int pvSearch(int depth, int alpha, int beta)
 			best = val;
 			if (val >= beta)
 			{
+				hashflag = FLAG_BETA;
 				break;
 			}
 			if (val > alpha)
 			{
+				hashflag = FLAG_PV;
 				alpha = val;
 			}
 		}
 	}
+
 	if (best == -MATE_VALUE)
 		return Search.pos.depth - MATE_VALUE;
 	else
 	{
 		// 更新置换表
+		recordHashTable(Search.pos.zobrist, hashflag, best, depth, mv);
+		//mv随便传了一个，最后需改
 		return best;
 	}
 }
@@ -148,7 +171,7 @@ void searchRoot(int depth)
 		if (!Search.pos.takeOneMove(mv))
 			continue;
 		// 尝试性延伸
-		new_depth = Search.pos.detectCheck()? depth: depth - 1;
+		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
@@ -158,6 +181,7 @@ void searchRoot(int depth)
 			if (val > best)
 				val = -pvSearch(new_depth, -MATE_VALUE, -best);
 		}
+
 		Search.pos.deleteOneMove();
 
 		// 更新最优着法

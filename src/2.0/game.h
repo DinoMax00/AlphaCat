@@ -16,6 +16,8 @@ constexpr bool RED = true;
 constexpr bool BLACK = false;
 // 最大着法数
 constexpr int32_t STACK_SIZE = 1024;
+// 循环表大小
+constexpr int32_t CIRCTAB_SIZE = 4095;
 // 棋盘定位 0x33-0xcb
 constexpr uint8_t BOARD_LEFT = 3;
 constexpr uint8_t BOARD_TOP = 3;
@@ -47,6 +49,14 @@ constexpr uint32_t BING_BITPIECE = (1 << BING_FROM) | (1 << (BING_FROM + 1)) |
 (1 << (BING_FROM + 2)) | (1 << (BING_FROM + 3)) | (1 << BING_TO);
 constexpr uint32_t ATTACK_BITPIECE = MA_BITPIECE | JU_BITPIECE | PAO_BITPIECE | BING_BITPIECE;
 
+//循环检测的返回值
+constexpr uint32_t CIR_NONE = 0;
+constexpr uint32_t CIR_DRAW = 1;
+constexpr uint32_t CIR_LOSS = 2;
+constexpr uint32_t CIR_WIN = 3;
+
+
+
 /* 棋子序号对应的棋子类型
  *
  * 棋子序号从0到47，其中0到15不用，16到31表示红子，32到47表示黑子。
@@ -77,9 +87,11 @@ struct Move
 	}
 };
 
+
 // 保存历史着法
 struct MoveStack
 {
+	uint64_t zobrist;
 	int red_val, black_val;
 	Move move;
 };
@@ -104,13 +116,13 @@ public:
 		uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
 	};
 
-
+	int64_t zobrist;
 	uint8_t	board[256];		// 棋盘数组
 	uint8_t	pieces[48];		// 每个棋子的位置
 	uint16_t bitRow[16];	// 位行
 	uint16_t bitCol[16];	// 位列
 
-
+	uint16_t circleTable[CIRCTAB_SIZE + 1];		//循环表
 
 	// 方法
 	Game();					// 默认构造函数 用于初始化
@@ -135,6 +147,7 @@ public:
 	// 情况检测
 	bool isProtected(int tag, int src, int except = 0);
 	int detectCheck(bool simple = false);
+	int detectCircle(int recur = 1);
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端
