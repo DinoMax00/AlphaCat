@@ -3,11 +3,11 @@
 #include "search.h"
 
 HashItem* HashTable;
-int HashSize;
+int HashSize = 1024 * 1024 - 1;
 
 void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step)
 {
-	if (HashTable[zobr & HashSize].depthAlpha > depth && HashTable[zobr & HashSize].depthAlpha > depth)
+	if (zobr == HashTable[zobr & HashSize].zobrist && (HashTable[zobr & HashSize].depthAlpha < depth || HashTable[zobr & HashSize].depthBeta < depth))
 		return;
 	HashItem hash;
 	hash.zobrist = zobr;
@@ -30,16 +30,16 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 	hash = HashTable[zobr & HashSize];
 	if (hash.zobrist != zobr)
 		return -MATE_VALUE;
-	if (hash.depthBeta > 0)
-	{
-		int value = hash.valueAlpha;
-		if (hash.depthBeta >= depth && value >= vlBeta)
-			return value;
-	}
 	if (hash.depthAlpha > 0)
 	{
 		int value = hash.valueAlpha;
-		if (hash.depthAlpha >= depth && value <= vlAlpha)
+		if (hash.depthAlpha <= depth && value <= vlAlpha)
+			return value;
+	}
+	if (hash.depthBeta > 0)
+	{
+		int value = hash.valueBeta;
+		if (hash.depthBeta <= depth && value >= vlBeta)
 			return value;
 	}
 	return -MATE_VALUE;
