@@ -79,13 +79,13 @@ int pvSearch(int depth, int alpha, int beta)
 
 	// 无害剪裁
 		//循环裁剪，临时这样写
-	//int vlrep = Search.pos.detectCircle();
-	//if (vlrep == CIR_LOSS)
-	//	return -BAN_VALUE;
-	//else if (vlrep == CIR_WIN)
-	//	return BAN_VALUE;
-	//else if (vlrep == CIR_DRAW)
-	//	return 0;
+	int vlrep = Search.pos.detectCircle();
+	if (vlrep == CIR_LOSS)
+		return -BAN_VALUE;
+	else if (vlrep == CIR_WIN)
+		return BAN_VALUE;
+	else if (vlrep == CIR_DRAW)
+		return 0;
 
 	// 置换表
 	int hashflag = FLAG_ALPHA;

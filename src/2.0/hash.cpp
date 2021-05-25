@@ -33,13 +33,13 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 	if (hash.depthAlpha > 0)
 	{
 		int value = hash.valueAlpha;
-		if (hash.depthAlpha <= depth && value <= vlAlpha)
+		if (hash.depthAlpha >= depth && value <= vlAlpha)
 			return value;
 	}
 	if (hash.depthBeta > 0)
 	{
 		int value = hash.valueBeta;
-		if (hash.depthBeta <= depth && value >= vlBeta)
+		if (hash.depthBeta >= depth && value >= vlBeta)
 			return value;
 	}
 	return -MATE_VALUE;
