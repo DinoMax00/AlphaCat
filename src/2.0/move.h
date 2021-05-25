@@ -25,7 +25,7 @@ public:
 	
 	int16_t next() {
 		if (idx >= num)
-			return 0;
+			return 0; 
 		return this->moves[idx++].step;
 	}
 
@@ -44,5 +44,14 @@ public:
 		return this->moves[generator() % num].step;
 	}
 };
+
+// 历史表
+extern int nHistory[65536];
+
+// 清空历史表
+inline void clearHistory()
+{
+	memset(nHistory, 0, sizeof(nHistory)); 
+}
 
 #endif

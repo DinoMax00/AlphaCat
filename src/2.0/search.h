@@ -12,7 +12,11 @@ const int WIN_VALUE = MATE_VALUE - 200; // ËÑË÷³öÊ¤¸ºµÄ·ÖÖµ½çÏŞ£¬³¬³ö´ËÖµ¾ÍËµÃ÷Ò
 // ËÑË÷Ç°¿ÉÉèÖÃµÄÈ«¾Ö±äÁ¿£¬Ö¸¶¨ËÑË÷²ÎÊı
 struct SearchStruct {
 	Game pos;                   // ÓĞ´ıËÑË÷µÄ¾ÖÃæ
-	int result;					// ·µ»Ø×Å·¨
+	int result = -1;			// ·µ»Ø×Å·¨
+
+	bool stop;					// ÊÇ·ñ³¬Ê±
+	uint64_t cur_time;			// ¼ÆÊ±Æ÷	
+	uint64_t time_limit = 2000;		// ÏŞÊ±
 };
 
 // ËÑË÷µÄÆô¶¯¹ı³Ì

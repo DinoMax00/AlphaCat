@@ -116,13 +116,13 @@ public:
 		uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
 	};
 
-	int64_t zobrist;
+	uint64_t zobrist;
 	uint8_t	board[256];		// 棋盘数组
 	uint8_t	pieces[48];		// 每个棋子的位置
 	uint16_t bitRow[16];	// 位行
 	uint16_t bitCol[16];	// 位列
 
-	uint16_t circleTable[CIRCTAB_SIZE + 1];		//循环表
+	int circleTable[CIRCTAB_SIZE + 1];		//循环表
 
 	// 方法
 	Game();					// 默认构造函数 用于初始化
@@ -164,6 +164,14 @@ public:
 
 	// 历史着法
 	Move lastMove();
+
+	// 空着剪裁
+	bool nullOk();
+	void nullMove();
+	void deleteNullMove();
+
+	// 和棋判断
+	bool isDraw();
 };
 
 

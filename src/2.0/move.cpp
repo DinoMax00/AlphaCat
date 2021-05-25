@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+int nHistory[65536];
+
 void MoveSort::sort()
 {
 	std::sort(this->moves, this->moves + this->num);

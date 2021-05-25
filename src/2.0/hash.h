@@ -2,7 +2,7 @@
 #define HASH
 
 #include <stdint.h>
-
+#include <string.h>
 //÷√ªª±Ì±Í÷æ
 const int FLAG_BETA = 1;
 const int FLAG_ALPHA = 2;
@@ -14,8 +14,8 @@ struct HashItem
 	uint16_t bestmove;
 	uint8_t depthAlpha;
 	uint8_t depthBeta;
-	uint16_t valueAlpha;
-	uint16_t valueBeta;
+	int16_t valueAlpha;
+	int16_t valueBeta;
 };
 
 void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step);
@@ -29,9 +29,15 @@ inline void newTable()
 {
 	HashTable = new HashItem[HashSize + 1];
 }
+
 inline void delTable()
 {
 	delete[] HashTable;
+}
+
+inline void clearHashTable()
+{
+	memset(HashTable, 0, sizeof(HashTable));
 }
 
 #endif

@@ -24,6 +24,7 @@ void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step)
 	}
 	HashTable[zobr & HashSize] = hash;
 }
+
 int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 {
 	HashItem hash;
@@ -44,3 +45,4 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 	}
 	return -MATE_VALUE;
 }
+

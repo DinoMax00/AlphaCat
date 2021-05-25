@@ -1,34 +1,51 @@
 #include <iostream>
+#include <Windows.h>
 
 #include "ucci.h"
 #include "move.h"
 #include "hash.h"
 #include "search.h"
-
+#include "log.h"
 SearchStruct Search;
 
+// 无害剪裁
+inline int harmlessPruning(int beta)
+{
+	int val;
+
+	// 杀棋步数剪裁
+	val = Search.pos.depth - MATE_VALUE;
+	if (val >= beta)
+		return val;
+
+	// 和棋剪裁
+
+	// 重复剪裁
+
+}
+
 // 静态搜索
-int quieseSearch(Game& game, int alpha, int beta)
+int quieseSearch(int alpha, int beta)
 {
 	MoveSort move_sort;
 
 	// 无害剪裁
 
 	// 极限深度返回局面估值
-	if (game.depth >= LIMIT_DEPTH)
-		return game.getValue(alpha, beta);
+	if (Search.pos.depth >= LIMIT_DEPTH)
+		return Search.pos.getValue(alpha, beta);
 
 	// 初始化
 	int best = -MATE_VALUE;
 
 	// 将军检测
-	if (game.lastMove().ChkChs > 0)
+	if (Search.pos.lastMove().ChkChs > 0)
 	{
-		move_sort.getAllMoves(game);
+		move_sort.getAllMoves(Search.pos);
 	}
 	else
 	{
-		int val = game.getValue(alpha, beta);
+		int val = Search.pos.getValue(alpha, beta);
 		if (val >= beta)
 		{
 			return val;
@@ -37,17 +54,17 @@ int quieseSearch(Game& game, int alpha, int beta)
 		if (val > alpha)
 			alpha = val;
 		// 生成吃子着法
-		move_sort.getCapMoves(game);
+		move_sort.getCapMoves(Search.pos);
 	}
 
 	// 向下搜索
 	int16_t mv;
 	while (mv = move_sort.nextQuiesc())
 	{
-		if (game.takeOneMove(mv))
+		if (Search.pos.takeOneMove(mv))
 		{
-			int val = -quieseSearch(game, -beta, -alpha);
-			game.deleteOneMove();
+			int val = -quieseSearch(-beta, -alpha);
+			Search.pos.deleteOneMove();
 			if (val > best)
 			{
 				if (val >= beta)
@@ -62,10 +79,44 @@ int quieseSearch(Game& game, int alpha, int beta)
 	// 返回分值
 	if (best == -MATE_VALUE)
 	{
-		return game.depth - MATE_VALUE;
+		return Search.pos.depth - MATE_VALUE;
 	}
 	return best;
 }
+
+// 零窗口完全搜索例程
+int cutSearch(int depth, int beta, bool no_null = false)
+{
+	int val, mvhash;
+	MoveSort move_sort;
+
+	// 叶子节点处调用静态搜索
+	if (depth <= 0)
+	{
+		return quieseSearch(beta - 1, beta);
+	}
+
+	// 无害剪裁
+
+	// 置换剪裁
+	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, mvhash);
+	if (val > -MATE_VALUE)
+	{
+		return val;
+	}
+
+	// 极限深度 直接返回评价值
+	if (Search.pos.depth >= LIMIT_DEPTH)
+	{
+		return Search.pos.getValue(beta - 1, beta);
+	}
+
+	// 空着剪裁
+	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
+	{
+
+	}
+} 
 
 // 主要变例搜索
 int pvSearch(int depth, int alpha, int beta)
@@ -74,11 +125,12 @@ int pvSearch(int depth, int alpha, int beta)
 	if (depth == 0)
 	{
 		//对于叶子节点，进行静态搜索
-		return quieseSearch(Search.pos, alpha, beta);
+		return quieseSearch(alpha, beta);
 	}
 
 	// 无害剪裁
-		//循环裁剪，临时这样写
+	
+	//循环裁剪，临时这样写
 	int vlrep = Search.pos.detectCircle();
 	if (vlrep == CIR_LOSS)
 		return -BAN_VALUE;
@@ -108,10 +160,10 @@ int pvSearch(int depth, int alpha, int beta)
 	//		val = pvSearch(Search.pos, depth / 2, -MATE_VALUE, beta, max_deep);
 	//}
 
-	MoveSort mov;
-	mov.getAllMoves(Search.pos);
+	MoveSort move_sort;
+	move_sort.getAllMoves(Search.pos);
 	int val, mv, new_depth;
-	while (mv = mov.next())
+	while (mv = move_sort.next())
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
@@ -158,7 +210,7 @@ int pvSearch(int depth, int alpha, int beta)
 }
 
 // 根节点搜索
-void searchRoot(int depth)
+int searchRoot(int depth)
 {
 	MoveSort move_sort;
 	move_sort.getAllMoves(Search.pos);
@@ -166,12 +218,15 @@ void searchRoot(int depth)
 	int new_depth, val;
 	int best = -MATE_VALUE;
 
+	// 搜索根节点下着法
 	while (mv = move_sort.next())
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
+		
 		// 尝试性延伸
 		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
@@ -184,21 +239,74 @@ void searchRoot(int depth)
 
 		Search.pos.deleteOneMove();
 
+		// 计时
+		if (Search.stop)
+		{
+			return best;
+		}
+
 		// 更新最优着法
 		if (val > best)
 		{
 			best = val;
 			Search.result = mv;
 		}
+
+		if (GetTickCount64() - Search.cur_time > Search.time_limit)
+		{
+			Search.stop = true;
+		}
 	}
+	return best;
+}
+
+void initSearch()
+{
+	Search.pos.depth = 0;
+	Search.result = -1;
+	Search.time_limit = 1500;
+	Search.stop = false;
 }
 
 void searchMain(int depth)
 {
-	Search.pos.depth = 0;
-	Search.pos.printForDebug();
-	Search.result = -1;
+	int val, val_last;
+	int16_t best_move = -1;
+	uint64_t time_temp;
+
+	// 初始化
+	initSearch();
+	// 开局库
+
+	// 初始化计数器
+
+	// 清空哈希表 历史表 杀手着法表
+	clearHashTable();
+	clearHistory();
+
+	// 开始计时
+	Search.cur_time = GetTickCount64();
+
 	// 迭代加深
-	searchRoot(depth);
+	for (int i = 1; i <= depth; i++)
+	{
+		val = searchRoot(i);
+
+		if (Search.stop)
+		{
+			std::cout << "搜索层数: " << i << std::endl;
+			Log().info(i);
+			break;
+		}
+
+		best_move = Search.result;
+
+		// 搜到杀棋 终止搜索
+		if (val > WIN_VALUE || val < -WIN_VALUE)
+		{
+			break;
+		}
+	}	
+	Search.result = best_move;
 	return;
 }

@@ -387,7 +387,7 @@ Move Game::lastMove()
 
 int Game::detectCircle(int recur)
 {
-	int side = !this->cur_player;
+	bool side = !this->cur_player;
 	int check, oppcheck;
 	check = oppcheck = 0x1ffff;
 	if (circleTable[this->zobrist & CIRCTAB_SIZE] == 0)
@@ -428,4 +428,24 @@ int Game::detectCircle(int recur)
 		stackpos--;
 	}
 	return 0;
+}
+
+bool Game::nullOk()
+{
+	return (cur_player == RED ? red_val : black_val) > 200;
+}
+
+void Game::nullMove()
+{
+
+}
+
+void Game::deleteNullMove()
+{
+
+}
+
+bool Game::isDraw()
+{
+	return ((bitPieces & 4292935648) == 0) || -lastMove().CptDrw >= 100 || move_num >= STACK_SIZE;
 }
