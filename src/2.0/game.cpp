@@ -266,9 +266,11 @@ bool Game::takeOneMove(uint16_t mv)
 
 	// 换边
 	changePlayer();
+
 	// zobr
 	if (this->circleTable[oldzobr & CIRCTAB_SIZE] == 0)
 		this->circleTable[oldzobr & CIRCTAB_SIZE] = this->move_num;
+
 	// 记录历史着法
 	MoveStack* p = this->moveStack + this->move_num;
 	p->move.step = mv;
@@ -388,19 +390,31 @@ Move Game::lastMove()
 int Game::detectCircle(int recur)
 {
 	bool side = !this->cur_player;
-	int check, oppcheck;
-	check = oppcheck = 0x1ffff;
-	if (circleTable[this->zobrist & CIRCTAB_SIZE] == 0)
-		return 0;
+	bool check, oppcheck;	// 长将标记
+
+	check = oppcheck = true;
+
 	MoveStack* stackpos = moveStack + move_num - 1;
-	while (stackpos->move.CptDrw == 0 && (stackpos - moveStack) >= 0)
+	while (stackpos->move.step != 0 && stackpos->move.CptDrw == 0)
 	{
 		if (side == this->cur_player)
 		{
+			check = check && stackpos->move.ChkChs;
+			if (stackpos->zobrist == this->zobrist)
+			{
+				recur--;
+				if (recur == 0)
+				{
+					return 1 + (check ? 2 : 0) + (oppcheck ? 4 : 0);
+				}
+			}
+			/*if (stackpos->move.ChkChs == 0)
+				check = 0;
 			if (stackpos->move.ChkChs > 0)
 				check &= 0x10000;
 			else
-				check = 0;
+				check &= (1 << (-stackpos->move.ChkChs));
+
 			if (stackpos->zobrist == this->zobrist)
 			{
 				recur--;
@@ -415,19 +429,29 @@ int Game::detectCircle(int recur)
 					else
 						return CIR_DRAW;
 				}
-			}
+			}*/
 		}
 		else
 		{
-			if (stackpos->move.ChkChs > 0)
-				oppcheck &= 0x10000;
-			else
-				oppcheck = 0;
+			oppcheck = oppcheck && stackpos->move.ChkChs;
 		}
+
 		side = !side;
 		stackpos--;
 	}
 	return 0;
+}
+
+int Game::drawValue()
+{
+	return depth & 1 ? 20 : -20;
+}
+
+int Game::circleVal(int rep)
+{
+	int val = (rep & 2) ? depth - 10000 : 0;
+	val += (rep & 4) ? 10000 - depth: 0;
+	return val ? val : drawValue();
 }
 
 bool Game::nullOk()
@@ -449,3 +473,4 @@ bool Game::isDraw()
 {
 	return ((bitPieces & 4292935648) == 0) || -lastMove().CptDrw >= 100 || move_num >= STACK_SIZE;
 }
+

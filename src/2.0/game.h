@@ -148,6 +148,8 @@ public:
 	bool isProtected(int tag, int src, int except = 0);
 	int detectCheck(bool simple = false);
 	int detectCircle(int recur = 1);
+	int circleVal(int nRecur = 1);
+	int drawValue();
 
 	// µ÷ÊÔ
 	void printForDebug();	// ÆåÅÌÊä³öµ½ÖÕ¶Ë

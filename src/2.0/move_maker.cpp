@@ -484,7 +484,7 @@ int Game::detectCheck(bool simple)
 		if (y == getIdxCol(dst) && (p_bitcol->ju_cap & preGen.bitColMask[dst]))
 		{
 			if (simple || record)
-				return true;
+				return 48;
 			else
 				record = opptag + JIANG_FROM;
 		}
@@ -499,7 +499,7 @@ int Game::detectCheck(bool simple)
 			if (p_leg != dst && this->board[p_leg] == 0)	//同时判断能否吃到子+别腿
 			{
 				if (simple || record)
-					return true;
+					return 48;
 				else
 					record = opptag + i;
 			}
@@ -514,14 +514,14 @@ int Game::detectCheck(bool simple)
 			if (x == getIdxRow(dst) && (p_bitrow->ju_cap & preGen.bitRowMask[dst]))
 			{
 				if (simple || record)
-					return true;
+					return 48;
 				else
 					record = opptag + i;
 			}
 			else if (y == getIdxCol(dst) && (p_bitcol->ju_cap & preGen.bitColMask[dst]))
 			{
 				if (simple || record)
-					return true;
+					return 48;
 				else
 					record = opptag + i;
 			}
@@ -536,14 +536,14 @@ int Game::detectCheck(bool simple)
 			if (x == getIdxRow(dst) && (p_bitrow->pao_cap & preGen.bitRowMask[dst]))
 			{
 				if (simple || record)
-					return true;
+					return 48;
 				else
 					record = opptag + i;
 			}
 			else if (y == getIdxCol(dst) && (p_bitcol->pao_cap & preGen.bitColMask[dst]))
 			{
 				if (simple || record)
-					return true;
+					return 48;
 				else
 					record = opptag + i;
 			}
@@ -556,7 +556,7 @@ int Game::detectCheck(bool simple)
 		if (pieceType[piece] == 6 && (piece & opptag))
 		{
 			if (simple || record)
-				return true;
+				return 48;
 			else
 				for (int i = BING_FROM; i <= BING_TO; i++)
 					if (pieces[opptag + i] == dst)
@@ -572,7 +572,7 @@ int Game::detectCheck(bool simple)
 		if (pieceType[piece] == 6 && (piece & opptag))
 		{
 			if (simple || record)
-				return true;
+				return 48;
 			else
 				for (int i = BING_FROM; i <= BING_TO; i++)
 					if (pieces[opptag + i] == dst)

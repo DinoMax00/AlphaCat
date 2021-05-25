@@ -18,18 +18,29 @@ inline int harmlessPruning(int beta)
 	if (val >= beta)
 		return val;
 
-	// ∫Õ∆ÂºÙ≤√
+	// —≠ª∑æ÷√ÊºÙ≤√
 
 	// ÷ÿ∏¥ºÙ≤√
+	int val_rep = Search.pos.detectCircle();
+	if (val_rep > 0)
+		return Search.pos.circleVal(val_rep);
 
+	return -MATE_VALUE;
 }
 
 // æ≤Ã¨À—À˜
 int quieseSearch(int alpha, int beta)
 {
 	MoveSort move_sort;
+	int  val;
 
 	// Œﬁ∫¶ºÙ≤√
+	val = harmlessPruning(beta);
+	if (val > -MATE_VALUE)
+	{
+		return val;
+	}
+	
 
 	// º´œﬁ…Ó∂»∑µªÿæ÷√Êπ¿÷µ
 	if (Search.pos.depth >= LIMIT_DEPTH)
@@ -45,11 +56,9 @@ int quieseSearch(int alpha, int beta)
 	}
 	else
 	{
-		int val = Search.pos.getValue(alpha, beta);
+		val = Search.pos.getValue(alpha, beta);
 		if (val >= beta)
-		{
 			return val;
-		}
 		best = val;
 		if (val > alpha)
 			alpha = val;
@@ -97,6 +106,9 @@ int cutSearch(int depth, int beta, bool no_null = false)
 	}
 
 	// Œﬁ∫¶ºÙ≤√
+	val = harmlessPruning(beta);
+	if (val > -MATE_VALUE)
+		return val;
 
 	// ÷√ªªºÙ≤√
 	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, mvhash);
@@ -121,6 +133,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 // ÷˜“™±‰¿˝À—À˜
 int pvSearch(int depth, int alpha, int beta)
 {
+	int val;
 	bool flagPV = false;//÷˜“™±‰¿˝À—À˜
 	if (depth == 0)
 	{
@@ -129,17 +142,11 @@ int pvSearch(int depth, int alpha, int beta)
 	}
 
 	// Œﬁ∫¶ºÙ≤√
-	
-	//—≠ª∑≤√ºÙ£¨¡Ÿ ±’‚—˘–¥
-	int vlrep = Search.pos.detectCircle();
-	if (vlrep == CIR_LOSS)
-		return -BAN_VALUE;
-	else if (vlrep == CIR_WIN)
-		return BAN_VALUE;
-	else if (vlrep == CIR_DRAW)
-		return 0;
+	val = harmlessPruning(beta);
+	if (val > -MATE_VALUE)
+		return val;
 
-	// ÷√ªª±Ì
+	// ÷√ªªºÙ≤√
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash;
 	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, mvhash);
@@ -162,7 +169,7 @@ int pvSearch(int depth, int alpha, int beta)
 
 	MoveSort move_sort;
 	move_sort.getAllMoves(Search.pos);
-	int val, mv, new_depth;
+	int mv, new_depth;
 	while (mv = move_sort.next())
 	{
 		if (!Search.pos.takeOneMove(mv))
