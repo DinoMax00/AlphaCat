@@ -7,11 +7,13 @@ int HashSize = 1024 * 1024 - 1;
 
 void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step)
 {
-	if (zobr == HashTable[zobr & HashSize].zobrist && (HashTable[zobr & HashSize].depthAlpha < depth || HashTable[zobr & HashSize].depthBeta < depth))
+	if (zobr == HashTable[zobr & HashSize].zobrist && (HashTable[zobr & HashSize].depthAlpha >= depth || HashTable[zobr & HashSize].depthBeta >= depth))
 		return;
 	HashItem hash;
 	hash.zobrist = zobr;
 	hash.bestmove = step;
+	hash.depthAlpha = 0;
+	hash.depthBeta = 0;
 	if (flag & FLAG_ALPHA)
 	{
 		hash.depthAlpha = depth;
