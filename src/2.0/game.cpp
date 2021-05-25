@@ -394,36 +394,36 @@ int Game::detectCircle(int recur)
 	MoveStack* stackpos = moveStack + move_num - 1;
 	while (stackpos->move.CptDrw == 0 && (stackpos - moveStack) >= 0)
 	{
-		if (side == this->cur_player)
-		{
-			if (stackpos->move.ChkChs > 0)
-				check &= 0x10000;
-			else
-				check = 0;
+		//if (side == this->cur_player)
+		//{
+			//if (stackpos->move.ChkChs > 0)
+			//	check &= 0x10000;
+			//else
+			//	check = 0;
 			if (stackpos->zobrist == this->zobrist)
 			{
 				recur--;
 				if (recur == 0)
 				{
-					check = ((check & 0xffff) == 0 ? check : 0xffff);
-					oppcheck = ((oppcheck & 0xffff) == 0 ? oppcheck : 0xffff);
-					if (check > oppcheck)
+					//check = ((check & 0xffff) == 0 ? check : 0xffff);
+					//oppcheck = ((oppcheck & 0xffff) == 0 ? oppcheck : 0xffff);
+					//if (check > oppcheck)
 						return CIR_LOSS;
-					else if (check < oppcheck)
-						return CIR_WIN;
-					else
-						return CIR_DRAW;
+					//else if (check < oppcheck)
+					//	return CIR_WIN;
+					//else
+					//	return CIR_DRAW;
 				}
 			}
-		}
-		else
-		{
-			if (stackpos->move.ChkChs > 0)
-				oppcheck &= 0x10000;
-			else
-				oppcheck = 0;
-		}
-		side = !side;
+		//}
+		//else
+		//{
+		//	if (stackpos->move.ChkChs > 0)
+		//		oppcheck &= 0x10000;
+		//	else
+		//		oppcheck = 0;
+		//}
+		//side = !side;
 		stackpos--;
 	}
 	return 0;
