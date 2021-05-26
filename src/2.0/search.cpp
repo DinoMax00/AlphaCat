@@ -18,7 +18,7 @@ inline int harmlessPruning(int beta)
 	if (val >= beta)
 		return val;
 
-	// —≠ª∑æ÷√ÊºÙ≤√
+	// ∫Õ∆ÂºÙ≤√
 
 	// ÷ÿ∏¥ºÙ≤√
 	int val_rep = Search.pos.detectCircle();
@@ -230,7 +230,6 @@ int searchRoot(int depth)
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
-		
 		// ≥¢ ‘–‘—”…Ï
 		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
 		

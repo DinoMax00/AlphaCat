@@ -209,9 +209,6 @@ void Game::deleteMoveChess(uint16_t mv, int captured)
 	this->pieces[piece] = src;
 	this->bitRow[src >> 4] ^= preGen.bitRowMask[src];
 	this->bitCol[src & 15] ^= preGen.bitColMask[src];
-	// 更新zobr
-	zobrist ^= ZobrTable[pt + (piece < 32 ? 0 : 7)][src];
-	zobrist ^= ZobrTable[pt + (piece < 32 ? 0 : 7)][dst];
 
 	if (captured > 0)
 	{
@@ -219,7 +216,6 @@ void Game::deleteMoveChess(uint16_t mv, int captured)
 		this->board[dst] = captured;
 		this->pieces[captured] = dst;
 		this->bitPieces ^= 1 << (captured - 16);
-		zobrist ^= ZobrTable[pt + (captured < 32 ? 0 : 7)][dst];
 	}
 	else
 	{
@@ -240,7 +236,7 @@ void Game::pushMove()
 void Game::popBack()
 {
 	MoveStack* p = this->moveStack + this->move_num;
-	this->zobrist = zobrist;
+	this->zobrist = p->zobrist;
 	this->red_val = p->red_val;
 	this->black_val = p->black_val;
 }
@@ -266,10 +262,6 @@ bool Game::takeOneMove(uint16_t mv)
 
 	// 换边
 	changePlayer();
-
-	// zobr
-	if (this->circleTable[oldzobr & CIRCTAB_SIZE] == 0)
-		this->circleTable[oldzobr & CIRCTAB_SIZE] = this->move_num;
 
 	// 记录历史着法
 	MoveStack* p = this->moveStack + this->move_num;
@@ -408,28 +400,6 @@ int Game::detectCircle(int recur)
 					return 1 + (check ? 2 : 0) + (oppcheck ? 4 : 0);
 				}
 			}
-			/*if (stackpos->move.ChkChs == 0)
-				check = 0;
-			if (stackpos->move.ChkChs > 0)
-				check &= 0x10000;
-			else
-				check &= (1 << (-stackpos->move.ChkChs));
-
-			if (stackpos->zobrist == this->zobrist)
-			{
-				recur--;
-				if (recur == 0)
-				{
-					check = ((check & 0xffff) == 0 ? check : 0xffff);
-					oppcheck = ((oppcheck & 0xffff) == 0 ? oppcheck : 0xffff);
-					if (check > oppcheck)
-						return CIR_LOSS;
-					else if (check < oppcheck)
-						return CIR_WIN;
-					else
-						return CIR_DRAW;
-				}
-			}*/
 		}
 		else
 		{
@@ -444,13 +414,13 @@ int Game::detectCircle(int recur)
 
 int Game::drawValue()
 {
-	return depth & 1 ? 20 : -20;
+	return (depth & 1) ? 20 : -20;
 }
 
 int Game::circleVal(int rep)
 {
-	int val = (rep & 2) ? depth - 10000 : 0;
-	val += (rep & 4) ? 10000 - depth: 0;
+	int val = (rep & 2) ? depth - 10000 + 1: 0;
+	val += (rep & 4) ? 10000 - depth - 1: 0;
 	return val ? val : drawValue();
 }
 
