@@ -291,11 +291,8 @@ void Game::deleteOneMove()
 	int sq = getSrc(p->move.step);
 	// 撤回
 	deleteMoveChess(p->move.step, p->move.CptDrw);
-	changePlayer();
-	if (this->circleTable[this->zobrist & CIRCTAB_SIZE] == this->move_num)
-		this->circleTable[this->zobrist & CIRCTAB_SIZE] = 0;
+	this->cur_player = !this->cur_player;
 	popBack();
-	// zobr
 }
 
 void Game::printForDebug()
@@ -429,14 +426,26 @@ bool Game::nullOk()
 	return (cur_player == RED ? red_val : black_val) > 200;
 }
 
+bool Game::nullSafe()
+{
+	return (cur_player == RED ? red_val : black_val) > 400;
+}
+
 void Game::nullMove()
 {
-
+	pushMove();
+	changePlayer();
+	this->moveStack[move_num].move.step = 0;
+	this->move_num++;
+	this->depth++;
 }
 
 void Game::deleteNullMove()
 {
-
+	this->move_num--;
+	this->depth--;
+	this->cur_player = !this->cur_player;
+	popBack();
 }
 
 bool Game::isDraw()

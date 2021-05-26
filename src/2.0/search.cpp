@@ -6,6 +6,7 @@
 #include "hash.h"
 #include "search.h"
 #include "log.h"
+
 SearchStruct Search;
 
 // 无害剪裁
@@ -96,7 +97,8 @@ int quieseSearch(int alpha, int beta)
 // 零窗口完全搜索例程
 int cutSearch(int depth, int beta, bool no_null = false)
 {
-	int val, mvhash;
+	int16_t mv;
+	int val, mvhash, best = -MATE_VALUE, new_depth;
 	MoveSort move_sort;
 
 	// 叶子节点处调用静态搜索
@@ -126,7 +128,60 @@ int cutSearch(int depth, int beta, bool no_null = false)
 	// 空着剪裁
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
 	{
+		Search.pos.nullMove();
+		val = -cutSearch(depth - NULL_DEPTH, 1 - beta, true);
+		Search.pos.deleteOneMove();
 
+		if (val >= beta)
+		{
+			if (Search.pos.nullSafe())
+			{
+				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH + 1), 0);
+				return val;
+			}
+			else if(cutSearch(depth - NULL_DEPTH, beta, true) >= beta)
+			{
+				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH + 1), 0);
+				return val;
+			}
+		}
+	}
+
+	move_sort.getAllMoves(Search.pos);
+
+	while (mv = move_sort.next())
+	{
+		if (!Search.pos.takeOneMove(mv))
+			continue;
+
+		// 尝试选择延伸
+		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
+		
+		// 零窗口搜索
+		val = -cutSearch(1 - beta, new_depth);
+		Search.pos.deleteOneMove();
+
+		// 截断判定
+		if (val > best)
+		{
+			best = val;
+			if (val >= beta)
+			{
+				recordHashTable(Search.pos.zobrist, FLAG_BETA, best, depth, mv);
+				return best;
+			}
+		}
+	}
+
+	// 不截断措施
+	if (best == -MATE_VALUE)
+	{
+		return Search.pos.depth - MATE_VALUE;
+	}
+	else
+	{
+		recordHashTable(Search.pos.zobrist, FLAG_ALPHA, best, depth, 0);
+		return best;
 	}
 } 
 
@@ -150,8 +205,8 @@ int pvSearch(int depth, int alpha, int beta)
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash;
 	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, mvhash);
-	if (vlhash > -MATE_VALUE)
-		return vlhash;
+	// if (vlhash > -MATE_VALUE)
+	// 	return vlhash;
 
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
@@ -175,13 +230,14 @@ int pvSearch(int depth, int alpha, int beta)
 		if (!Search.pos.takeOneMove(mv))
 			continue;
 		// 尝试选择延伸
-		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -beta, -alpha);
 		else
 		{
 			val = -pvSearch(new_depth, -alpha - 1, -alpha);
+			// val = -cutSearch(-alpha, new_depth);
 			if (val > alpha && val < beta)
 				val = -pvSearch(new_depth, -beta, -alpha);
 		}
@@ -231,7 +287,7 @@ int searchRoot(int depth)
 		if (!Search.pos.takeOneMove(mv))
 			continue;
 		// 尝试性延伸
-		new_depth = Search.pos.detectCheck() ? depth : depth - 1;
+		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 		
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
@@ -270,7 +326,7 @@ void initSearch()
 {
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 1500;
+	Search.time_limit = 2000;
 	Search.stop = false;
 }
 

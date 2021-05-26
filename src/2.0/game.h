@@ -106,6 +106,9 @@ private:
 
 	void initGame();		// 初始化
 	void putChess(int32_t sq, int32_t pc, bool del = false);		// 把一个棋子放在棋盘上，del为true则是移除棋子
+
+	int moveChess(uint16_t mv);		// 一步移动
+	void deleteMoveChess(uint16_t mv, int captured);	// 撤回一步移动
 public:
 	bool cur_player = RED;	// 当前游戏角色
 	int32_t	red_val;		// 红棋估值
@@ -122,8 +125,6 @@ public:
 	uint16_t bitRow[16];	// 位行
 	uint16_t bitCol[16];	// 位列
 
-	int circleTable[CIRCTAB_SIZE + 1];		//循环表
-
 	// 方法
 	Game();					// 默认构造函数 用于初始化
 	void changePlayer();	// 对换角色
@@ -131,8 +132,6 @@ public:
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
 	// 走子
-	int moveChess(uint16_t mv);		// 一步移动
-	void deleteMoveChess(uint16_t mv, int captured);	// 撤回一步移动
 	bool takeOneMove(uint16_t mv);	// 执行一个着法，其实就是带合法性检测的一步移动
 	void deleteOneMove();				// 撤销一个着法
 
@@ -169,6 +168,7 @@ public:
 
 	// 空着剪裁
 	bool nullOk();
+	bool nullSafe();
 	void nullMove();
 	void deleteNullMove();
 
