@@ -12,8 +12,8 @@ struct HashItem
 {
 	uint64_t zobrist;
 	uint16_t bestmove;
-	uint8_t depthAlpha;
-	uint8_t depthBeta;
+	int8_t depthAlpha;
+	int8_t depthBeta;
 	int16_t valueAlpha;
 	int16_t valueBeta;
 };

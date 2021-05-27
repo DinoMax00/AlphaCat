@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "hash.h"
 #include "game.h"
 #include "search.h"
@@ -33,16 +35,16 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 	hash = HashTable[zobr & HashSize];
 	if (hash.zobrist != zobr)
 		return -MATE_VALUE;
-	if (hash.depthAlpha > 0)
-	{
-		int value = hash.valueAlpha;
-		if (hash.depthAlpha >= depth && value <= vlAlpha)
-			return value;
-	}
 	if (hash.depthBeta > 0)
 	{
 		int value = hash.valueBeta;
 		if (hash.depthBeta >= depth && value >= vlBeta)
+			return value;
+	}
+	if (hash.depthAlpha > 0)
+	{
+		int value = hash.valueAlpha;
+		if (hash.depthAlpha >= depth && value <= vlAlpha)
 			return value;
 	}
 	return -MATE_VALUE;

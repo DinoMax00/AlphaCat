@@ -79,9 +79,10 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 		{
 			this->black_val += normalEval.blackPieces[pt][sq];
 		}
+		pt += 7;
 	}
 	// 更新zobr键值
-	zobrist ^= ZobrTable[pt + (pc < 32 ? 0 : 7)][sq];
+	zobrist ^= ZobrTable[pt][sq];
 }
 
 void Game::changePlayer()
@@ -167,7 +168,7 @@ int Game::moveChess(uint16_t mv)
 			pt += 7;
 		}
 		// 更新zobr
-		zobrist ^= ZobrTable[pt + (chessOnDst < 32 ? 0 : 7)][dst];
+		zobrist ^= ZobrTable[pt][dst];
 	}
 	else
 	{
@@ -193,8 +194,8 @@ int Game::moveChess(uint16_t mv)
 		pt += 7;
 	}
 	// 更新zobr
-	zobrist ^= ZobrTable[pt + (chessOnSrc < 32 ? 0 : 7)][src];
-	zobrist ^= ZobrTable[pt + (chessOnSrc < 32 ? 0 : 7)][dst];
+	zobrist ^= ZobrTable[pt][src];
+	zobrist ^= ZobrTable[pt][dst];
 	return chessOnDst;
 }
 

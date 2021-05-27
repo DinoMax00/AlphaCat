@@ -130,7 +130,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 	{
 		Search.pos.nullMove();
 		val = -cutSearch(depth - NULL_DEPTH, 1 - beta, true);
-		Search.pos.deleteOneMove();
+		Search.pos.deleteNullMove();
 
 		if (val >= beta)
 		{
@@ -205,8 +205,10 @@ int pvSearch(int depth, int alpha, int beta)
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash;
 	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, mvhash);
-	// if (vlhash > -MATE_VALUE)
-	// 	return vlhash;
+
+	if (vlhash > -MATE_VALUE) {
+		return vlhash;
+	}
 
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
@@ -231,7 +233,6 @@ int pvSearch(int depth, int alpha, int beta)
 			continue;
 		// 尝试选择延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
-
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -beta, -alpha);
 		else
@@ -288,7 +289,7 @@ int searchRoot(int depth)
 			continue;
 		// 尝试性延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
-		
+		// std::cout << moveToString(mv) << " " << Search.pos.zobrist << std::endl;
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
