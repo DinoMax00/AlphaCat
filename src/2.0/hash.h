@@ -19,7 +19,7 @@ struct HashItem
 };
 
 void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step);
-int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step);
+int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, bool no_null, int& step);
 
 
 extern HashItem* HashTable;

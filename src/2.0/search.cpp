@@ -113,7 +113,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		return val;
 
 	// 置换剪裁
-	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, mvhash);
+	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, no_null, mvhash);
 	if (val > -MATE_VALUE)
 	{
 		return val;
@@ -129,7 +129,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
 	{
 		Search.pos.nullMove();
-		val = -cutSearch(depth - NULL_DEPTH, 1 - beta, true);
+		val = -cutSearch(depth - NULL_DEPTH - 1, 1 - beta, true);
 		Search.pos.deleteNullMove();
 
 		if (val >= beta)
@@ -186,11 +186,11 @@ int cutSearch(int depth, int beta, bool no_null = false)
 } 
 
 // 主要变例搜索
-int pvSearch(int depth, int alpha, int beta)
+int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 {
 	int val;
 	bool flagPV = false;//主要变例搜索
-	if (depth == 0)
+	if (depth <= 0)
 	{
 		//对于叶子节点，进行静态搜索
 		return quieseSearch(alpha, beta);
@@ -204,7 +204,7 @@ int pvSearch(int depth, int alpha, int beta)
 	// 置换剪裁
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash;
-	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, mvhash);
+	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, true, mvhash);
 
 	if (vlhash > -MATE_VALUE) {
 		return vlhash;
@@ -213,6 +213,22 @@ int pvSearch(int depth, int alpha, int beta)
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
 		return Search.pos.getValue(alpha, beta);
+
+	// 空着剪裁
+	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
+	{
+		Search.pos.nullMove();
+		val = -pvSearch(depth - NULL_DEPTH - 1, - beta, -beta + 1, true);
+		Search.pos.deleteNullMove();
+
+		if (val >= beta)
+		{
+			if (Search.pos.nullSafe())
+				return val;
+			if (pvSearch(depth - NULL_DEPTH, alpha, beta, true) >= beta)
+				return val;
+		}
+	}
 
 	int best = -MATE_VALUE;
 
@@ -289,7 +305,6 @@ int searchRoot(int depth)
 			continue;
 		// 尝试性延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
-		// std::cout << moveToString(mv) << " " << Search.pos.zobrist << std::endl;
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);

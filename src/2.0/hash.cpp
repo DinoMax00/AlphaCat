@@ -29,7 +29,7 @@ void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step)
 	HashTable[zobr & HashSize] = hash;
 }
 
-int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
+int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, bool no_null, int& step)
 {
 	HashItem hash;
 	hash = HashTable[zobr & HashSize];
@@ -38,7 +38,7 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, int& step)
 	if (hash.depthBeta > 0)
 	{
 		int value = hash.valueBeta;
-		if (hash.depthBeta >= depth && value >= vlBeta)
+		if (!(no_null && hash.bestmove == 0) && hash.depthBeta >= depth && value >= vlBeta)
 			return value;
 	}
 	if (hash.depthAlpha > 0)
