@@ -367,10 +367,6 @@ void Game::printForDebug()
 	std::cout << "   a  b  c  d  e  f  g  h  i   \n";
 }
 
-int Game::getEva()
-{
-	return cur_player == RED ? red_val - black_val : black_val - red_val;
-}
 
 Move Game::lastMove()
 {

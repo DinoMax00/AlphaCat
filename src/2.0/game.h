@@ -159,9 +159,10 @@ public:
 	// 获得局面估值
 	int getValue(int vlAlpha, int vlBeta);
 	int materialValue();
-	int advisorShapeValue();
+	int shiShapeValue();
 	int stringHoldValue();
-	int getEva();
+	int juMobilityValue();
+	int maTrapValue();
 
 	// 历史着法
 	Move lastMove();
