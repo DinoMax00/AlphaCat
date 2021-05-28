@@ -78,9 +78,9 @@ const int pieceValue[48] = {
 struct Move
 {
 	uint16_t step;	// move类型
-	uint16_t value;	// 着法估值
-	uint16_t ChkChs; // 将军
-	uint16_t CptDrw; // 吃子
+	int value;	// 着法估值
+	int16_t ChkChs; // 将军
+	int16_t CptDrw; // 吃子
 	bool operator < (const Move& x) const
 	{
 		return value > x.value;
@@ -125,7 +125,6 @@ public:
 	uint16_t bitRow[16];	// 位行
 	uint16_t bitCol[16];	// 位列
 
-	// 方法
 	Game();					// 默认构造函数 用于初始化
 	void changePlayer();	// 对换角色
 
@@ -148,6 +147,8 @@ public:
 	int detectCheck(bool simple = false);
 	int detectCircle(int recur = 1);
 	int circleVal(int nRecur = 1);
+	bool legalMove(uint16_t mv);
+
 	int drawValue();
 
 	// 调试

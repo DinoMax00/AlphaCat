@@ -50,10 +50,11 @@ int quieseSearch(int alpha, int beta)
 	// 初始化
 	int best = -MATE_VALUE;
 
+	bool check = Search.pos.lastMove().ChkChs > 0;
 	// 将军检测
-	if (Search.pos.lastMove().ChkChs > 0)
+	if (check)
 	{
-		move_sort.getAllMoves(Search.pos);
+		move_sort.getQuiescAll(Search.pos);
 	}
 	else
 	{
@@ -69,7 +70,7 @@ int quieseSearch(int alpha, int beta)
 
 	// 向下搜索
 	int16_t mv;
-	while (mv = move_sort.nextQuiesc())
+	while (mv = move_sort.nextQuiesc(check))
 	{
 		if (Search.pos.takeOneMove(mv))
 		{
@@ -149,7 +150,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 
 	move_sort.getAllMoves(Search.pos);
 
-	while (mv = move_sort.next())
+	while (mv = move_sort.next(Search.pos))
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
@@ -190,6 +191,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 {
 	int val;
 	bool flagPV = false;//主要变例搜索
+	uint16_t best_move = 0;
 	if (depth <= 0)
 	{
 		//对于叶子节点，进行静态搜索
@@ -243,7 +245,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	MoveSort move_sort;
 	move_sort.getAllMoves(Search.pos);
 	int mv, new_depth;
-	while (mv = move_sort.next())
+	while (mv = move_sort.next(Search.pos))
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
@@ -267,11 +269,13 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 			best = val;
 			if (val >= beta)
 			{
+				best_move = mv;
 				hashflag = FLAG_BETA;
 				break;
 			}
 			if (val > alpha)
 			{
+				best_move = mv;
 				hashflag = FLAG_PV;
 				alpha = val;
 			}
@@ -284,7 +288,10 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	{
 		// 更新置换表
 		recordHashTable(Search.pos.zobrist, hashflag, best, depth, mv);
-		//mv随便传了一个，最后需改
+		if (best_move && move_sort.phase != PHASE_GOOD_CAP)
+		{
+			updBest(best_move, depth, Search.killeTable[Search.pos.depth]);
+		}
 		return best;
 	}
 }
@@ -299,7 +306,7 @@ int searchRoot(int depth)
 	int best = -MATE_VALUE;
 
 	// 搜索根节点下着法
-	while (mv = move_sort.next())
+	while (mv = move_sort.next(Search.pos))
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
@@ -344,6 +351,9 @@ void initSearch()
 	Search.result = -1;
 	Search.time_limit = 2000;
 	Search.stop = false;
+	clearHashTable();
+	clearHistory();
+	Search.clearKiller();
 }
 
 void searchMain(int depth)
@@ -356,18 +366,13 @@ void searchMain(int depth)
 	initSearch();
 	// 开局库
 
-	// 初始化计数器
-
-	// 清空哈希表 历史表 杀手着法表
-	clearHashTable();
-	clearHistory();
-
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 
 	// 迭代加深
 	for (int i = 1; i <= depth; i++)
 	{
+		std::cout << i << std::endl;
 		val = searchRoot(i);
 
 		if (Search.stop)

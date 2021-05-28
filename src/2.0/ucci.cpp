@@ -157,8 +157,6 @@ void UcciEngine::run()
 			std::cout << GetTickCount64() << std::endl;
 			searchMain(20);
 			std::cout << GetTickCount64() << std::endl;
-			// this->game.printForDebug();
-			// std::cout << Search.result << std::endl;
 			if (Search.result == -1) {
 				std::cout << "nobestmove " << std::endl;
 				Log().info("ÒýÇæÏìÓ¦->nobestmove");

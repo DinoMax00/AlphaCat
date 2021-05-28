@@ -3,6 +3,89 @@
 #include "game.h"
 #include "pregen.h"
 
+bool Game::legalMove(uint16_t mv)
+{
+	int src, dst, tag, pc_moved, pc_captured, leg, x, y;
+
+	tag = sideTag(this->cur_player);
+	src = getSrc(mv);
+	dst = getDst(mv);
+	pc_moved = this->board[src];
+	pc_captured = this->board[dst];
+	
+	// 检查要走的子是否存在
+	if (!(pc_moved & tag))
+		return false;
+
+	// 检查吃到的是否是对方棋子
+	if (pc_captured & tag)
+		return false;
+
+	switch (pc_moved & 15)
+	{
+		case JIANG_FROM:
+			return inHome(dst) & jiangSpan(src, dst);
+		case SHI_FROM:
+		case SHI_TO:
+			return inHome(dst) & shiSpan(src, dst);
+		case XIANG_FROM:
+		case XIANG_TO:
+			return sameSide(src, dst) & xiangSpan(src, dst) & !this->board[src + dst >> 1];
+		case MA_FROM:
+		case MA_TO:
+			leg = src + preMaLegTab[dst - src + 256];
+			return leg != src && !this->board[leg];
+		case JU_FROM:
+		case JU_TO:
+			x = getIdxCol(src);
+			y = getIdxRow(src);
+			if (x == getIdxCol(dst))
+			{
+				if (pc_captured)
+					return (preGen.colMaskTab[y - BOARD_TOP] + bitCol[x])->ju_cap & preGen.bitColMask[dst];
+				else
+					return (preGen.colMaskTab[y - BOARD_TOP] + bitCol[x])->non_cap & preGen.bitColMask[dst];
+			}
+			else if (y == getIdxRow(dst))
+			{
+				if (pc_captured)
+					return (preGen.rowMaskTab[x - BOARD_LEFT] + bitRow[y])->ju_cap & preGen.bitRowMask[dst];
+				else
+					return (preGen.rowMaskTab[x - BOARD_LEFT] + bitRow[y])->non_cap & preGen.bitRowMask[dst];
+			}
+			else
+				return false;
+		case PAO_FROM:
+		case PAO_TO:
+			x = getIdxCol(src);
+			y = getIdxRow(src);
+			if (x == getIdxCol(dst))
+			{
+				if (pc_captured)
+					return (preGen.colMaskTab[y - BOARD_TOP] + bitCol[x])->pao_cap & preGen.bitColMask[dst];
+				else
+					return (preGen.colMaskTab[y - BOARD_TOP] + bitCol[x])->non_cap & preGen.bitColMask[dst];
+			}
+			else if (y == getIdxRow(dst))
+			{
+				if (pc_captured)
+					return (preGen.rowMaskTab[x - BOARD_LEFT] + bitRow[y])->pao_cap & preGen.bitRowMask[dst];
+				else
+					return (preGen.rowMaskTab[x - BOARD_LEFT] + bitRow[y])->non_cap & preGen.bitRowMask[dst];
+			}
+			else
+				return false;
+		default:
+			if (awayHalf(dst, this->cur_player) & (dst == src - 1 || dst == src + 1))
+			{
+				return true;
+			}
+			else {
+				return dst == (src - 16 + ((!this->cur_player) << 5));
+			}
+	}
+
+}
 
 bool Game::isProtected(int tag, int src, int except)
 {
@@ -88,6 +171,7 @@ bool Game::isProtected(int tag, int src, int except)
 	}
 	return false;
 }
+
 int Game::moveJudge(int opptag, int src, int dst)
 {
 	int mvv = pieceValue[this->board[dst]];

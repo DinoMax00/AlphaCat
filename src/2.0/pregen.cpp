@@ -10,30 +10,6 @@ inline bool inBoard(int pos)
 	return pos >= 0x03 && pos <= 0x0b;
 }
 
-// 将 士 在家里
-inline bool inHome(int pos)
-{
-	if (0x36 <= pos && pos <= 0x38)
-		return true;
-	if (0x46 <= pos && pos <= 0x48)
-		return true;
-	if (0x56 <= pos && pos <= 0x58)
-		return true;
-	if (0xa6 <= pos && pos <= 0xa8)
-		return true;
-	if (0xb6 <= pos && pos <= 0xb8)
-		return true;
-	if (0xc6 <= pos && pos <= 0xc8)
-		return true;
-	return false;
-}
-
-// 两个位置再同一边
-inline bool sameSide(int src, int dst)
-{
-	return ((src ^ dst) & 0x80) == 0;
-}
-
 // 兵向前走一步 区分红黑
 inline int bingMoveForward(int pos, int side)
 {

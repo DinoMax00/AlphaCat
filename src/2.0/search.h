@@ -1,6 +1,8 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
+#include <string.h>
+
 #include "game.h"
 #include "pregen.h"
 
@@ -17,6 +19,13 @@ struct SearchStruct {
 	bool stop;					// 是否超时
 	uint64_t cur_time;			// 计时器	
 	uint64_t time_limit = 2000;		// 限时
+
+	uint16_t killeTable[LIMIT_DEPTH][2]; // 杀手着法
+
+	void clearKiller()
+	{
+		memset(killeTable, 0, sizeof(killeTable));
+	}
 };
 
 // 搜索的启动过程
