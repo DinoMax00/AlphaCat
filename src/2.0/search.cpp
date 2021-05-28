@@ -250,13 +250,13 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 		// ³¢ÊÔÑ¡ÔñÑÓÉì
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 		if (best == -MATE_VALUE)
-			val = -pvSearch(new_depth, -beta, -alpha);
+			val = -pvSearch(new_depth, -beta, -alpha, true);
 		else
 		{
 			val = -pvSearch(new_depth, -alpha - 1, -alpha);
 			// val = -cutSearch(-alpha, new_depth);
 			if (val > alpha && val < beta)
-				val = -pvSearch(new_depth, -beta, -alpha);
+				val = -pvSearch(new_depth, -beta, -alpha, true);
 		}
 
 		Search.pos.deleteOneMove();
