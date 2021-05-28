@@ -345,7 +345,7 @@ int Game::stringHoldValue() {
                     x = getIdxCol(srcSq);
                     y = getIdxRow(srcSq);
                     if (x == getIdxCol(dstSq)) {
-                        slideMove = (preGen.rowMoveTab[y - ROW_TOP] + bitRow[x]);
+                        slideMove = (preGen.colMoveTab[y - ROW_TOP] + bitCol[x]);
                         strJudge = (srcSq < dstSq ? 0 : 1);
                         // 如果车用炮的吃法(炮用超级炮的着法)能吃到目标子"dstSq"，牵制就成立了，下同
                         if (dstSq == slideMove->paoCap[strJudge] + (int)x) {
@@ -381,7 +381,7 @@ int Game::stringHoldValue() {
                         x = getIdxCol(srcSq);
                         y = getIdxRow(srcSq);
                         if (x == getIdxCol(dstSq)) {
-                            slideMove = preGen.rowMoveTab[x - ROW_TOP] + bitRow[y];
+                            slideMove = preGen.colMoveTab[y - ROW_TOP] + bitCol[x];
                             strJudge = (srcSq < dstSq ? 0 : 1);
                             if (dstSq == slideMove->paoCap[strJudge] + (int)x) {
                                 strSq = slideMove->juCap[strJudge] + (int)x;
@@ -421,7 +421,7 @@ int Game::stringHoldValue() {
                     x = getIdxCol(srcSq);
                     y = getIdxRow(srcSq);
                     if (x == getIdxCol(dstSq)) {
-                        slideMove = preGen.rowMoveTab[x - ROW_TOP] + bitRow[y];
+                        slideMove = preGen.colMoveTab[y - ROW_TOP] + bitCol[x];
                         strJudge = (srcSq < dstSq ? 0 : 1);
                         if (dstSq == slideMove->cannonCap[strJudge] + (int)x) {
                             strSq = slideMove->paoCap[strJudge] + (int)x;
@@ -453,7 +453,7 @@ int Game::stringHoldValue() {
                         x = getIdxCol(srcSq);
                         y = getIdxRow(srcSq);
                         if (x == getIdxCol(dstSq)) {
-                            slideMove = preGen.rowMoveTab[x - ROW_TOP] + bitRow[y];
+                            slideMove = preGen.colMoveTab[y - ROW_TOP] + bitCol[x];
                             strJudge = (srcSq < dstSq ? 0 : 1);
                             if (dstSq == slideMove->cannonCap[strJudge] + (int)x) {
                                 strSq = slideMove->paoCap[strJudge] + (int)x;
