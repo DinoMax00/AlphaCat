@@ -9,6 +9,8 @@
 
 SearchStruct Search;
 
+uint16_t opBookSearch(uint64_t obj, int mirror);
+
 // 无害剪裁
 inline int harmlessPruning(int beta)
 {
@@ -316,8 +318,8 @@ int searchRoot(int depth)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
 		else
 		{
-			//val = -pvSearch(new_depth, -best - 1, -best);
-			val = -cutSearch(new_depth, -best);
+			val = -pvSearch(new_depth, -best - 1, -best);
+			//val = -cutSearch(new_depth, -best);
 			if (val > best)
 				val = -pvSearch(new_depth, -MATE_VALUE, -best);
 		}
@@ -368,7 +370,18 @@ void searchMain(int depth)
 	// 初始化
 	initSearch();
 	// 开局库
-
+	int opbook_result = opBookSearch(Search.pos.zobrist, 0);
+	if (opbook_result != 0)
+	{
+		Search.result = opbook_result;
+		return;
+	}
+	opbook_result = opBookSearch(Search.pos.zobrist_mirror, 1);
+	if (opbook_result != 0)
+	{
+		Search.result = opbook_result;
+		return;
+	}
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 

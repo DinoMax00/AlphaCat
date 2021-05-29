@@ -99,8 +99,6 @@ struct MoveStack
 class Game
 {
 private:
-	
-	
 	void pushMove();		// 入栈
 	void popBack();			// 回退状态
 
@@ -122,6 +120,7 @@ public:
 	};
 
 	uint64_t zobrist;
+	uint64_t zobrist_mirror;
 	uint8_t	board[256];		// 棋盘数组
 	uint8_t	pieces[48];		// 每个棋子的位置
 	uint16_t bitRow[16];	// 位行

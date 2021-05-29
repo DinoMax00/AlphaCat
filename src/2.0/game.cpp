@@ -34,6 +34,7 @@ void Game::initGame()
 	std::memset(this->bitCol, 0, sizeof(this->bitCol));
 	std::memset(this->bitRow, 0, sizeof(this->bitRow));
 	this->zobrist = 0;
+	this->zobrist_mirror = 0;
 	this->bitPieces = 0;
 	this->red_val = this->black_val = 0;
 	this->move_num = 0;
@@ -83,12 +84,14 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 	}
 	// 更新zobr键值
 	zobrist ^= ZobrTable[pt][sq];
+	zobrist_mirror ^= ZobrTable[pt][sq + 14 - 2 * (sq % 16)];
 }
 
 void Game::changePlayer()
 {
 	this->cur_player = !this->cur_player;
 	zobrist ^= ZobrPlayer;
+	zobrist_mirror ^= ZobrPlayer;
 }
 
 void Game::buildFromFen(std::string fen)
@@ -142,6 +145,11 @@ void Game::buildFromFen(std::string fen)
 		}
 		pos++;
 	}
+	if (cur_player == RED)
+	{
+		zobrist ^= ZobrPlayer;
+		zobrist_mirror ^= ZobrPlayer;
+	}
 }
 
 int Game::moveChess(uint16_t mv)
@@ -169,6 +177,7 @@ int Game::moveChess(uint16_t mv)
 		}
 		// 更新zobr
 		zobrist ^= ZobrTable[pt][dst];
+		zobrist_mirror ^= ZobrTable[pt][dst + 14 - 2 * (dst % 16)];
 	}
 	else
 	{
@@ -195,7 +204,9 @@ int Game::moveChess(uint16_t mv)
 	}
 	// 更新zobr
 	zobrist ^= ZobrTable[pt][src];
+	zobrist_mirror ^= ZobrTable[pt][src + 14 - 2 * (src % 16)];
 	zobrist ^= ZobrTable[pt][dst];
+	zobrist_mirror ^= ZobrTable[pt][dst + 14 - 2 * (dst % 16)];
 	return chessOnDst;
 }
 
@@ -413,8 +424,8 @@ int Game::drawValue()
 
 int Game::circleVal(int rep)
 {
-	int val = (rep & 2) ? depth - 10000 + 1: 0;
-	val += (rep & 4) ? 10000 - depth - 1: 0;
+	int val = (rep & 2) ? depth - 10000 + 1 : 0;
+	val += (rep & 4) ? 10000 - depth - 1 : 0;
 	return val ? val : drawValue();
 }
 
