@@ -153,7 +153,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 		
 		// Áã´°¿ÚËÑË÷
-		val = -cutSearch(1 - beta, new_depth);
+		val = -cutSearch(new_depth, 1 - beta);
 		Search.pos.deleteOneMove();
 
 		// ½Ø¶ÏÅĞ¶¨
