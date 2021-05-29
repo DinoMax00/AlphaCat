@@ -98,14 +98,12 @@ int quieseSearch(int alpha, int beta)
 int cutSearch(int depth, int beta, bool no_null = false)
 {
 	int16_t mv;
-	int val, mvhash, best = -MATE_VALUE, new_depth;
+	int val, mvhash, best, new_depth;
 	MoveSort move_sort;
 
 	// 叶子节点处调用静态搜索
-	if (depth <= 0)
-	{
+	if (depth <= 0) 
 		return quieseSearch(beta - 1, beta);
-	}
 
 	// 无害剪裁
 	val = harmlessPruning(beta);
@@ -113,18 +111,14 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		return val;
 
 	// 置换剪裁
-	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, no_null, mvhash);
+	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, true, mvhash);
 	if (val > -MATE_VALUE)
-	{
 		return val;
-	}
 
 	// 极限深度 直接返回评价值
 	if (Search.pos.depth >= LIMIT_DEPTH)
-	{
 		return Search.pos.getValue(beta - 1, beta);
-	}
-
+	
 	// 空着剪裁
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
 	{
@@ -147,7 +141,8 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		}
 	}
 
-	move_sort.getAllMoves(Search.pos, mvhash);
+	best = -MATE_VALUE;
+	move_sort.getAllMoves(Search.pos, mvhash, Search.killeTable[Search.pos.depth]);
 
 	while (mv = move_sort.next(Search.pos))
 	{
@@ -175,9 +170,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 
 	// 不截断措施
 	if (best == -MATE_VALUE)
-	{
 		return Search.pos.depth - MATE_VALUE;
-	}
 	else
 	{
 		recordHashTable(Search.pos.zobrist, FLAG_ALPHA, best, depth, 0);
@@ -324,7 +317,7 @@ int searchRoot(int depth)
 		else
 		{
 			//val = -pvSearch(new_depth, -best - 1, -best);
-			val = cutSearch(new_depth, -best);
+			val = -cutSearch(new_depth, -best);
 			if (val > best)
 				val = -pvSearch(new_depth, -MATE_VALUE, -best);
 		}
