@@ -141,7 +141,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 			}
 			else if(cutSearch(depth - NULL_DEPTH, beta, true) >= beta)
 			{
-				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH + 1), 0);
+				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH), 0);
 				return val;
 			}
 		}
@@ -258,8 +258,8 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 			val = -pvSearch(new_depth, -beta, -alpha, true);
 		else
 		{
-			val = -pvSearch(new_depth, -alpha - 1, -alpha);
-			// val = -cutSearch(-alpha, new_depth);
+			//val = -pvSearch(new_depth, -alpha - 1, -alpha);
+			val = -cutSearch(new_depth, -alpha);
 			if (val > alpha && val < beta)
 				val = -pvSearch(new_depth, -beta, -alpha, true);
 		}
@@ -323,7 +323,8 @@ int searchRoot(int depth)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
 		else
 		{
-			val = -pvSearch(new_depth, -best - 1, -best);
+			//val = -pvSearch(new_depth, -best - 1, -best);
+			val = cutSearch(new_depth, -best);
 			if (val > best)
 				val = -pvSearch(new_depth, -MATE_VALUE, -best);
 		}
