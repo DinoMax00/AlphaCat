@@ -55,7 +55,13 @@ constexpr uint32_t CIR_DRAW = 1;
 constexpr uint32_t CIR_LOSS = 2;
 constexpr uint32_t CIR_WIN = 3;
 
-
+// 游戏分值
+constexpr int LIMIT_DEPTH = 64;             // 搜索的极限深度
+constexpr int MATE_VALUE = 10000;           // 最高分值，即将死的分值
+constexpr int BAN_VALUE = MATE_VALUE - 100; // 长将判负分值
+constexpr int WIN_VALUE = MATE_VALUE - 200; // 搜索出胜负的分值界限，超出此值就说明已经搜索出杀棋了
+constexpr int NULL_DEPTH = 2;				// 空着剪裁的深度
+constexpr int DRAW_VALUE = 20;				// 和棋分值
 
 /* 棋子序号对应的棋子类型
  *
@@ -99,6 +105,8 @@ struct MoveStack
 class Game
 {
 private:
+	MoveStack moveStack[STACK_SIZE];		// 着法堆栈
+	int32_t move_num;		// 栈顶指针
 	void pushMove();		// 入栈
 	void popBack();			// 回退状态
 
@@ -108,14 +116,12 @@ private:
 	int moveChess(uint16_t mv);		// 一步移动
 	void deleteMoveChess(uint16_t mv, int captured);	// 撤回一步移动
 public:
-	MoveStack moveStack[STACK_SIZE];		// 着法堆栈
-	int32_t move_num;		// 栈顶指针
 	bool cur_player = RED;	// 当前游戏角色
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值
 	int16_t depth;			// 搜索深度
 	union {
-		uint32_t bitPieces;		// 16-32号棋子是否在棋盘上 ????16-47吧
+		uint32_t bitPieces;		// 16-47号棋子是否在棋盘上
 		uint16_t splited_bitPieces[2];// 0为红色方的棋子，1为黑色方的棋子
 	};
 
@@ -127,7 +133,7 @@ public:
 	uint16_t bitCol[16];	// 位列
 
 	Game();					// 默认构造函数 用于初始化
-	void changePlayer();	// 对换角色
+	inline void changePlayer();	// 对换角色
 
 	void buildFromFen(std::string fen);	// 根据fen串构建棋盘
 
@@ -150,7 +156,7 @@ public:
 	int circleVal(int nRecur = 1);
 	bool legalMove(uint16_t mv);
 
-	int drawValue();
+	inline int drawValue();
 
 	// 调试
 	void printForDebug();	// 棋盘输出到终端
@@ -160,7 +166,7 @@ public:
 
 	// 获得局面估值
 	int getValue(int vlAlpha, int vlBeta);
-	int materialValue();
+	inline int materialValue();
 	int shiShapeValue();
 	int stringHoldValue();
 	int juMobilityValue();
@@ -176,7 +182,7 @@ public:
 	void deleteNullMove();
 
 	// 和棋判断
-	bool isDraw();
+	inline bool isDraw();
 };
 
 

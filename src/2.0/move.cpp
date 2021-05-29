@@ -13,6 +13,8 @@ void MoveSort::updHistoryVal()
 {
 	for (int i = this->idx; i < this->num; i++)
 	{
+		if (this->moves[i].step == this->killer_1 || this->moves[i].step == this->killer_2)
+			std::swap(this->moves[i], this->moves[--this->num]);
 		this->moves[i].value = nHistory[this->moves[i].step];
 	}
 }
@@ -32,7 +34,10 @@ void MoveSort::getQuiescAll(Game& game)
 {
 	this->idx = 0;
 	this->num = game.genAllMoves(this->moves);
-	this->updHistoryVal();
+	for (int i = this->idx; i < this->num; i++)
+	{
+		this->moves[i].value = nHistory[this->moves[i].step];
+	}
 	this->sort();
 }
 

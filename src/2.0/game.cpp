@@ -87,7 +87,7 @@ void Game::putChess(int32_t sq, int32_t pc, bool del)
 	zobrist_mirror ^= ZobrTable[pt][sq + 14 - 2 * (sq % 16)];
 }
 
-void Game::changePlayer()
+inline void Game::changePlayer()
 {
 	this->cur_player = !this->cur_player;
 	zobrist ^= ZobrPlayer;
@@ -417,15 +417,15 @@ int Game::detectCircle(int recur)
 	return 0;
 }
 
-int Game::drawValue()
+inline int Game::drawValue()
 {
-	return (depth & 1) ? 20 : -20;
+	return (depth & 1) ? DRAW_VALUE : -DRAW_VALUE;
 }
 
 int Game::circleVal(int rep)
 {
-	int val = (rep & 2) ? depth - 10000 + 1 : 0;
-	val += (rep & 4) ? 10000 - depth - 1 : 0;
+	int val = (rep & 2) ? depth - BAN_VALUE : 0;
+	val += (rep & 4) ? BAN_VALUE - depth : 0;
 	return val ? val : drawValue();
 }
 

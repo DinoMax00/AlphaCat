@@ -253,8 +253,8 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 			val = -pvSearch(new_depth, -beta, -alpha, true);
 		else
 		{
-			//val = -pvSearch(new_depth, -alpha - 1, -alpha);
-			val = -cutSearch(new_depth, -alpha);
+			val = -pvSearch(new_depth, -alpha - 1, -alpha);
+			// val = -cutSearch(new_depth, -alpha);
 			if (val > alpha && val < beta)
 				val = -pvSearch(new_depth, -beta, -alpha, true);
 		}
@@ -370,6 +370,7 @@ void searchMain(int depth)
 	// 初始化
 	initSearch();
 	// 开局库
+	/*
 	int opbook_result = opBookSearch(Search.pos.zobrist, 0);
 	if (opbook_result != 0)
 	{
@@ -382,11 +383,12 @@ void searchMain(int depth)
 		Search.result = opbook_result;
 		return;
 	}
+	*/
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 
 	// 迭代加深
-	for (int i = 1; i <= depth; i++)
+	for (int i = 4; i <= depth; i++)
 	{
 		val = searchRoot(i);
 

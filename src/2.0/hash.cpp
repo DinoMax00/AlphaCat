@@ -16,6 +16,7 @@ void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step)
 	hash.bestmove = step;
 	hash.depthAlpha = 0;
 	hash.depthBeta = 0;
+
 	if (flag & FLAG_ALPHA)
 	{
 		hash.depthAlpha = depth;
