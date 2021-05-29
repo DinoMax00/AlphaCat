@@ -19,8 +19,6 @@ inline int harmlessPruning(int beta)
 	if (val >= beta)
 		return val;
 
-	// 和棋剪裁
-
 	// 重复剪裁
 	int val_rep = Search.pos.detectCircle();
 	if (val_rep > 0)
@@ -32,16 +30,17 @@ inline int harmlessPruning(int beta)
 // 静态搜索
 int quieseSearch(int alpha, int beta)
 {
+	Search.nodes++;
 	MoveSort move_sort;
 	int  val;
 
 	// 无害剪裁
 	val = harmlessPruning(beta);
+
 	if (val > -MATE_VALUE)
 	{
 		return val;
 	}
-	
 
 	// 极限深度返回局面估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
@@ -148,7 +147,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		}
 	}
 
-	move_sort.getAllMoves(Search.pos);
+	move_sort.getAllMoves(Search.pos, mvhash);
 
 	while (mv = move_sort.next(Search.pos))
 	{
@@ -189,9 +188,11 @@ int cutSearch(int depth, int beta, bool no_null = false)
 // 主要变例搜索
 int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 {
+	Search.nodes++;
 	int val;
 	bool flagPV = false;//主要变例搜索
 	uint16_t best_move = 0;
+
 	if (depth <= 0)
 	{
 		//对于叶子节点，进行静态搜索
@@ -205,7 +206,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 
 	// 置换剪裁
 	int hashflag = FLAG_ALPHA;
-	int vlhash, mvhash;
+	int vlhash, mvhash = 0;
 	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, true, mvhash);
 
 	if (vlhash > -MATE_VALUE) {
@@ -215,6 +216,13 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	// 极限深度 返回估值
 	if (Search.pos.depth >= LIMIT_DEPTH)
 		return Search.pos.getValue(alpha, beta);
+
+	// 限时
+	if (GetTickCount64() - Search.cur_time > Search.time_limit)
+	{
+		Search.stop = true;
+		return Search.pos.getValue(alpha, beta);
+	}
 
 	// 空着剪裁
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
@@ -234,21 +242,16 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 
 	int best = -MATE_VALUE;
 
-	//// 内部迭代加深启发
-	//if (depth > 2)
-	//{
-	//	int val = pvSearch(Search.pos, depth / 2, alpha, beta, max_deep);
-	//	if (val <= alpha)
-	//		val = pvSearch(Search.pos, depth / 2, -MATE_VALUE, beta, max_deep);
-	//}
-
+	// 着法生成
 	MoveSort move_sort;
-	move_sort.getAllMoves(Search.pos);
+	move_sort.getAllMoves(Search.pos, mvhash, Search.killeTable[Search.pos.depth]);
 	int mv, new_depth;
+
 	while (mv = move_sort.next(Search.pos))
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
+
 		// 尝试选择延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 		if (best == -MATE_VALUE)
@@ -299,8 +302,9 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 // 根节点搜索
 int searchRoot(int depth)
 {
+	Search.nodes++;
 	MoveSort move_sort;
-	move_sort.getAllMoves(Search.pos);
+	move_sort.getAllMoves(Search.pos, 0);
 	int16_t mv;
 	int new_depth, val;
 	int best = -MATE_VALUE;
@@ -310,8 +314,10 @@ int searchRoot(int depth)
 	{
 		if (!Search.pos.takeOneMove(mv))
 			continue;
+
 		// 尝试性延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
+
 		// 主要变例搜索
 		if (best == -MATE_VALUE)
 			val = -pvSearch(new_depth, -MATE_VALUE, MATE_VALUE);
@@ -342,14 +348,18 @@ int searchRoot(int depth)
 			Search.stop = true;
 		}
 	}
+
+	updBest(Search.result, depth, Search.killeTable[Search.pos.depth]);
+
 	return best;
 }
 
 void initSearch()
 {
+	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 2000;
+	Search.time_limit = 2500;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -358,9 +368,8 @@ void initSearch()
 
 void searchMain(int depth)
 {
-	int val, val_last;
+	int val;
 	int16_t best_move = -1;
-	uint64_t time_temp;
 
 	// 初始化
 	initSearch();
@@ -372,13 +381,15 @@ void searchMain(int depth)
 	// 迭代加深
 	for (int i = 1; i <= depth; i++)
 	{
-		std::cout << i << std::endl;
 		val = searchRoot(i);
 
 		if (Search.stop)
 		{
+			i--;
 			std::cout << "搜索层数: " << i << std::endl;
+			std::cout << "搜索节点数量" << Search.nodes << std::endl;
 			Log().info(i);
+			Log().info(Search.nodes);
 			break;
 		}
 
@@ -390,6 +401,7 @@ void searchMain(int depth)
 			break;
 		}
 	}	
+	// std::cout << "搜索节点数量" << Search.nodes << std::endl;
 	Search.result = best_move;
 	return;
 }

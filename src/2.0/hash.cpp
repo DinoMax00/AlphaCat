@@ -35,6 +35,7 @@ int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, bool no_null
 	hash = HashTable[zobr & HashSize];
 	if (hash.zobrist != zobr)
 		return -MATE_VALUE;
+	step = hash.bestmove;
 	if (hash.depthBeta > 0)
 	{
 		int value = hash.valueBeta;

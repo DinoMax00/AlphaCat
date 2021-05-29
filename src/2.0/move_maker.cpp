@@ -30,7 +30,7 @@ bool Game::legalMove(uint16_t mv)
 			return inHome(dst) & shiSpan(src, dst);
 		case XIANG_FROM:
 		case XIANG_TO:
-			return sameSide(src, dst) & xiangSpan(src, dst) & !this->board[src + dst >> 1];
+			return sameSide(src, dst) & xiangSpan(src, dst) & !this->board[(src + dst) >> 1];
 		case MA_FROM:
 		case MA_TO:
 			leg = src + preMaLegTab[dst - src + 256];
@@ -98,16 +98,19 @@ bool Game::isProtected(int tag, int src, int except)
 
 	if ((src & 0x80) != (tag - 16) << 4)	//棋子位于本半边
 	{
-		//帅的保护
-		dst = this->pieces[tag + JIANG_FROM];
-		if (dst && dst != except && LegalMoveTab[dst - src + 256] == 1)
-			return true;
-		//士的保护
-		for (int i = SHI_FROM; i <= SHI_TO; i++)
+		if (inHome(src))
 		{
-			dst = this->pieces[tag + i];
-			if (dst && dst != except && LegalMoveTab[dst - src + 256] == 2)
+			//帅的保护
+			dst = this->pieces[tag + JIANG_FROM];
+			if (dst && dst != except && LegalMoveTab[dst - src + 256] == 1)
 				return true;
+			//士的保护
+			for (int i = SHI_FROM; i <= SHI_TO; i++)
+			{
+				dst = this->pieces[tag + i];
+				if (dst && dst != except && LegalMoveTab[dst - src + 256] == 2)
+					return true;
+			}
 		}
 		//相的保护
 		for (int i = XIANG_FROM; i <= XIANG_TO; i++)

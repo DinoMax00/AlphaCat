@@ -1,7 +1,10 @@
 #include <algorithm>
+#include <iostream>
+
 #include "evaluate.h"
 #include "game.h"
 #include "pregen.h"
+
 /* 局面预评价就是初始化局面预评价数据(PreEval)的过程。
  * 局面预评价主要分以下两个方面：
  * 1. 判断局势处于开中局还是残局阶段；
@@ -130,16 +133,11 @@ void Game::evaBoard() {
 
 // 特殊棋型的评价
 int Game::shiShapeValue() {
-    // SlideMaskStruct *rowMaskPtr(int x, int y) const {
-    //   return preGen.rowMaskTab[x - RANK_TOP] + bitRow[y];
-    // }//rank
-    // SlideMaskStruct *colMaskPtr(int x, int y) const {
-    //     return preGen.colMaskTab[y - RANK_TOP] + bitCol[x];
-    // }//file
     int paoPos, juPos, sq, shiPos1, shiPos2, x, y, shiShape;
     int redPenal, blackPenal;
     SlideMaskStruct *slideMask;
     redPenal = blackPenal = 0;
+
     if ((this->splited_bitPieces[0] & SHI_BITPIECE) == SHI_BITPIECE) {
         if (this->pieces[sideTag(RED) + JIANG_FROM] == 0xc7) {
             shiPos1 = this->pieces[sideTag(RED) + SHI_FROM];
@@ -171,7 +169,6 @@ int Game::shiShapeValue() {
                                 // 计算空头炮的威胁
                                 redPenal += exEval.hollowThreatValue[idxRowFlip(y)];
                             }
-                            // 等dino加
                             else if ((slideMask->cannon_cap & RED_JIANG_BITFILE) != 0 &&
                                      (this->board[0xb7] == 21 || this->board[0xb7] == 22)) {
                                 // 计算炮镇窝心马的威胁
@@ -189,11 +186,10 @@ int Game::shiShapeValue() {
                         x = getIdxCol(sq);
                         y = getIdxRow(sq);
                         if (x == COL_CENTER) {
-                            // 等dino加
                             if (((preGen.colMaskTab[y - ROW_TOP] + bitCol[x])->cannon_cap & RED_JIANG_BITFILE) != 0) {
                                 // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
                                 redPenal += (exEval.centralThreatValue[idxRowFlip(y)] >> 2) +
-                                            (this->isProtected(1, shiShape == SHAPE_LEFT ? 0xc8 : 0xc6) ? 20 : 0);
+                                            (this->isProtected(sideTag(BLACK), shiShape == SHAPE_LEFT ? 0xc8 : 0xc6) ? 20 : 0);
                                 // 如果车在底线保护帅(将)，则给予更大的罚分
                                 for (juPos = sideTag(RED) + JU_FROM; juPos <= sideTag(RED) + JU_TO; juPos++) {
                                     sq = this->pieces[juPos];
@@ -262,8 +258,6 @@ int Game::shiShapeValue() {
                                 // 计算空头炮的威胁
                                 blackPenal += exEval.hollowThreatValue[y];
                             }
-
-                            // 等dino加
                             else if ((slideMask->cannon_cap & BLACK_JIANG_BITFILE) != 0 &&
                                      (this->board[0x47] == 37 || this->board[0x47] == 38)) {
                                 // 计算炮镇窝心马的威胁
@@ -284,7 +278,7 @@ int Game::shiShapeValue() {
                             if (((preGen.colMaskTab[y - ROW_TOP] + bitCol[x])->cannon_cap & BLACK_JIANG_BITFILE) != 0) {
                                 // 计算一般中炮的威胁，帅(将)门被对方控制的还有额外罚分
                                 blackPenal += (exEval.centralThreatValue[y] >> 2) +
-                                              (this->isProtected(0, shiShape == SHAPE_LEFT ? 0x38 : 0x36) ? 20 : 0);
+                                              (this->isProtected(sideTag(RED), shiShape == SHAPE_LEFT ? 0x38 : 0x36) ? 20 : 0);
                                 // 如果车在底线保护帅(将)，则给予更大的罚分！
                                 for (juPos = sideTag(BLACK) + JU_FROM; juPos <= sideTag(BLACK) + JU_TO; juPos++) {
                                     sq = this->pieces[juPos];
@@ -432,7 +426,8 @@ int Game::stringHoldValue() {
                                 }
                             }
                         }
-                    } else if (y == getIdxRow(dstSq)) {
+                    } 
+                    else if (y == getIdxRow(dstSq)) {
                         slideMove = (preGen.rowMoveTab[x - ROW_TOP] + bitRow[y]);
                         strJudge = (srcSq < dstSq ? 0 : 1);
                         if (dstSq == slideMove->cannonCap[strJudge] + (y<<4)) {
@@ -547,15 +542,19 @@ int Game::maTrapValue() {
     return sideValue(this->cur_player, maTrapValue[BLACK] - maTrapValue[RED]);
 }
 
-int Game::getValue(int vlAlpha, int vlBeta) {
+int Game::getValue(int vlAlpha, int vlBeta) 
+{
     int value;
     // 偷懒的局面评价函数分以下几个层次：
 
     // 1. 四级偷懒评价(彻底偷懒评价)，只包括子力平衡；
     value = this->materialValue();
-    if (value + EVAL_MARGIN1 <= vlAlpha) {
+    if (value + EVAL_MARGIN1 <= vlAlpha) 
+    {
         return value + EVAL_MARGIN1;
-    } else if (value - EVAL_MARGIN1 >= vlBeta) {
+    } 
+    else if (value - EVAL_MARGIN1 >= vlBeta) 
+    {
         return value - EVAL_MARGIN1;
     }
 
@@ -585,9 +584,8 @@ int Game::getValue(int vlAlpha, int vlBeta) {
 
     // 5. 零级偷懒评价(完全评价)，包括马的阻碍。
     return value + this->maTrapValue();
-    // return value;
 }
 
 int Game::materialValue() {
-    return cur_player == RED ? red_val - black_val : black_val - red_val;
+    return cur_player == RED ? red_val - black_val + 3 : black_val - red_val + 3;
 }

@@ -37,7 +37,7 @@ inline void delTable()
 
 inline void clearHashTable()
 {
-	memset(HashTable, 0, sizeof(HashTable));
+	memset(HashTable, 0, sizeof(HashItem) * (HashSize + 1));
 }
 
 #endif

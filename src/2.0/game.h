@@ -99,8 +99,8 @@ struct MoveStack
 class Game
 {
 private:
-	MoveStack moveStack[STACK_SIZE];		// 着法堆栈
-	int32_t move_num;		// 栈顶指针
+	
+	
 	void pushMove();		// 入栈
 	void popBack();			// 回退状态
 
@@ -110,6 +110,8 @@ private:
 	int moveChess(uint16_t mv);		// 一步移动
 	void deleteMoveChess(uint16_t mv, int captured);	// 撤回一步移动
 public:
+	MoveStack moveStack[STACK_SIZE];		// 着法堆栈
+	int32_t move_num;		// 栈顶指针
 	bool cur_player = RED;	// 当前游戏角色
 	int32_t	red_val;		// 红棋估值
 	int32_t black_val;		// 黑棋估值

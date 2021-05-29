@@ -10,6 +10,8 @@
 #include "game.h"
 
 constexpr int MAX_MOVE_NUM = 128;
+constexpr int TAKEN = -123456789;
+constexpr int PHASE_HASH = 0;
 constexpr int PHASE_GEN_CAP = 1;
 constexpr int PHASE_GOOD_CAP = 2;
 constexpr int PHASE_KILLER_1 = 3;
@@ -22,13 +24,14 @@ class MoveSort
 private:
 	int idx;
 	int num;	// 着法数量
+	uint16_t mvHash;
 	Move moves[MAX_MOVE_NUM];	// 着法数组
-	uint16_t	killer_1, killer_2;	// 杀手着法
+	uint16_t	killer_1 = 0, killer_2 = 0;	// 杀手着法
 	void sort();	// 排序
 public:
-	int phase;	// 着法生成阶段
+	int phase = 1;	// 着法生成阶段
 
-	void getAllMoves(Game& game, uint16_t* killerTable = NULL);	// 产生所有着法
+	void getAllMoves(Game& game, uint16_t mvHash, uint16_t* killerTable = NULL);	// 产生所有着法
 	void getQuiescAll(Game& game);
 	void getCapMoves(Game& game);	// 产生所有吃子着法
 	void updHistoryVal(); // 历史表启发
