@@ -11,7 +11,6 @@
 
 #include "search.h"
 #include "ucci.h"
-#include "log.h"
 #include "game.h"
 #include "move.h"
 
@@ -45,7 +44,6 @@ void UcciEngine::getCommand()
 {
 	std::getline(std::cin, commandStr);
 	if (commandStr.size()) split();
-	Log().info("获得命令->" + commandStr);
 
 }
 
@@ -105,7 +103,6 @@ void UcciEngine::run()
 		if (commandVec[0] == "isready")
 		{
 			std::cout << "readyok" << std::endl;
-			Log().info("引擎响应->readyok");
 		}
 		// 新的对局
 		else if (commandVec[0] == "setoption")
@@ -159,18 +156,15 @@ void UcciEngine::run()
 			std::cout << GetTickCount64() << std::endl;
 			if (Search.result == -1) {
 				std::cout << "nobestmove " << std::endl;
-				Log().info("引擎响应->nobestmove");
 			}
 			else {
 				std::cout << "bestmove " << moveToString(Search.result) << std::endl;
-				Log().info("引擎响应->bestmove " + moveToString(Search.result));
 			}
 		}
 		// 拜拜
 		else if (commandVec[0] == "quit")
 		{
 			std::cout << "bye" << std::endl;
-			Log().info("引擎响应->bye");
 			return;
 		}
 		clear();

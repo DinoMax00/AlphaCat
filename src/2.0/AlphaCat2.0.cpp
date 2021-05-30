@@ -11,7 +11,6 @@
 #include <ctime>
 #include <bitset>
 
-#include "log.h"
 #include "ucci.h"
 #include "game.h"
 #include "pregen.h"
@@ -20,7 +19,6 @@
 
 int main(int argc, char* argv[])
 {
-	Log().clear();
 	preGenInit();
 	newTable();
 

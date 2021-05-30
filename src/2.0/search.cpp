@@ -5,7 +5,6 @@
 #include "move.h"
 #include "hash.h"
 #include "search.h"
-#include "log.h"
 
 SearchStruct Search;
 
@@ -405,8 +404,6 @@ void searchMain(int depth)
 			i--;
 			std::cout << "搜索层数: " << i << std::endl;
 			std::cout << "搜索节点数量" << Search.nodes << std::endl;
-			Log().info(i);
-			Log().info(Search.nodes);
 			break;
 		}
 		// std::cout << moveToString(Search.result) << std::endl;
