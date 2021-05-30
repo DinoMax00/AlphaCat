@@ -404,7 +404,7 @@ int Game::detectCircle(int recur)
 	{
 		if (side == this->cur_player)
 		{
-			check = check && (stackpos->move.ChkChs >= 0);
+			check = check && (stackpos->move.ChkChs > 0);
 			if (stackpos->zobrist == this->zobrist)
 			{
 				recur--;
@@ -416,7 +416,7 @@ int Game::detectCircle(int recur)
 		}
 		else
 		{
-			oppcheck = oppcheck && (stackpos->move.ChkChs >= 0);
+			oppcheck = oppcheck && (stackpos->move.ChkChs > 0);
 		}
 
 		side = !side;

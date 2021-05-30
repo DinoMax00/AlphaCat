@@ -83,7 +83,7 @@ int quieseSearch(int alpha, int beta)
 	{
 		if (Search.pos.takeOneMove(mv))
 		{
-			int val = -quieseSearch(-beta, -alpha);
+			val = -quieseSearch(-beta, -alpha);
 			Search.pos.deleteOneMove();
 			if (val > best)
 			{
@@ -210,7 +210,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	// 置换剪裁
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash = 0;
-	vlhash = getHashTable(Search.pos, alpha, beta, depth, true, mvhash);
+	vlhash = getHashTable(Search.pos, alpha, beta, depth, true, mvhash); 
 
 	if (vlhash > -MATE_VALUE) {
 		return vlhash;
@@ -258,13 +258,13 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 		// 尝试选择延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
 		if (best == -MATE_VALUE)
-			val = -pvSearch(new_depth, -beta, -alpha, true);
+			val = -pvSearch(new_depth, -beta, -alpha);
 		else
 		{
 			val = -pvSearch(new_depth, -alpha - 1, -alpha);
 			// val = -cutSearch(new_depth, -alpha);
 			if (val > alpha && val < beta)
-				val = -pvSearch(new_depth, -beta, -alpha, true);
+				val = -pvSearch(new_depth, -beta, -alpha);
 		}
 
 		Search.pos.deleteOneMove();
@@ -294,7 +294,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	{
 		// 更新置换表
 		recordHashTable(Search.pos.zobrist, hashflag, best, depth, mv);
-		if (best_move && move_sort.phase != PHASE_GOOD_CAP)
+		if (best_move)
 		{
 			updBest(best_move, depth, Search.killeTable[Search.pos.depth]);
 		}
@@ -363,7 +363,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 2500;
+	Search.time_limit = 3000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -378,6 +378,7 @@ void searchMain(int depth)
 	// 初始化
 	initSearch();
 	// 开局库
+	/*
 	int opbook_result = opBookSearch(Search.pos.zobrist, 0);
 	if (opbook_result != 0)
 	{
@@ -390,11 +391,12 @@ void searchMain(int depth)
 		Search.result = opbook_result;
 		return;
 	}
+	*/
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 
 	// 迭代加深
-	for (int i = 4; i <= depth; i++)
+	for (int i = 1; i <= depth; i++)
 	{
 		val = searchRoot(i);
 
