@@ -240,7 +240,7 @@ void Game::deleteMoveChess(uint16_t mv, int captured)
 void Game::pushMove()
 {
 	MoveStack* p = this->moveStack + this->move_num;
-	p->zobrist = zobrist;
+	p->zobrist = this->zobrist;
 	p->red_val = this->red_val;
 	p->black_val = this->black_val;
 }

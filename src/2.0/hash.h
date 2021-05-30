@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "game.h"
 //÷√ªª±Ì±Í÷æ
 const int FLAG_BETA = 1;
 const int FLAG_ALPHA = 2;
@@ -12,14 +13,13 @@ struct HashItem
 {
 	uint64_t zobrist;
 	uint16_t bestmove;
-	int8_t depthAlpha;
-	int8_t depthBeta;
-	int16_t valueAlpha;
-	int16_t valueBeta;
+	int16_t flag;
+	int16_t depth;
+	int16_t value;
 };
 
 void recordHashTable(uint64_t zobr, int flag, int value, int depth, int step);
-int getHashTable(uint64_t zobr, int vlAlpha, int vlBeta, int depth, bool no_null, int& step);
+int getHashTable(Game& pos, int vlAlpha, int vlBeta, int depth, bool no_null, int& step);
 
 
 extern HashItem* HashTable;

@@ -20,7 +20,7 @@ inline int harmlessPruning(int beta)
 	val = Search.pos.depth - MATE_VALUE;
 	if (val >= beta)
 		return val;
-	
+
 	// 和棋剪裁
 	if (Search.pos.isDraw())
 		return 0;
@@ -31,7 +31,6 @@ inline int harmlessPruning(int beta)
 #else
 	int val_rep = Search.pos.detectCircle();
 #endif // CHASE_CHECK
-
 	if (val_rep > 0)
 		return Search.pos.circleVal(val_rep);
 
@@ -113,7 +112,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 	MoveSort move_sort;
 
 	// 叶子节点处调用静态搜索
-	if (depth <= 0) 
+	if (depth <= 0)
 		return quieseSearch(beta - 1, beta);
 
 	// 无害剪裁
@@ -122,14 +121,14 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		return val;
 
 	// 置换剪裁
-	val = getHashTable(Search.pos.zobrist, beta - 1, beta, depth, true, mvhash);
+	val = getHashTable(Search.pos, beta - 1, beta, depth, true, mvhash);
 	if (val > -MATE_VALUE)
 		return val;
 
 	// 极限深度 直接返回评价值
 	if (Search.pos.depth >= LIMIT_DEPTH)
 		return Search.pos.getValue(beta - 1, beta);
-	
+
 	// 空着剪裁
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
 	{
@@ -144,7 +143,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH + 1), 0);
 				return val;
 			}
-			else if(cutSearch(depth - NULL_DEPTH, beta, true) >= beta)
+			else if (cutSearch(depth - NULL_DEPTH, beta, true) >= beta)
 			{
 				recordHashTable(Search.pos.zobrist, FLAG_BETA, val, max(depth, NULL_DEPTH), 0);
 				return val;
@@ -162,7 +161,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 
 		// 尝试选择延伸
 		new_depth = Search.pos.lastMove().ChkChs > 0 ? depth : depth - 1;
-		
+
 		// 零窗口搜索
 		val = -cutSearch(new_depth, 1 - beta);
 		Search.pos.deleteOneMove();
@@ -187,7 +186,7 @@ int cutSearch(int depth, int beta, bool no_null = false)
 		recordHashTable(Search.pos.zobrist, FLAG_ALPHA, best, depth, 0);
 		return best;
 	}
-} 
+}
 
 // 主要变例搜索
 int pvSearch(int depth, int alpha, int beta, bool no_null = false)
@@ -211,7 +210,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	// 置换剪裁
 	int hashflag = FLAG_ALPHA;
 	int vlhash, mvhash = 0;
-	vlhash = getHashTable(Search.pos.zobrist, alpha, beta, depth, true, mvhash);
+	vlhash = getHashTable(Search.pos, alpha, beta, depth, true, mvhash);
 
 	if (vlhash > -MATE_VALUE) {
 		return vlhash;
@@ -232,7 +231,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	if (!no_null && Search.pos.lastMove().ChkChs <= 0 && Search.pos.nullOk())
 	{
 		Search.pos.nullMove();
-		val = -pvSearch(depth - NULL_DEPTH - 1, - beta, -beta + 1, true);
+		val = -pvSearch(depth - NULL_DEPTH - 1, -beta, -beta + 1, true);
 		Search.pos.deleteNullMove();
 
 		if (val >= beta)
@@ -364,7 +363,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 5000;
+	Search.time_limit = 2500;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -416,7 +415,7 @@ void searchMain(int depth)
 		{
 			break;
 		}
-	}	
+	}
 	// std::cout << "搜索节点数量" << Search.nodes << std::endl;
 	Search.result = best_move;
 	return;

@@ -13,14 +13,11 @@ uint16_t moveMirror(uint16_t move)
 }
 uint16_t opBookSearch(uint64_t obj, int mirror)
 {
-	//std::ofstream temp;
-	//temp.open("./oplog.txt", std::ios::out| std::ios::app);
 	int bestmove = 0;
 	int16_t score = -100;
 	int length = 156300;
 	int left = 0, right = length - 1, mid = (left + right) / 2;
 	int i = 0;
-	//temp << obj << std::endl;
 	while (left <= right)
 	{
 		uint64_t now = opbook_zobrist[mid];
@@ -49,6 +46,8 @@ uint16_t opBookSearch(uint64_t obj, int mirror)
 		}
 		mid++;
 	}
+	if (score < 0)
+		return 0;
 	int from = bestmove % 256;
 	int to = bestmove / 256;
 	bestmove = from * 256 + to;
