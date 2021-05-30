@@ -671,3 +671,207 @@ int Game::detectCheck(bool simple)
 	}
 	return record;
 }
+
+int Game::chasedBy(uint16_t mv)
+{
+	int x, y;
+	int src, dst, tag;
+	int pcMoved, pcCaptured;
+	int temp = (!cur_player) << 7;
+	uint8_t* p, * p_leg;
+	SlideMoveStruct* p_bit;
+	// 判断时 已经执行了这步移动
+	src = getDst(mv);
+	pcMoved = this->board[src];
+	tag = sideTag(this->cur_player);
+
+	switch (pcMoved - sideTag(!this->cur_player))
+	{
+		case MA_FROM:
+		case MA_TO:
+			p = preGen.preMaMoves[src];
+			p_leg = preGen.preMaLegs[src];
+			dst = *p;
+			while (dst)
+			{
+				if (this->board[*p_leg] == 0)
+				{
+					pcCaptured = this->board[dst];
+					if ((pcCaptured & tag) != 0)
+					{
+						pcCaptured -= tag;
+						if (pcCaptured <= JU_TO)
+						{
+							if (pcCaptured >= JU_FROM)
+								return pcCaptured;
+						}
+						else
+						{
+							if (pcCaptured <= PAO_TO)
+							{
+								// 马捉炮 要判断炮是否受到保护
+								if (!isProtected(tag, dst))
+									return pcCaptured;
+							}
+							else
+								// 马捉兵 要判断兵是否过河且受到保护
+								if (((dst & 0x80) == (temp)) && !isProtected(tag, dst))
+									return pcCaptured;
+						}
+					}
+				}
+				p++;
+				p_leg++;
+				dst = *p;
+			}
+			break;
+		case JU_FROM:
+		case JU_TO:
+			x = getIdxCol(src);
+			y = getIdxRow(src);
+			if (((getSrc(mv) ^ src) & 0xf) == 0)
+			{
+				p_bit = preGen.rowMoveTab[x - BOARD_LEFT] + this->bitRow[y];
+				for (int i = 0; i < 2; i++)
+				{
+					dst = p_bit->juCap[i] + (y << 4);
+					if (dst != src)
+					{
+						pcCaptured = this->board[dst];
+						if (pcCaptured & tag)
+						{
+							pcCaptured -= tag;
+							if (pcCaptured <= JU_TO)
+							{
+								if (pcCaptured >= MA_FROM && pcCaptured <= MA_TO && !isProtected(tag, dst))
+									return pcCaptured;
+							}
+							else
+							{
+								if (pcCaptured <= PAO_TO)
+								{
+									if (!isProtected(tag, dst))
+										return pcCaptured;
+								}
+								else if (((dst & 0x80) == (temp)) && !isProtected(tag, dst))
+									return pcCaptured;
+
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				p_bit = preGen.colMoveTab[y - BOARD_TOP] + this->bitCol[x];
+				for (int i = 0; i < 2; i++)
+				{
+					dst = p_bit->juCap[i] + x;
+					if (dst != src)
+					{
+						pcCaptured = this->board[dst];
+						if (pcCaptured & tag)
+						{
+							pcCaptured -= tag;
+							if (pcCaptured <= JU_TO)
+							{
+								if (pcCaptured >= MA_FROM && pcCaptured <= MA_TO && !isProtected(tag, dst))
+									return pcCaptured;
+							}
+							else
+							{
+								if (pcCaptured <= PAO_TO)
+								{
+									if (!isProtected(tag, dst))
+										return pcCaptured;
+								}
+								else if (((dst & 0x80) == (temp)) && !isProtected(tag, dst))
+									return pcCaptured;
+
+							}
+						}
+					}
+				}
+			}
+			break;
+		case PAO_FROM:
+		case PAO_TO:
+			x = getIdxCol(src);
+			y = getIdxRow(src);
+			if (((getSrc(mv) ^ src) & 0xf) == 0)
+			{
+				p_bit = preGen.rowMoveTab[x - BOARD_LEFT] + this->bitRow[y];
+				for (int i = 0; i < 2; i++)
+				{
+					dst = p_bit->paoCap[i] + (y << 4);
+					if (dst != src)
+					{
+						pcCaptured = this->board[dst];
+						if (pcCaptured & tag)
+						{
+							pcCaptured -= tag;
+							if (pcCaptured <= JU_TO)
+							{
+								if (pcCaptured >= MA_FROM)
+								{
+									if (pcCaptured <= MA_TO)
+									{
+										if (!isProtected(tag, dst))
+											return pcCaptured;
+									}
+									else
+										return pcCaptured;
+								}
+							}
+							else
+							{
+								if (pcCaptured >= BING_FROM && ((dst & 0x80) == (temp)) && !isProtected(tag, dst))
+									return pcCaptured;
+
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				p_bit = preGen.colMoveTab[y - BOARD_TOP] + this->bitCol[x];
+				for (int i = 0; i < 2; i++)
+				{
+					dst = p_bit->paoCap[i] + x;
+					if (dst != src)
+					{
+						pcCaptured = this->board[dst];
+						if (pcCaptured & tag)
+						{
+							pcCaptured -= tag;
+							if (pcCaptured <= JU_TO)
+							{
+								if (pcCaptured >= MA_FROM)
+								{
+									if (pcCaptured <= MA_TO)
+									{
+										if (!isProtected(tag, dst))
+											return pcCaptured;
+									}
+									else
+										return pcCaptured;
+								}
+							}
+							else
+							{
+								if (pcCaptured >= BING_FROM && ((dst & 0x80) == (temp)) && !isProtected(tag, dst))
+									return pcCaptured;
+
+							}
+						}
+					}
+				}
+			}
+			break;
+		default:
+			break;
+	}
+
+	return 0;
+}

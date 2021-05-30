@@ -287,7 +287,13 @@ bool Game::takeOneMove(uint16_t mv)
 	}
 	else
 	{
-		p->move.CptDrw = 0;
+		if (p->move.ChkChs == 0)
+			p->move.ChkChs = -chasedBy(mv);
+		if (this->lastMove().CptDrw == -100)
+			p->move.CptDrw = -100;
+		else
+			p->move.CptDrw = min(0, this->lastMove().CptDrw) - (p->move.ChkChs > 0 || this->lastMove().ChkChs > 0 ? 0 : 1);
+		//p->move.CptDrw = 0;
 	}
 
 	this->move_num++;
@@ -378,7 +384,6 @@ void Game::printForDebug()
 	std::cout << "   a  b  c  d  e  f  g  h  i   \n";
 }
 
-
 Move Game::lastMove()
 {
 	return this->moveStack[move_num - 1].move;
@@ -392,11 +397,11 @@ int Game::detectCircle(int recur)
 	check = oppcheck = true;
 
 	MoveStack* stackpos = moveStack + move_num - 1;
-	while (stackpos->move.step != 0 && stackpos->move.CptDrw == 0)
+	while (stackpos->move.step != 0 && stackpos->move.CptDrw <= 0)
 	{
 		if (side == this->cur_player)
 		{
-			check = check && stackpos->move.ChkChs;
+			check = check && (stackpos->move.ChkChs >= 0);
 			if (stackpos->zobrist == this->zobrist)
 			{
 				recur--;
@@ -408,7 +413,48 @@ int Game::detectCircle(int recur)
 		}
 		else
 		{
-			oppcheck = oppcheck && stackpos->move.ChkChs;
+			oppcheck = oppcheck && (stackpos->move.ChkChs >= 0);
+		}
+
+		side = !side;
+		stackpos--;
+	}
+	return 0;
+}
+
+int Game::detectCircle2(int recur)
+{
+	bool side = !this->cur_player;
+	int32_t check = 0x1ffff; // 0x10000表示长将 0x00000~0x0ffff表示长捉
+	int32_t opp_check = 0x1ffff;
+	int32_t chk;
+
+	MoveStack* stackpos = moveStack + move_num - 1;
+	while (stackpos->move.step != 0 && stackpos->move.CptDrw <= 0)
+	{
+		chk = stackpos->move.ChkChs;
+		if (side == this->cur_player)
+		{
+			if (chk == 0) check = 0;
+			else if (chk > 0) check &= 0x10000;
+			else check &= (1 << (-chk));
+
+			if (stackpos->zobrist == this->zobrist)
+			{
+				recur--;
+				if (recur == 0)
+				{
+					check = (check & 0xffff) ? 0xffff : check;
+					opp_check = (opp_check & 0xffff) ? 0xffff : opp_check;
+					return (check > opp_check) ? 3 : ((check < opp_check) ? 5 : (check ? 7 : 1));
+				}
+			}
+		}
+		else
+		{
+			if (chk == 0) opp_check = 0;
+			else if (chk > 0) opp_check &= 0x10000;
+			else opp_check &= (1 << (-chk));
 		}
 
 		side = !side;
@@ -458,6 +504,6 @@ void Game::deleteNullMove()
 
 bool Game::isDraw()
 {
-	return ((bitPieces & 4292935648) == 0) || -lastMove().CptDrw >= 100 || move_num >= STACK_SIZE;
+	return ((bitPieces & ATTACK_PIECES) == 0) || -lastMove().CptDrw >= 100 || move_num >= STACK_SIZE;
 }
 

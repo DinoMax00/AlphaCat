@@ -37,6 +37,7 @@ constexpr uint8_t PAO_FROM = 9;
 constexpr uint8_t PAO_TO = 10;
 constexpr uint8_t BING_FROM = 11;
 constexpr uint8_t BING_TO = 15;
+constexpr uint32_t ATTACK_PIECES = 4292935648i64;
 
 // 各种棋子的屏蔽位
 constexpr uint32_t JIANG_BITPIECE = 1 << JIANG_FROM;
@@ -153,8 +154,10 @@ public:
 	bool isProtected(int tag, int src, int except = 0);
 	int detectCheck(bool simple = false);
 	int detectCircle(int recur = 1);
+	int detectCircle2(int recur = 1);
 	int circleVal(int nRecur = 1);
 	bool legalMove(uint16_t mv);
+	int chasedBy(uint16_t mv);
 
 	inline int drawValue();
 
@@ -182,7 +185,7 @@ public:
 	void deleteNullMove();
 
 	// 和棋判断
-	inline bool isDraw();
+	bool isDraw();
 };
 
 

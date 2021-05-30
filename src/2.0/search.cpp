@@ -20,9 +20,13 @@ inline int harmlessPruning(int beta)
 	val = Search.pos.depth - MATE_VALUE;
 	if (val >= beta)
 		return val;
+	
+	// 和棋剪裁
+	if (Search.pos.isDraw())
+		return 0;
 
 	// 重复剪裁
-	int val_rep = Search.pos.detectCircle();
+	int val_rep = Search.pos.detectCircle2();
 	if (val_rep > 0)
 		return Search.pos.circleVal(val_rep);
 
@@ -370,7 +374,6 @@ void searchMain(int depth)
 	// 初始化
 	initSearch();
 	// 开局库
-	/*
 	int opbook_result = opBookSearch(Search.pos.zobrist, 0);
 	if (opbook_result != 0)
 	{
@@ -383,7 +386,6 @@ void searchMain(int depth)
 		Search.result = opbook_result;
 		return;
 	}
-	*/
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 
