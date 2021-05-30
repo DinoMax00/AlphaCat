@@ -37,7 +37,14 @@ inline void delTable()
 
 inline void clearHashTable()
 {
-	memset(HashTable, 0, sizeof(HashItem) * (HashSize + 1));
+	for (int i = 0; i <= HashSize; i++)
+	{
+		HashTable[i].zobrist = 0;
+		HashTable[i].bestmove = 0;
+		HashTable[i].flag = 0;
+		HashTable[i].depth = 0;
+		HashTable[i].value = 0;
+	}
 }
 
 #endif

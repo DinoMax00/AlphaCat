@@ -362,7 +362,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 3000;
+	Search.time_limit = 1000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -401,9 +401,6 @@ void searchMain(int depth)
 
 		if (Search.stop)
 		{
-			i--;
-			std::cout << "搜索层数: " << i << std::endl;
-			std::cout << "搜索节点数量" << Search.nodes << std::endl;
 			break;
 		}
 		// std::cout << moveToString(Search.result) << std::endl;

@@ -13,7 +13,7 @@ struct SearchStruct {
 
 	bool stop;					// 是否超时
 	uint64_t cur_time = 0;			// 计时器	
-	uint64_t time_limit = 2000;		// 限时
+	uint64_t time_limit = 50000;		// 限时
 
 	uint16_t killeTable[LIMIT_DEPTH][2] = {0}; // 杀手着法
 

@@ -317,7 +317,7 @@ void Game::deleteOneMove()
 }
 
 void Game::printForDebug()
-{
+{/*
 	std::cout << "_______________________________\n";
 	// 打印棋盘
 	int row = 9;
@@ -385,6 +385,7 @@ void Game::printForDebug()
 	// 
 	std::cout << "-------------------------------\n";
 	std::cout << "   a  b  c  d  e  f  g  h  i   \n";
+	*/
 }
 
 Move Game::lastMove()
