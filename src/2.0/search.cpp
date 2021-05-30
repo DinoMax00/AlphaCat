@@ -26,7 +26,12 @@ inline int harmlessPruning(int beta)
 		return 0;
 
 	// ÖØ¸´¼ô²Ã
+#ifdef CHASE_CHECK
 	int val_rep = Search.pos.detectCircle2();
+#else
+	int val_rep = Search.pos.detectCircle();
+#endif // CHASE_CHECK
+
 	if (val_rep > 0)
 		return Search.pos.circleVal(val_rep);
 
@@ -359,7 +364,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 2500;
+	Search.time_limit = 5000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
