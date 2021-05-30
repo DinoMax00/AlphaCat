@@ -54,7 +54,7 @@ extern int nHistory[65536];
 // 清空历史表
 inline void clearHistory()
 {
-	memset(nHistory, 0, sizeof(nHistory)); 
+	for (int i = 0; i < 65536; i++) nHistory[i] = 0;
 }
 
 // 更新历史表与杀手着法

@@ -294,7 +294,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	{
 		// ¸üÐÂÖÃ»»±í
 		recordHashTable(Search.pos.zobrist, hashflag, best, depth, mv);
-		if (best_move && move_sort.phase != PHASE_GOOD_CAP)
+		if (best_move  && move_sort.phase != PHASE_GOOD_CAP)
 		{
 			updBest(best_move, depth, Search.killeTable[Search.pos.depth]);
 		}
@@ -353,7 +353,7 @@ int searchRoot(int depth)
 		}
 	}
 
-	updBest(Search.result, depth, Search.killeTable[Search.pos.depth]);
+	// updBest(Search.result, depth, Search.killeTable[Search.pos.depth]);
 
 	return best;
 }
@@ -363,7 +363,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 5000;
+	Search.time_limit = 3000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
