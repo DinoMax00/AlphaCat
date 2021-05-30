@@ -294,7 +294,7 @@ int pvSearch(int depth, int alpha, int beta, bool no_null = false)
 	{
 		// ¸üÐÂÖÃ»»±í
 		recordHashTable(Search.pos.zobrist, hashflag, best, depth, mv);
-		if (best_move)
+		if (best_move && move_sort.phase != PHASE_GOOD_CAP)
 		{
 			updBest(best_move, depth, Search.killeTable[Search.pos.depth]);
 		}

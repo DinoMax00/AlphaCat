@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-// #define CHASE_CHECK
+#define CHASE_CHECK
 
 /*****************************************************************//**
  * \file   board.h

@@ -54,21 +54,9 @@ uint16_t MoveSort::next(Game& game) {
 	{
 		// 哈希表启发 
 		case PHASE_HASH:
-			this->phase = PHASE_KILLER_1;
+			this->phase = PHASE_GEN_CAP;
 			if (this->mvHash && game.legalMove(mvHash))
 				return mvHash;
-		// 杀手启发1
-		case PHASE_KILLER_1:
-			this->phase = PHASE_KILLER_2;
-			if (this->killer_1 && game.legalMove(killer_1)) {
-				return this->killer_1;
-			}
-		// 杀手启发2
-		case PHASE_KILLER_2:
-			this->phase = PHASE_GEN_CAP;
-			if (this->killer_2 && game.legalMove(killer_2)) {
-				return this->killer_2;
-			}
 		// 生成吃子着法
 		case PHASE_GEN_CAP:
 			this->phase = PHASE_GOOD_CAP;
@@ -79,6 +67,18 @@ uint16_t MoveSort::next(Game& game) {
 		case PHASE_GOOD_CAP:
 			if (this->idx < this->num && this->moves[this->idx].value > 1) {
 				return this->moves[this->idx++].step;
+			}
+			// 杀手启发1
+		case PHASE_KILLER_1:
+			this->phase = PHASE_KILLER_2;
+			if (this->killer_1 && game.legalMove(killer_1)) {
+				return this->killer_1;
+			}
+			// 杀手启发2
+		case PHASE_KILLER_2:
+			this->phase = PHASE_GEN_NONCAP;
+			if (this->killer_2 && game.legalMove(killer_2)) {
+				return this->killer_2;
 			}
 		// 生成不吃子着法
 		case PHASE_GEN_NONCAP:
