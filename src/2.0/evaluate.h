@@ -33,6 +33,7 @@ const int SHAPE_RIGHT = 3;
 
 // 局面预评价结构
 struct EVALSTRUCT {
+  int advanceValue;
   uint8_t redPieces[7][256];
   uint8_t blackPieces[7][256];
 };
