@@ -13,8 +13,8 @@ void MoveSort::updHistoryVal()
 {
 	for (int i = this->idx; i < this->num; i++)
 	{
-		if (this->moves[i].step == this->killer_1 || this->moves[i].step == this->killer_2)
-			std::swap(this->moves[i], this->moves[--this->num]);
+		//if (this->moves[i].step == this->killer_1 || this->moves[i].step == this->killer_2 || this->moves[i].step == this->mvHash)
+			//std::swap(this->moves[i], this->moves[--this->num]);
 		this->moves[i].value = nHistory[this->moves[i].step];
 	}
 }
@@ -68,16 +68,16 @@ uint16_t MoveSort::next(Game& game) {
 			if (this->idx < this->num && this->moves[this->idx].value > 1) {
 				return this->moves[this->idx++].step;
 			}
-			// 杀手启发1
+		// 杀手启发1
 		case PHASE_KILLER_1:
 			this->phase = PHASE_KILLER_2;
-			if (this->killer_1 && game.legalMove(killer_1)) {
+			if (this->killer_1 && game.legalMove(this->killer_1)) {
 				return this->killer_1;
 			}
 			// 杀手启发2
 		case PHASE_KILLER_2:
 			this->phase = PHASE_GEN_NONCAP;
-			if (this->killer_2 && game.legalMove(killer_2)) {
+			if (this->killer_2 && game.legalMove(this->killer_2)) {
 				return this->killer_2;
 			}
 		// 生成不吃子着法

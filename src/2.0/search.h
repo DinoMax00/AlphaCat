@@ -2,7 +2,7 @@
 #define SEARCH_H
 
 #include <string.h>
-
+#include <iostream>
 #include "game.h"
 #include "pregen.h"
 
@@ -19,7 +19,7 @@ struct SearchStruct {
 
 	void clearKiller()
 	{
-		memset(killeTable, 0, sizeof(killeTable));
+		for (int i = 0; i < LIMIT_DEPTH; i++) killeTable[i][0] = killeTable[i][1] = 0;
 	}
 };
 

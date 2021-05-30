@@ -363,7 +363,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 3000;
+	Search.time_limit = 5000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -409,7 +409,7 @@ void searchMain(int depth)
 			Log().info(Search.nodes);
 			break;
 		}
-
+		// std::cout << moveToString(Search.result) << std::endl;
 		best_move = Search.result;
 
 		// ËÑµ½É±Æå ÖÕÖ¹ËÑË÷
