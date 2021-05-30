@@ -96,7 +96,7 @@ bool Game::isProtected(int tag, int src, int except)
 	p_bitrow = preGen.rowMaskTab[y - BOARD_LEFT] + this->bitRow[x];
 	p_bitcol = preGen.colMaskTab[x - BOARD_TOP] + this->bitCol[y];
 
-	if ((src & 0x80) != (tag - 16) << 4)	//棋子位于本半边
+	if ((src & 0x80) != (tag - 16) << 3)	//棋子位于本半边
 	{
 		if (inHome(src))
 		{
@@ -165,9 +165,9 @@ bool Game::isProtected(int tag, int src, int except)
 				return true;
 		}
 	}
-	//兵的保护--前方
+	//兵的保护-后方
 	{
-		dst = src - 16 + ((tag / 16 - 1) << 5);
+		dst = src + 16 - ((tag / 16 - 1) << 5);
 		int piece = this->board[dst];
 		if (dst != except && pieceType[piece] == 6 && (piece & tag))
 			return true;
@@ -181,7 +181,7 @@ int Game::moveJudge(int opptag, int src, int dst)
 	int lva = (isProtected(opptag, dst) ? pieceValue[this->board[src]] : 0);
 	if (mvv >= lva)
 		return mvv - lva + 1;
-	else if (mvv >= 3 || ((dst & 0x80) == (opptag - 16) << 4))
+	else if (mvv >= 3 || ((dst & 0x80) == (opptag - 16) << 3))
 		return 1;
 	return 0;
 }
