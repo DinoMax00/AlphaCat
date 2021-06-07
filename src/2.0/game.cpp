@@ -390,6 +390,7 @@ void Game::printForDebug()
 
 Move Game::lastMove()
 {
+	if (move_num == 0) return { 0, 0, 0, 0 };
 	return this->moveStack[move_num - 1].move;
 }
 
@@ -508,6 +509,6 @@ void Game::deleteNullMove()
 
 bool Game::isDraw()
 {
-	return ((bitPieces & ATTACK_PIECES) == 0) || -lastMove().CptDrw >= 100 || move_num >= STACK_SIZE;
+	return ((bitPieces & ATTACK_PIECES) == 0) || move_num >= STACK_SIZE;
 }
 

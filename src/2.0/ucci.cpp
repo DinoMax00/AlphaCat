@@ -58,10 +58,10 @@ void UcciEngine::bootEngine()
 		if (commandVec[0] == "ucci")
 		{
 			// 输出引擎信息
-			std::cout << "id name AlphaCat" << std::endl;
-			std::cout << "id copyright 2021-2022 TongJi" << std::endl;
-			std::cout << "id copyright 2021-2022 TongJi" << std::endl;
-			std::cout << "id author Dino FeiFei PPZ AYi" << std::endl;
+			// std::cout << "id name AlphaCat" << std::endl;
+			// std::cout << "id copyright 2021-2022 TongJi" << std::endl;
+			// std::cout << "id copyright 2021-2022 TongJi" << std::endl;
+			// std::cout << "id author Dino FeiFei PPZ AYi" << std::endl;
 			std::cout << "ucciok" << std::endl;
 			clear();
 			return;
@@ -152,7 +152,7 @@ void UcciEngine::run()
 			// position startpos moves f0e1 b9c7 c0e2 h9g7 h0g2 a9a8 g3g4 a8d8 b2c2 c6c5 c2c5 c7d5 c5c4 i9i8 b0c2 i8f8 a0b0 b7e7 i3i4 f8f3 i4i5 f3g3 g2f0 i6i5 i0i5 e7e3 c4d4 d5c7 c3c4 e3e4 i5i6 g3c3 i6g6 g7e8 d4d2 c3c2 d2d9 c2c4 d9f9 e9f9 h2f2 g9e7 g6f6 f9e9 f6f7 h7g7 f2g2 g7g2 f0g2 e8g9 f7f4 c7d5 f4f5 g9h7 e0f0 c4c3 b0b9 d8f8 f5f8 h7f8 g4g5 e7g5 g2h4 e4e1 d0e1 c3a3 b9c9 f8d9 h4f5 a3e3 f5g3 e3g3 e2g4 g3b3 c9c6 b3b0 f0f1 d9b8 c6a6 b8c6 a6a7 c6b4 a7a6 d5c3 a6e6 g5e7 f1f2 c3e4 f2e2 e4c5 e2d2 b4d3 e6d6 d3b2 g4e2 c5a4 e2g4 a4c3 g0i2
 			Search.pos.printForDebug();
 			//std::cout << GetTickCount64() << std::endl;
-			searchMain(20);
+			searchMain(30);
 			//std::cout << GetTickCount64() << std::endl;
 			if (Search.result == -1) {
 				std::cout << "nobestmove " << std::endl;

@@ -25,7 +25,7 @@ private:
 	int idx = 0;
 	int num = 0;	// 着法数量
 	uint16_t mvHash = 0; 
-	Move moves[MAX_MOVE_NUM];	// 着法数组
+	Move moves[MAX_MOVE_NUM] = {0};	// 着法数组
 	uint16_t	killer_1 = 0, killer_2 = 0;	// 杀手着法
 	void sort();	// 排序
 public:

@@ -352,7 +352,7 @@ int searchRoot(int depth)
 		}
 	}
 
-	// updBest(Search.result, depth, Search.killeTable[Search.pos.depth]);
+	updBest(Search.result, depth, Search.killeTable[Search.pos.depth]);
 
 	return best;
 }
@@ -362,7 +362,7 @@ void initSearch()
 	Search.nodes = 0;
 	Search.pos.depth = 0;
 	Search.result = -1;
-	Search.time_limit = 1000;
+	Search.time_limit = 45000;
 	Search.stop = false;
 	clearHashTable();
 	clearHistory();
@@ -377,7 +377,7 @@ void searchMain(int depth)
 	// 初始化
 	initSearch();
 	// 开局库
-	/*
+	
 	int opbook_result = opBookSearch(Search.pos.zobrist, 0);
 	if (opbook_result != 0)
 	{
@@ -390,7 +390,7 @@ void searchMain(int depth)
 		Search.result = opbook_result;
 		return;
 	}
-	*/
+	
 	// 开始计时
 	Search.cur_time = GetTickCount64();
 
@@ -403,7 +403,6 @@ void searchMain(int depth)
 		{
 			break;
 		}
-		// std::cout << moveToString(Search.result) << std::endl;
 		best_move = Search.result;
 
 		// 搜到杀棋 终止搜索
@@ -412,7 +411,6 @@ void searchMain(int depth)
 			break;
 		}
 	}
-	// std::cout << "搜索节点数量" << Search.nodes << std::endl;
 	Search.result = best_move;
 	return;
 }

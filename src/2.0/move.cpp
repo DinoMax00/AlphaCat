@@ -13,8 +13,8 @@ void MoveSort::updHistoryVal()
 {
 	for (int i = this->idx; i < this->num; i++)
 	{
-		//if (this->moves[i].step == this->killer_1 || this->moves[i].step == this->killer_2 || this->moves[i].step == this->mvHash)
-			//std::swap(this->moves[i], this->moves[--this->num]);
+		if (this->moves[i].step == this->killer_1 || this->moves[i].step == this->killer_2 || this->moves[i].step == this->mvHash)
+			std::swap(this->moves[i], this->moves[--this->num]);
 		this->moves[i].value = nHistory[this->moves[i].step];
 	}
 }
@@ -93,7 +93,4 @@ uint16_t MoveSort::next(Game& game) {
 		default:
 			return 0;
 	}
-	if (idx >= num)
-		return 0;
-	return this->moves[idx++].step;
 }
