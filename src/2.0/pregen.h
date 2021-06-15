@@ -46,7 +46,7 @@ struct Pregen
 
 extern Pregen preGen;
 
-void preGenInit();
+void preGenInit(); 
 
 // 走法数组
 static const int preJiangTab[4] = { -0x10, -0x01, +0x01, +0x10 };

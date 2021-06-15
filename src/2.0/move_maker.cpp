@@ -285,6 +285,7 @@ int Game::genCapMoves(Move moves[])
 			}
 		}
 	}
+
 	// 车的着法
 	for (int i = JU_FROM; i <= JU_TO; i++)
 	{

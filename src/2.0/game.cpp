@@ -288,12 +288,15 @@ bool Game::takeOneMove(uint16_t mv)
 	else
 	{
 #ifdef CHASE_CHECK
+		p->move.CptDrw = 0;
+		/*
 		if (p->move.ChkChs == 0)
 			p->move.ChkChs = -chasedBy(mv);
 		if (this->lastMove().CptDrw == -100)
 			p->move.CptDrw = -100;
 		else
 			p->move.CptDrw = min(0, this->lastMove().CptDrw) - (p->move.ChkChs > 0 || this->lastMove().ChkChs > 0 ? 0 : 1);
+		*/
 #else 
 		p->move.CptDrw = 0;
 #endif // chase check

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-int nHistory[65536];
+int64_t nHistory[65536];
 
 void MoveSort::sort()
 {
@@ -50,6 +50,7 @@ void MoveSort::getCapMoves(Game& game)
 }
 
 uint16_t MoveSort::next(Game& game) {
+
 	switch (this->phase)
 	{
 		// ¹şÏ£±íÆô·¢ 
@@ -93,4 +94,5 @@ uint16_t MoveSort::next(Game& game) {
 		default:
 			return 0;
 	}
+
 }

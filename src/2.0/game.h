@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#define CHASE_CHECK
+// #define CHASE_CHECK
 
 /*****************************************************************//**
  * \file   board.h
@@ -66,12 +66,6 @@ constexpr int WIN_VALUE = MATE_VALUE - 200; // кякВЁЖй╓╦╨╣д╥жж╣╫Гочё╛Ё╛ЁЖ╢кж╣╬мк
 constexpr int NULL_DEPTH = 2;				// ©уве╪Т╡ц╣диН╤х
 constexpr int DRAW_VALUE = 20;				// ╨мфЕ╥жж╣
 
-/* фЕвспР╨е╤тс╕╣дфЕвсюЮпм
- *
- * фЕвспР╨е╢с0╣╫47ё╛фДжп0╣╫15╡╩сцё╛16╣╫31╠Мй╬╨Лвсё╛32╣╫47╠Мй╬╨звс║ё
- * ц©╥╫╣дфЕвскЁпРрю╢нйгё╨к╖йкйкоЮоЮбМбМЁ╣Ё╣езез╠Ь╠Ь╠Ь╠Ь╠Ь(╫╚й©й©оСоСбМбМЁ╣Ё╣езезвДвДвДвДвД)
- * лАй╬ё╨еп╤офЕвсйг╨Лвссц"pc < 32"ё╛╨звссц"pc >= 32"
- */
 const int pieceType[48] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 6, 6,
@@ -87,7 +81,7 @@ const int pieceValue[48] = {
 struct Move
 {
 	uint16_t step;	// moveюЮпм
-	int value;	// ве╥╗╧юж╣
+	int64_t value;	// ве╥╗╧юж╣
 	int16_t ChkChs; // ╫╚╬Э
 	int16_t CptDrw; // Ётвс
 	bool operator < (const Move& x) const

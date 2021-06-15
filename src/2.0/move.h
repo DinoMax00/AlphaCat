@@ -49,7 +49,7 @@ public:
 };
 
 // 历史表
-extern int nHistory[65536];
+extern int64_t nHistory[65536];
 
 // 清空历史表
 inline void clearHistory()
@@ -60,7 +60,7 @@ inline void clearHistory()
 // 更新历史表与杀手着法
 inline void updBest(uint16_t mv, int depth, uint16_t *killerTable)
 {
-	nHistory[mv] += depth * depth;
+	nHistory[mv] += 1ll * depth * depth;
 	if (killerTable[0] != mv)
 	{
 		killerTable[1] = killerTable[0];

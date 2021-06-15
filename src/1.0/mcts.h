@@ -54,11 +54,6 @@ public:
 	void printFormctsDebug();
 	void printFormctsDebug2();
 	Mcts *new_world(Board *);
-
-	//unsigned int draw_times;
-	//Move& best_move;
-	//void ExpansionOfNew();
-	// Move& getBestMove();
 };
 
 #endif
